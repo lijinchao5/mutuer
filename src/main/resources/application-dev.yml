@@ -7,9 +7,9 @@ server:
 jdbc:
   datasource:
     name: test
-    url: jdbc:mysql://39.104.76.67:3086/oep?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false
-    username: test
-    password: 09)(poPO
+    url: jdbc:mysql://39.106.190.46:3366/oep?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: 2<dM>=y27Pk.S9
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -43,9 +43,9 @@ spring:
   #Redis配置
   redis:
     timeout: 3000
-    port: 5379
-    password: oep-be-123!@#098)(*
-    host: 39.104.76.67
+    port: 3379
+    password: 1Lu.8x5YRJ
+    host: 39.106.190.46
     database: 5 
     pool:
       max-wait: 1000
@@ -77,15 +77,15 @@ systemconfig:
       allowCredentials: "false"
       maxAge: 86400
   aliOSS:
-    endpoint: http://oss-cn-huhehaote.aliyuncs.com
-    accessKeyId: LTAIVtgwtV8fPSSG
-    accessKeySecret: gWyoub5rrgPU4wh1VXNNMAooQK78o6
-    bucketName: xl-audio-file-store
-    thirdapp-same: 1
-    thirdapp-endpoint: http://oss-cn-huhehaote.aliyuncs.com
-    thirdapp-accessKeyId: LTAIVtgwtV8fPSSG
-    thirdapp-accessKeySecret: gWyoub5rrgPU4wh1VXNNMAooQK78o6
-    thirdapp-bucketName: xl-audio-file-store
+    endpoint: http://oss-cn-beijing.aliyuncs.com
+    accessKeyId: LTAIJuAAYm5fDqwm
+    accessKeySecret: 4TbWkvkDyx7F4ivsSNtuVHGmnvoj8G
+    bucketName: xl-oss-pro
+    thirdapp-same: 0
+    thirdapp-endpoint: http://oss-cn-beijing.aliyuncs.com
+    thirdapp-accessKeyId: LTAINbwOMw6UaaK3
+    thirdapp-accessKeySecret: CxOkyQD24n8d0kOzg3MYcQlopBUeDY
+    thirdapp-bucketName: xl-oss-pro1
     pool:
       #允许打开的最大HTTP连接数。默认为1024
       maxConnections: 1024
@@ -118,14 +118,14 @@ systemconfig:
     extno: 10690022
     host: http://47.100.188.160:7862/sms
   sync_url:
-    book: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncBooks.do
-    book_content: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncBookContent.do
-    paper: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncPapers.do
-    paper_content: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncPaperContent.do
-    article_url: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncReads.do
-    sentence_content_url: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncReadContent.do
-#    question_content_url: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncQusetionContent.do
-    other_link_url: http://39.104.76.67:8088/oep-be-cms/resourceSync/syncLinks.do
+    book: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncBooks.do
+    book_content: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncBookContent.do
+    paper: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncPapers.do
+    paper_content: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncPaperContent.do
+    article_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncReads.do
+    sentence_content_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncReadContent.do
+#    question_content_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncQusetionContent.do
+    other_link_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncLinks.do
 # 日志输出
 logging:
   level: 
