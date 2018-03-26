@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.ExamStudentEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ExamStudentEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="time_out" jdbcType="INTEGER" property="timeOut" />
+    <result column="complate" jdbcType="VARCHAR" property="complate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, exam_id, student_id, score, time_out, complate, remark, create_id, create_date, 
+    update_id, update_date, enable_flag
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_exam_student
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteExamStudentEntity" parameterType="java.lang.Long">
+    delete from xl_exam_student
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertExamStudentEntity" parameterType="com.xuanli.oepcms.entity.ExamStudentEntity">
+    insert into xl_exam_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="examId != null">
+        exam_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="timeOut != null">
+        time_out,
+      </if>
+      <if test="complate != null">
+        complate,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="studentRank != null">
+        student_rank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="examId != null">
+        #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="timeOut != null">
+        #{timeOut,jdbcType=INTEGER},
+      </if>
+      <if test="complate != null">
+        #{complate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="studentRank != null">
+        #{studentRank,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateExamStudentEntity" parameterType="com.xuanli.oepcms.entity.ExamStudentEntity">
+    update xl_exam_student
+    <set>
+      <if test="examId != null">
+        exam_id = #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="timeOut != null">
+        time_out = #{timeOut,jdbcType=INTEGER},
+      </if>
+      <if test="complate != null">
+        complate = #{complate,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="studentRank != null">
+        student_rank = #{studentRank,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+	<select id="generatorExamReport" parameterType="com.xuanli.oepcms.entity.ExamStudentEntity" resultType="com.xuanli.oepcms.entity.ExamStudentEntity">
+		SELECT
+			ess.student_id studentId,
+			SUM(score) score,
+			(
+				SELECT
+					IFNULL(
+						TIMESTAMPDIFF(
+							SECOND,
+							MIN(es1.create_date),
+							MAX(es1.create_date)
+						),
+						0
+					) clacTimes
+				FROM
+					xl_exam_student_score es1
+				WHERE
+					es1.student_id = ess.student_id
+				AND es1.exam_id = ess.exam_id
+			) updateId,
+			MAX(ess.update_date) updateDate
+		FROM
+			xl_exam_student_score ess
+		WHERE
+			ess.exam_id = #{examId}
+		AND ess.enable_flag = 'T'
+		GROUP BY
+			ess.student_id
+	</select>
+	<select id="getExamStudentEntityByStudent" parameterType="com.xuanli.oepcms.entity.ExamStudentEntity"  resultMap="BaseResultMap">
+		select 
+	    	<include refid="Base_Column_List" />
+	    from xl_exam_student
+	    where 
+        exam_id = #{examId,jdbcType=BIGINT} and student_id = #{studentId,jdbcType=BIGINT}
+	</select>
+	
+	<update id="updateExamStudentEntityByExamId" parameterType="com.xuanli.oepcms.entity.ExamStudentEntity">
+		update xl_exam_student
+    	<set>
+	      <if test="score != null">
+	        score = #{score,jdbcType=DOUBLE},
+	      </if>
+	      <if test="complate != null">
+	        complate = #{complate,jdbcType=VARCHAR},
+	      </if>
+	      <if test="updateDate != null">
+	        update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="timeOut != null">
+	        <!-- time_out = #{timeOut,jdbcType=INTEGER}, -->
+	        time_out = CASE
+			WHEN #{timeOut} > time_out THEN
+				#{timeOut}
+			WHEN time_out > #{timeOut} THEN
+				time_out
+			END,
+	      </if>
+      	</set>
+		where
+        	student_id = #{studentId,jdbcType=BIGINT} 
+        	and  exam_id = #{examId,jdbcType=BIGINT}
+	</update>
+	
+	<select id="getExamStudentRank" parameterType="com.xuanli.oepcms.entity.ExamStudentEntity" resultType="com.xuanli.oepcms.controller.bean.ExamStudentBean">
+	    SELECT
+			es.id,
+			es.exam_id examid,
+			es.student_id studentId,
+			IFNULL(
+				IFNULL(u. NAME, u.mobile),
+				u.name_num
+			) studentName,
+			u.photo studentPhoto,
+			es.score studentScore,
+			es.time_out timeout,
+			es.complate,
+			es.remark,
+			es.create_id createid,
+			es.create_date createdate,
+			es.update_id updateid,
+			es.update_date updatedate,
+			es.enable_flag enableflag,
+			es.complate,
+			(
+				SELECT
+					count(id) + 1
+				FROM
+					xl_exam_student s
+				WHERE
+					s.score > es.score
+			) rank,
+			es.student_rank studentRank
+		FROM
+			xl_exam_student es
+		LEFT JOIN xl_user u ON u.id = es.student_id
+	    where es.exam_id = #{examId,jdbcType=BIGINT}
+	    order by student_rank
+  	</select>
+  	<select id="getStudentExamScore" parameterType="com.xuanli.oepcms.controller.bean.ExamStudentBean" resultType="com.xuanli.oepcms.controller.bean.ExamStudentBean">
+  		SELECT
+			type,
+			(
+				SELECT
+					dd. NAME
+				FROM
+					xl_dic_detail dd
+				WHERE
+					dd.name_val = al.type
+				AND dd.dic_id = 12
+			) typeName,
+			SUM(score) totalScore,
+			SUM(studentScore) studentScore
+		FROM
+			(
+				SELECT
+					es.id,
+					es.exam_id examId,
+					es.subject_id subjectId,
+					ps.audio,
+					ps.type type,
+					psd.guide,
+					psd.question,
+					psd.guide_audio guideAudio,
+					psd.read_time readTime,
+					psd.question_audio questionAudio,
+					psd.write_time writeTime,
+					psd.score,
+					psd.original_text originalText,
+					po.result,
+					po.point_result pointResult,
+					po.correct_result correntResult,
+					ess.audio_path,
+					ess.fluency,
+					ess.integrity,
+					ess.pronunciation,
+					ess.remark,
+					ess.text,
+					ess.audio_path audioPath,
+					IFNULL(ess.score, 0) studentScore
+				FROM
+					xl_exam e
+				LEFT JOIN xl_exam_subject es ON e.id = es.exam_id
+				LEFT JOIN xl_paper_subject ps ON ps.id = es.subject_id
+				LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+				LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+				LEFT JOIN xl_exam_student_score ess ON ess.subject_detail_id = psd.id
+				AND ess.student_id = #{studentId}
+				WHERE
+					e.id = #{examId}
+				ORDER BY
+					ps.id,
+					psd.id
+			) al
+		GROUP BY
+			al.type
+  	
+  	</select>
+  	
+  	
+  	
+  	<select id="getStudentExamScoreDetail" parameterType="com.xuanli.oepcms.controller.bean.ExamStudentBean" resultType="com.xuanli.oepcms.controller.bean.ExamStudentScoreBean">
+  		SELECT
+			es.id,
+			es.exam_id examId,
+			es.subject_id subjectId,
+			ps.audio,
+			ps.type type,
+			psd.guide,
+			psd.question,
+			psd.guide_audio guideAudio,
+			psd.read_time readTime,
+			psd.question_audio questionAudio,
+			psd.write_time writeTime,
+			psd.score,
+			psd.original_text originalText,
+			po.result,
+			po.point_result pointResult,
+			po.correct_result correntResult,
+			ess.fluency,
+			ess.integrity,
+			ess.pronunciation,
+			ess.remark,
+			ess.text,
+			ess.audio_path audioPath,
+			IFNULL(ess.score,0) studentScore
+		FROM
+			xl_exam e
+		LEFT JOIN xl_exam_subject es ON e.id = es.exam_id
+		LEFT JOIN xl_paper_subject ps ON ps.id = es.subject_id
+		LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+		LEFT JOIN xl_exam_student_score ess ON ess.subject_detail_id = psd.id
+		AND ess.student_id = #{studentId}
+		WHERE
+			e.id = #{examId}
+		ORDER BY
+			ps.id,
+			psd.id
+	</select>
+	
+	 <select id="getExamStudentInfo" parameterType="com.xuanli.oepcms.entity.ExamStudentEntity" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from xl_exam_student
+	    where 1=1
+	    <if test="examId != null">
+	        and exam_id = #{examId,jdbcType=BIGINT}
+	      </if>
+	      <if test="studentId != null">
+	        and student_id = #{studentId,jdbcType=BIGINT}
+	      </if>
+	  </select>	
+	 <select id="getStudentExamReport" parameterType="map" resultType="map">
+	    SELECT
+			id id,
+			exam_id examId,
+			student_id studentId,
+			score score,
+			time_out timeOut,
+			complate,
+			remark,
+			create_id createId,
+			create_date createDate,
+			update_id updateId,
+			update_date updateDate,
+			enable_flag enableFlag,
+			student_rank studentRank
+		FROM
+			xl_exam_student
+	    where 1=1
+	    <if test="examId != null">
+	        and exam_id = #{examId,jdbcType=BIGINT}
+	      </if>
+	      <if test="studentId != null">
+	        and student_id = #{studentId,jdbcType=BIGINT}
+	      </if>
+	  </select>	
+	 <select id="getStudentExamTypeReport" parameterType="map" resultType="map">
+	    SELECT
+			type,
+			(
+				SELECT
+					dd. NAME
+				FROM
+					xl_dic_detail dd
+				WHERE
+					dd.name_val = al.type
+				AND dd.dic_id = 12
+			) typeName,
+			SUM(score) totalScore,
+			SUM(studentScore) studentScore
+		FROM
+			(
+				SELECT
+					es.id,
+					es.exam_id examId,
+					es.subject_id subjectId,
+					ps.audio,
+					ps.type type,
+					psd.guide,
+					psd.question,
+					psd.guide_audio guideAudio,
+					psd.read_time readTime,
+					psd.question_audio questionAudio,
+					psd.write_time writeTime,
+					psd.score,
+					psd.original_text originalText,
+					po.result,
+					po.point_result pointResult,
+					po.correct_result correntResult,
+					ess.audio_path,
+					ess.fluency,
+					ess.integrity,
+					ess.pronunciation,
+					ess.remark,
+					ess.text,
+					ess.audio_path audioPath,
+					IFNULL(ess.score, 0) studentScore
+				FROM
+					xl_exam e
+				LEFT JOIN xl_exam_subject es ON e.id = es.exam_id
+				LEFT JOIN xl_paper_subject ps ON ps.id = es.subject_id
+				LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+				LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+				LEFT JOIN xl_exam_student_score ess ON ess.subject_detail_id = psd.id
+				AND ess.student_id = #{studentId} and ess.exam_id=#{examId}
+				WHERE
+					e.id = #{examId}
+				ORDER BY
+					ps.id,
+					psd.id
+			) al
+		GROUP BY
+			al.type
+	  </select>	
+	  <update id="updateExamStudentEntityRemark" parameterType="java.util.List">
+		UPDATE xl_exam_student
+		SET remark = #{remark}
+		WHERE
+			exam_id = #{examId}
+		AND student_id IN
+		<foreach collection="stuIds" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	  </update>
+</mapper>

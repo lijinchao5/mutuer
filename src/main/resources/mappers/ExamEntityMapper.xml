@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.ExamEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ExamEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="notice" jdbcType="VARCHAR" property="notice" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="class_id" jdbcType="BIGINT" property="classId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="point_score" jdbcType="DOUBLE" property="pointScore" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+    <result column="paper_id" jdbcType="BIGINT" property="paperId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, notice, start_time, end_time, class_id, status, type, point_score, create_id, 
+    create_date, update_id, update_date, enable_flag,paper_id
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_exam
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteExamEntity" parameterType="java.lang.Long">
+    delete from xl_exam
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertExamEntity" parameterType="com.xuanli.oepcms.entity.ExamEntity" keyProperty="id" useGeneratedKeys="true">
+    insert into xl_exam
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="notice != null">
+        notice,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="pointScore != null">
+        point_score,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="paperId != null">
+        paper_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null">
+        #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classId != null">
+        #{classId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="pointScore != null">
+        #{pointScore,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="paperId != null">
+        #{paperId},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateExamEntity" parameterType="com.xuanli.oepcms.entity.ExamEntity">
+    update xl_exam
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null">
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classId != null">
+        class_id = #{classId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="pointScore != null">
+        point_score = #{pointScore,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  <select id="findExamByPageTotal" parameterType="com.xuanli.oepcms.entity.ExamEntity" resultType="java.lang.Integer">
+  		SELECT
+			count(*)
+		FROM
+			xl_exam h
+		where
+			create_id = #{createId}
+		<if test="classId != null">
+			and class_Id = #{classId}
+		</if>
+		<if test="type != null">
+			and type = #{type}
+		</if>
+		<if test="status != null and status != ''">
+			<if test="status == 0">
+				and start_time > NOW()
+			</if>
+			<if test="status == 1">
+				and end_time > NOW() and NOW() > start_time
+			</if>
+			<if test="status == 2">
+				and NOW() > end_time
+			</if>
+		</if>
+  </select>
+  <select id="findExamByPage" parameterType="com.xuanli.oepcms.entity.ExamEntity" resultType="com.xuanli.oepcms.entity.ExamEntity">
+  		SELECT
+			id,
+			NAME,
+			notice,
+			start_time starttime,
+			end_time endtime,
+			class_id classId,
+			type,
+			point_score pointscore,
+			create_id createid,
+			create_date createdate,
+			update_id updateid,
+			update_date updatedate,
+			enable_flag enableflag,
+			(
+				SELECT
+					count(id)
+				FROM
+					xl_exam_student es
+				WHERE
+					es.exam_id = e.id
+			) totalStudent,
+			(
+				SELECT
+					count(id)
+				FROM
+					xl_exam_student es
+				WHERE
+					complate IN ('T', 'S')
+				AND es.exam_id = e.id
+			) complateStudent,
+			CASE
+			WHEN NOW() > end_time THEN
+				2
+			WHEN NOW() > start_time
+			AND end_time > NOW() THEN
+				1
+			WHEN start_time > NOW() THEN
+				0
+			END status
+		FROM
+			xl_exam e
+		WHERE
+			create_id = #{createId}
+		<if test="classId != null">
+			and class_Id = #{classId}
+		</if>
+		<if test="type != null">
+			and type = #{type}
+		</if>
+		<if test="status != null and status != ''">
+			<if test="status == 0">
+				and start_time > NOW()
+			</if>
+			<if test="status == 1">
+				and end_time > NOW() and NOW() > start_time
+			</if>
+			<if test="status == 2">
+				and NOW() > end_time
+			</if>
+		</if>
+		ORDER BY create_date desc
+		limit #{start},#{end}
+  </select>
+
+
+
+	<select id="getExamInfo" parameterType="java.lang.Long" resultType="com.xuanli.oepcms.controller.bean.ExamBean">
+		SELECT
+			es.id,
+			es.exam_id examId,
+			es.subject_id subjectId,
+			ps.audio,
+			psd.type,
+			psd.guide,
+			psd.question,
+			psd.guide_audio guideAudio,
+			psd.read_time readTime,
+			psd.question_audio questionAudio,
+			psd.write_time writeTime,
+			psd.score,
+			psd.original_text originalText,
+			po.result,
+			po.point_result pointResult,
+			po.correct_result correntResult
+		FROM
+			xl_exam e
+		LEFT JOIN xl_exam_subject es ON e.id = es.exam_id
+		LEFT JOIN xl_paper_subject ps ON ps.id = es.subject_id
+		LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+		where e.id = #{value}
+		ORDER BY
+			ps.id,
+			psd.id
+	</select>
+
+  <select id="findStudentExamByPageTotal" parameterType="map" resultType="java.lang.Integer">
+  		SELECT
+			count(*)
+		FROM
+			xl_exam h
+		LEFT JOIN xl_exam_student es ON h.id = es.exam_id
+		where 
+			es.student_id = #{studentId}
+		AND h.type = 1
+		<if test="state !=null and state !=''">
+			<if test="state == 0">
+				AND h.start_time > NOW()
+			</if>
+			<if test="state == 1">
+				AND NOW() > h.start_time
+				AND h.end_time > NOW()
+			</if>
+			<if test="state == 2">
+				AND NOW() > h.end_time
+			</if>
+		</if>
+  </select>
+  <select id="findStudentExamByPage" parameterType="map" resultType="map">
+  		SELECT
+			h.id examId,
+			h. NAME examName,
+			h.notice examNotice,
+			h.start_time startTime,
+			h.end_time endTime,
+			h.class_id classId,
+			es.score score,
+			es.complate,
+			(
+				CASE
+				WHEN start_time > NOW() THEN
+					0
+				WHEN NOW() > start_time
+				AND end_time > NOW() THEN
+					1
+				WHEN NOW() > end_time THEN
+					2
+				END
+			) state,
+			(
+				SELECT
+					count(id)
+				FROM
+					xl_exam_student es
+				WHERE
+					es.exam_id = h.id
+			) totalStudent,
+			(
+				SELECT
+					count(id)
+				FROM
+					xl_exam_student es
+				WHERE
+					es.exam_id = h.id
+				AND es.complate in ('T','S')
+			) complateStudent,
+			es.student_rank studentRank,
+			es.score score
+		FROM
+			xl_exam h
+		LEFT JOIN xl_exam_student es ON h.id = es.exam_id
+		WHERE
+			es.student_id = #{studentId}
+		AND h.type = 1
+		<if test="state !=null and state !=''">
+			<if test="state == 0">
+				AND h.start_time > NOW()
+			</if>
+			<if test="state == 1">
+				AND NOW() > h.start_time
+				AND h.end_time > NOW()
+			</if>
+			<if test="state == 2">
+				AND NOW() > h.end_time
+			</if>
+		</if>
+		order by h.create_date desc
+		limit #{start},#{end}
+  </select>
+	<select id="getTimeOutCount" parameterType="java.lang.Long"
+		resultType="java.lang.Integer">
+		SELECT
+		count(id)
+		FROM
+		xl_exam 
+		WHERE
+		id = #{value}
+		AND end_time > now()
+	</select>
+</mapper>

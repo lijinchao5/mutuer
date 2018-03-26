@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Html5网页JavaScript录制MP3音频</title>
+<script type="text/javascript" src="jquery-1.12.4.js"></script>
+<meta charset="utf-8" />
+</head>
+<body>
+
+	<div>
+		准备倒计时<span id="time0">10</span><br>
+		开始录音倒计时<span id="time1">5</span>
+	</div>
+	<script type="text/javascript">
+		var timer0 = null;
+		var timer1 = null;
+		var timer2 = null;
+		var t0 = 10;
+		var t1 = 5;
+		function startRecord() {
+			t1--;
+			document.getElementById("time1").innerHTML = t1;
+			if (t1 <= 0) {
+				window.clearInterval(timer1);
+				//timer1 = window.setInterval("startRecord()", 1000);
+				alert("开始录音")
+			}
+		}
+
+		function timego() {
+			t0--;
+			document.getElementById("time0").innerHTML = t0;
+			if (t0 <= 0) {
+				window.clearInterval(timer0);
+				timer1 = window.setInterval("startRecord()", 1000);
+			}
+		}
+		timer0 = window.setInterval("timego()", 1000);
+	</script>
+</body>
+</html>

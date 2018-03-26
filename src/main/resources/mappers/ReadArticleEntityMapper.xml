@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.ReadArticleEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ReadArticleEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="word_num" jdbcType="INTEGER" property="wordNum" />
+    <result column="picture_path" jdbcType="VARCHAR" property="picturePath" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="update_id" jdbcType="VARCHAR" property="updateId" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, word_num, picture_path, type, level, create_id, create_date, update_id, 
+    update_date, enable_flag
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_read_article
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteReadArticleEntity" parameterType="java.lang.Long">
+    delete from xl_read_article
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertReadArticleEntity" parameterType="com.xuanli.oepcms.entity.ReadArticleEntity">
+    insert into xl_read_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="wordNum != null">
+        word_num,
+      </if>
+      <if test="picturePath != null">
+        picture_path,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNum != null">
+        #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="picturePath != null">
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateReadArticleEntity" parameterType="com.xuanli.oepcms.entity.ReadArticleEntity">
+    update xl_read_article
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNum != null">
+        word_num = #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="picturePath != null">
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findReadArticlePageTotal" parameterType="com.xuanli.oepcms.entity.ReadArticleEntity" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			xl_read_article 
+		where
+			enable_flag = 'T'
+		<if test="level != null">
+			and level = #{level,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null and type != ''" >
+			and type in(${type}) 
+		</if>
+  </select>
+  
+  <select id="findReadArticlePage" parameterType="com.xuanli.oepcms.entity.ReadArticleEntity" resultType="map">
+		SELECT
+			xra.id,
+			xra. NAME name,
+			xra.word_num wordNum,
+			xra.picture_path picturePath,
+			xra.type,
+			xra. LEVEL level,
+			xra.create_id createId,
+			xra.create_date createDate,
+			xra.update_id updateId,
+			xra.update_date updateDate,
+			xra.enable_flag enableFlag,
+			dd. NAME levelName,
+			dd1. NAME typeName
+		FROM
+			xl_read_article xra
+		LEFT JOIN xl_dic_detail dd ON dd.dic_id = 15
+		AND dd.name_val = xra.`level`
+		LEFT JOIN xl_dic_detail dd1 ON dd1.dic_id = 16
+		AND dd1.name_val = xra.type
+		WHERE
+			xra.enable_flag = 'T'
+		<if test="level != null">
+			and xra.level = #{level,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null and type != ''" >
+			and xra.type in(${type}) 
+		</if>
+		order by xra.id desc
+		limit #{start},#{end}
+  </select>
+  
+  <select id="findArtcileEntityById" parameterType="com.xuanli.oepcms.entity.ReadArticleEntity" resultType="map">
+		SELECT
+			xra.id,
+			xra. NAME name,
+			xra.word_num wordNum,
+			xra.picture_path picturePath,
+			xra.type,
+			xra. LEVEL level,
+			xra.create_id createId,
+			xra.create_date createDate,
+			xra.update_id updateId,
+			xra.update_date updateDate,
+			xra.enable_flag enableFlag,
+			dd. NAME levelName,
+			dd1. NAME typeName
+		FROM
+			xl_read_article xra
+		LEFT JOIN xl_dic_detail dd ON dd.dic_id = 15
+		AND dd.name_val = xra.`level`
+		LEFT JOIN xl_dic_detail dd1 ON dd1.dic_id = 16
+		AND dd1.name_val = xra.type
+		WHERE
+			xra.id = #{id}
+  </select>
+</mapper>

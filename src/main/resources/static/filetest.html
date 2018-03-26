@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>spring boot index</title>
+<script type="text/javascript" src="jquery-1.12.4.js"></script>
+<script type="text/javascript">
+	$(function(){
+	})
+</script>
+</head>
+<body>
+	<form action="/homework/doHomeWork.do" method="post" enctype="multipart/form-data">
+		作业id:<input type="text" name="sectionId"><br>
+		题目id:<input type="text" name=""><br>
+		作业内容:[填写文字/或者上传文件]:
+		<input type="text" name="text">
+		<input type="file" name="audioFile"><br>
+		<input type="submit" value="提交">
+	</form>
+</body>
+</html>

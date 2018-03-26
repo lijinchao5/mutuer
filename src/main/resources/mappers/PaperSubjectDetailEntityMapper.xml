@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.PaperSubjectDetailEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.PaperSubjectDetailEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="subject_id" jdbcType="BIGINT" property="subjectId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="guide" jdbcType="VARCHAR" property="guide" />
+    <result column="question" jdbcType="VARCHAR" property="question" />
+    <result column="guide_audio" jdbcType="VARCHAR" property="guideAudio" />
+    <result column="read_time" jdbcType="INTEGER" property="readTime" />
+    <result column="question_audio" jdbcType="VARCHAR" property="questionAudio" />
+    <result column="write_time" jdbcType="INTEGER" property="writeTime" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="original_text" jdbcType="VARCHAR" property="originalText" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+    <result column="cms_id" jdbcType="BIGINT" property="cmsId" />
+    <result column="question_no" jdbcType="INTEGER" property="questionNo" />
+    <result column="repeat_count" jdbcType="INTEGER" property="repeatCount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, subject_id, type, guide, question, guide_audio, read_time, question_audio, write_time, 
+    score, original_text, create_id, create_date, update_id, update_date, enable_flag, cms_id,question_no,repeat_count
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper_subject_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCmsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper_subject_detail
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deletePaperSubjectDetailEntity" parameterType="java.lang.Long">
+    delete from xl_paper_subject_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertPaperSubjectDetailEntity" parameterType="com.xuanli.oepcms.entity.PaperSubjectDetailEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into xl_paper_subject_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="guide != null">
+        guide,
+      </if>
+      <if test="question != null">
+        question,
+      </if>
+      <if test="guideAudio != null">
+        guide_audio,
+      </if>
+      <if test="readTime != null">
+        read_time,
+      </if>
+      <if test="questionAudio != null">
+        question_audio,
+      </if>
+      <if test="writeTime != null">
+        write_time,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="originalText != null">
+        original_text,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="cmsId != null">
+        cms_id,
+      </if>
+      <if test="repeatCount != null">
+        repeat_count,
+      </if>
+      <if test="questionNo != null">
+        question_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="guide != null">
+        #{guide,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="guideAudio != null">
+        #{guideAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="readTime != null">
+        #{readTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionAudio != null">
+        #{questionAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="writeTime != null">
+        #{writeTime,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="originalText != null">
+        #{originalText,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        #{cmsId,jdbcType=BIGINT},
+      </if>
+      <if test="repeatCount != null">
+        #{repeatCount},
+      </if>
+      <if test="questionNo != null">
+        #{questionNo},
+      </if>
+    </trim>
+  </insert>
+  <update id="updatePaperSubjectDetailEntity" parameterType="com.xuanli.oepcms.entity.PaperSubjectDetailEntity">
+    update xl_paper_subject_detail
+    <set>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="guide != null">
+        guide = #{guide,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="guideAudio != null">
+        guide_audio = #{guideAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="readTime != null">
+        read_time = #{readTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionAudio != null">
+        question_audio = #{questionAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="writeTime != null">
+        write_time = #{writeTime,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="originalText != null">
+        original_text = #{originalText,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        cms_id = #{cmsId,jdbcType=BIGINT},
+      </if>
+      <if test="repeatCount != null">
+        repeat_count = #{repeatCount},
+      </if>
+      <if test="questionNo != null">
+       question_no = #{questionNo},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateSyncPaperSubjectDetailEntity" parameterType="com.xuanli.oepcms.entity.PaperSubjectDetailEntity">
+    update xl_paper_subject_detail
+    <set>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="guide != null">
+        guide = #{guide,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="guideAudio != null">
+        guide_audio = #{guideAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="readTime != null">
+        read_time = #{readTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionAudio != null">
+        question_audio = #{questionAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="writeTime != null">
+        write_time = #{writeTime,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="originalText != null">
+        original_text = #{originalText,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="repeatCount != null">
+        repeat_count = #{repeatCount},
+      </if>
+      <if test="questionNo != null">
+       question_no = #{questionNo},
+      </if>
+    </set>
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findSubjectDetailBySubjectId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from xl_paper_subject_detail
+    where subject_id = #{subjectId,jdbcType=BIGINT}
+    order by id
+  </select>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.DicDetailEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.DicDetailEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dic_id" jdbcType="INTEGER" property="dicId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name_val" jdbcType="VARCHAR" property="nameVal" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, dic_id, name, name_val, enable_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_dic_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from xl_dic_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.DicDetailEntity">
+    insert into xl_dic_detail (id, dic_id, name, 
+      name_val, enable_flag)
+    values (#{id,jdbcType=INTEGER}, #{dicId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{nameVal,jdbcType=VARCHAR}, #{enableFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.DicDetailEntity">
+    insert into xl_dic_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dicId != null">
+        dic_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="nameVal != null">
+        name_val,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dicId != null">
+        #{dicId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameVal != null">
+        #{nameVal,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.DicDetailEntity">
+    update xl_dic_detail
+    <set>
+      <if test="dicId != null">
+        dic_id = #{dicId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameVal != null">
+        name_val = #{nameVal,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.DicDetailEntity">
+    update xl_dic_detail
+    set dic_id = #{dicId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      name_val = #{nameVal,jdbcType=VARCHAR},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findDicByType" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.DicEntity" >
+    SELECT
+		dd.id, dd.dic_id, dd.name, dd.name_val, dd.enable_flag
+	FROM
+		xl_dic_detail dd
+	LEFT JOIN xl_dic d ON dd.dic_id = d.id
+	WHERE
+		d.type = #{type,jdbcType=VARCHAR}
+  </select>
+  <select id="findDicByType9" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.DicEntity" >
+    SELECT
+		texts name,
+		code name_val
+	FROM
+		xl_area
+	WHERE
+		level_type = 1
+	order by code
+  </select>
+  
+</mapper>

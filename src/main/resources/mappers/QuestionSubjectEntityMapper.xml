@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.QuestionSubjectEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.QuestionSubjectEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="subject_num" jdbcType="VARCHAR" property="subjectNum" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="total_score" jdbcType="DOUBLE" property="totalScore" />
+    <result column="question_score" jdbcType="DOUBLE" property="questionScore" />
+    <result column="audio" jdbcType="VARCHAR" property="audio" />
+    <result column="total_time" jdbcType="INTEGER" property="totalTime" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="grade_level_id" jdbcType="INTEGER" property="gradeLevelId" />
+    <result column="term" jdbcType="INTEGER" property="term" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+    <result column="cms_id" jdbcType="BIGINT" property="cmsId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, subject_num, subject, total_score, question_score, audio, total_time, type, grade_level_id, 
+    term, create_id, create_date, update_id, update_date, enable_flag, cms_id
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_question_subject
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectCmsById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_question_subject
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteQuestionSubjectEntity" parameterType="java.lang.Long">
+    delete from xl_question_subject
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertQuestionSubjectEntity" parameterType="com.xuanli.oepcms.entity.QuestionSubjectEntity">
+    insert into xl_question_subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="subjectNum != null">
+        subject_num,
+      </if>
+      <if test="subject != null">
+        subject,
+      </if>
+      <if test="totalScore != null">
+        total_score,
+      </if>
+      <if test="questionScore != null">
+        question_score,
+      </if>
+      <if test="audio != null">
+        audio,
+      </if>
+      <if test="totalTime != null">
+        total_time,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="gradeLevelId != null">
+        grade_level_id,
+      </if>
+      <if test="term != null">
+        term,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="cmsId != null">
+        cms_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subjectNum != null">
+        #{subjectNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="questionScore != null">
+        #{questionScore,jdbcType=DOUBLE},
+      </if>
+      <if test="audio != null">
+        #{audio,jdbcType=VARCHAR},
+      </if>
+      <if test="totalTime != null">
+        #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null">
+        #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        #{term,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        #{cmsId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateQuestionSubjectEntity" parameterType="com.xuanli.oepcms.entity.QuestionSubjectEntity">
+    update xl_question_subject
+    <set>
+      <if test="subjectNum != null">
+        subject_num = #{subjectNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="questionScore != null">
+        question_score = #{questionScore,jdbcType=DOUBLE},
+      </if>
+      <if test="audio != null">
+        audio = #{audio,jdbcType=VARCHAR},
+      </if>
+      <if test="totalTime != null">
+        total_time = #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null">
+        grade_level_id = #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        term = #{term,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        cms_id = #{cmsId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateSyncQuestionSubjectEntity" parameterType="com.xuanli.oepcms.entity.QuestionSubjectEntity">
+    update xl_question_subject
+    <set>
+      <if test="subjectNum != null">
+        subject_num = #{subjectNum,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null">
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="questionScore != null">
+        question_score = #{questionScore,jdbcType=DOUBLE},
+      </if>
+      <if test="audio != null">
+        audio = #{audio,jdbcType=VARCHAR},
+      </if>
+      <if test="totalTime != null">
+        total_time = #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null">
+        grade_level_id = #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        term = #{term,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </update>
+
+
+
+
+
+
+	<select id="findPaperDetailByPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT
+			count(ps.id)
+		FROM
+			xl_question_subject ps
+		LEFT JOIN xl_question_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_question_option po ON psd.id = po.detail_id
+		WHERE
+			1 = 1
+		<if test="gradeLevelId != null">
+		  and ps.grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
+		</if>
+		<if test="term != null">
+		  and ps.term = #{term,jdbcType=INTEGER}
+		</if>
+		<if test="type != null">
+		  and ps.type = #{type,jdbcType=INTEGER}
+		</if>
+  </select>
+  <select id="findPaperDetailByPage" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+		ps.id,
+		ps.type,
+		ps.question_score questionScore,
+		ps.audio subjectAudio,
+		psd.guide guide,
+		psd.question,
+		psd.guide_audio guideAudio,
+		psd.type detailType,
+		psd.read_time readTime,
+		psd.write_time writeTime,
+		psd.original_text,
+		psd.repeat_count repeatCount,
+		psd.question_no questionNo,
+		po.result,
+		po.point_result pointResult,
+		po.correct_result correntResult,
+		ps.used_count useTotal,
+		ps.create_date createDate
+	FROM
+		xl_question_subject ps
+	LEFT JOIN xl_question_subject_detail psd ON ps.id = psd.subject_id
+	LEFT JOIN xl_question_option po ON psd.id = po.detail_id
+	WHERE
+		1 = 1
+	<if test="gradeLevelId != null">
+	  and ps.grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
+	</if>
+	<if test="term != null">
+	  and ps.term = #{term,jdbcType=INTEGER}
+	</if>
+	<if test="type != null">
+	  and ps.type = #{type,jdbcType=INTEGER}
+	</if>
+	ORDER BY
+		<if test="ob!=null">
+			<if test="ob=='createDate'">
+	      		ps.create_date
+	      	</if>
+			<if test="ob=='usedCount'">
+	      		ps.used_count
+	      	</if>
+	      	<if test="sb!=null">
+	      		<if test="sb=='asc'">
+	      			asc
+		      	</if>
+		      	<if test="sb=='desc'">
+	      			desc
+		      	</if>
+	      	</if>
+	      	,
+      	</if>
+		ps.id,
+		psd.id
+      limit #{start},#{end}
+  </select>
+
+<update id="updateQuestionSubjectUsedCount">
+	update xl_question_subject set used_count = used_count+1 where id = #{id,jdbcType=BIGINT}
+</update>
+
+
+</mapper>

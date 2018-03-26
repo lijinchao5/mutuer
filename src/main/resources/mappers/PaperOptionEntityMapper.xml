@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.PaperOptionEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.PaperOptionEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="detail_id" jdbcType="BIGINT" property="detailId" />
+    <result column="result" jdbcType="VARCHAR" property="result" />
+    <result column="point_result" jdbcType="VARCHAR" property="pointResult" />
+    <result column="correct_result" jdbcType="VARCHAR" property="correctResult" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+    <result column="cms_id" jdbcType="BIGINT" property="cmsId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, detail_id, result, point_result, correct_result, create_id, create_date, update_id, 
+    update_date, enable_flag, cms_id
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper_option
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCmsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper_option
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deletePaperOptionEntity" parameterType="java.lang.Long">
+    delete from xl_paper_option
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertPaperOptionEntity" parameterType="com.xuanli.oepcms.entity.PaperOptionEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into xl_paper_option
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="detailId != null">
+        detail_id,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="pointResult != null">
+        point_result,
+      </if>
+      <if test="correctResult != null">
+        correct_result,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="cmsId != null">
+        cms_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="detailId != null">
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="pointResult != null">
+        #{pointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="correctResult != null">
+        #{correctResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        #{cmsId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updatePaperOptionEntity" parameterType="com.xuanli.oepcms.entity.PaperOptionEntity">
+    update xl_paper_option
+    <set>
+      <if test="detailId != null">
+        detail_id = #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="pointResult != null">
+        point_result = #{pointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="correctResult != null">
+        correct_result = #{correctResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        cms_id = #{cmsId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateSyncPaperOptionEntity" parameterType="com.xuanli.oepcms.entity.PaperOptionEntity">
+    update xl_paper_option
+    <set>
+      <if test="detailId != null">
+        detail_id = #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="pointResult != null">
+        point_result = #{pointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="correctResult != null">
+        correct_result = #{correctResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByDetailId" parameterType="com.xuanli.oepcms.entity.PaperOptionEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper_option
+    where enable_flag='T'
+    <if test="detailId != null">
+       and  detail_id = #{detailId,jdbcType=BIGINT}
+     </if>
+  </select>
+  <select id="getSubjectOptionByDetailId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper_option
+    where  detail_id = #{value}
+  </select>
+</mapper>

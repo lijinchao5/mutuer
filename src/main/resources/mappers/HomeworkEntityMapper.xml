@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.HomeworkEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.HomeworkEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="clas_id" property="clasId" jdbcType="BIGINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="BIGINT" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, end_time, clas_id, remark, create_id, create_date, update_id, update_date
+  </sql>
+  <select id="getById" resultType="com.xuanli.oepcms.entity.HomeworkEntity" parameterType="java.lang.Long" >
+    select 
+    	id, name, end_time endtime, clas_id clasid, remark, create_id createid, create_date createdate, update_id updateid, update_date updatedate,IF(end_time > NOW() , '1' , '2') STATUS
+    from 
+    	xl_homework
+    where 
+    	id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xl_homework
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteHomeworkEntity" parameterType="java.lang.Long" >
+    delete from xl_homework
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertHomeworkEntity" parameterType="com.xuanli.oepcms.entity.HomeworkEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into xl_homework
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="clasId != null" >
+        clas_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clasId != null" >
+        #{clasId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateHomeworkEntity" parameterType="com.xuanli.oepcms.entity.HomeworkEntity" >
+    update xl_homework
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clasId != null" >
+        clas_id = #{clasId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+
+	<select id="findHomeworkPageTotal" parameterType="com.xuanli.oepcms.entity.HomeworkEntity" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			xl_homework h
+		where
+			create_id = #{createId}
+		<if test="clasId != null">
+			and clas_id = #{clasId,jdbcType=BIGINT}
+		</if>
+		<if test="status != null">
+			<if test="status == '1'">
+				and end_time > NOW()
+			</if>
+			
+			<if test="status == '2'">
+				and NOW() > end_time
+			</if>
+		</if>
+	</select>
+	<select id="findHomeworkPage" parameterType="com.xuanli.oepcms.entity.HomeworkEntity" resultType="com.xuanli.oepcms.entity.HomeworkEntity">
+		SELECT
+			h.id ,
+			h. NAME NAME ,
+			h.end_time endtime ,
+			h.clas_id clasid ,
+			h.remark remark ,
+			h.create_id createid ,
+			h.create_date createdate ,
+			(
+				SELECT
+					GROUP_CONCAT(b. NAME , '||')
+				FROM
+					(
+						SELECT
+							CONCAT(u. NAME , ',' , s. NAME) NAME ,
+							'1' AS id ,
+							hd.homework_id workid
+						FROM
+							xl_section_detail sd
+						LEFT JOIN xl_section s ON s.id = sd.section_id
+						LEFT JOIN xl_unit u ON u.id = s.unit_id
+						LEFT JOIN xl_homework_detail hd ON sd.id = hd.section_detail_id
+						GROUP BY
+							u.id ,
+							s.id ,
+							hd.homework_id
+					) b
+				WHERE
+					b.workid = h.id
+				GROUP BY
+					b.id
+			) detail ,
+			(
+				SELECT
+					count(*)
+				FROM
+					xl_homework_student hs
+				WHERE
+					hs.homework_id = h.id
+			) totalStudent ,
+			(
+				SELECT
+					count(*)
+				FROM
+					xl_homework_student hs
+				WHERE
+					hs.homework_id = h.id
+				AND hs.work_complate = 'T'
+			) complateTotal ,
+			IF(end_time > NOW() , '1' , '2') STATUS
+		FROM
+			xl_homework h
+		WHERE
+			h.create_id = #{createId}
+		<if test="clasId != null">
+			and clas_id = #{clasId,jdbcType=BIGINT}
+		</if>
+		<if test="status != null">
+			<if test="status == 1">
+				and h.end_time > NOW()
+			</if>
+			<if test="status == 2">
+				and NOW() > h.end_time
+			</if>
+		</if>
+		order by h.id desc
+		limit #{start},#{end}
+	</select>
+	
+	<select id="findStudentHomeworkByPageTotal" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT
+			count(*)
+		FROM
+			xl_homework xh
+		LEFT JOIN xl_homework_student hs ON xh.id = hs.homework_id
+		WHERE
+			hs.student_id = #{studentId}
+		<if test="over != null">
+			<if test='over == "F"'>
+				and xh.end_time > NOW()
+			</if>
+			<if test='over == "T"'>
+				and NOW() > xh.end_time
+			</if>
+		</if>
+	</select>
+	<select id="findStudentHomeworkByPage" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			xh.id id,
+			xh. name,
+			xh.remark,
+			xh.end_time endTime,
+			xh.create_date createDate,
+			hs.score,
+			hs.work_complate workComplate,
+			hs.work_time workTime,
+			hs.student_id studentId,
+			(
+				SELECT
+					count(id)
+				FROM
+					xl_homework_student xhs
+				WHERE
+					xhs.homework_id = xh.id
+			) totalStudent,
+			(
+				SELECT
+					count(id)
+				FROM
+					xl_homework_student xhs
+				WHERE
+					xhs.homework_id = xh.id
+				AND xhs.work_complate = 'T'
+			) complateStudent,
+			IF (xh.end_time > NOW(), 'T', 'F') over
+		FROM
+			xl_homework xh
+		LEFT JOIN xl_homework_student hs ON xh.id = hs.homework_id
+		WHERE
+			hs.student_id = #{studentId}
+		<if test="over != null">
+			<if test='over == "F"'>
+				and xh.end_time > NOW()
+			</if>
+			<if test='over == "T"'>
+				and NOW() > xh.end_time
+			</if>
+		</if>
+		order by xh.create_date desc
+		limit #{start},#{end}
+	</select>
+	<select id="getTimeOutCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		FROM
+			xl_homework h
+		WHERE
+			h.id = #{value}
+		AND h.end_time > now()
+	</select>
+</mapper>

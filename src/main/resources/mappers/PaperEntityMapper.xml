@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.PaperEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.PaperEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="paper_num" jdbcType="VARCHAR" property="paperNum" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="notice" jdbcType="VARCHAR" property="notice" />
+    <result column="total_score" jdbcType="DOUBLE" property="totalScore" />
+    <result column="total_time" jdbcType="INTEGER" property="totalTime" />
+    <result column="study_section_id" jdbcType="INTEGER" property="studySectionId" />
+    <result column="grade_level_id" jdbcType="INTEGER" property="gradeLevelId" />
+    <result column="address_province" jdbcType="INTEGER" property="addressProvince" />
+    <result column="term" jdbcType="INTEGER" property="term" />
+    <result column="paper_type" jdbcType="INTEGER" property="paperType" />
+    <result column="exam_type" jdbcType="INTEGER" property="examType" />
+    <result column="question_type" jdbcType="INTEGER" property="questionType" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+    <result column="cms_id" jdbcType="BIGINT" property="cmsId" />
+    <result column="paper_province" jdbcType="VARCHAR" property="paperProvince" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, paper_num, name, notice, total_score, total_time, study_section_id, grade_level_id, 
+    address_province, term, paper_type, exam_type, question_type, create_id, create_date, update_id, 
+    update_date, enable_flag,cms_id,paper_province
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deletePaperEntity" parameterType="java.lang.Long">
+    delete from xl_paper
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertPaperEntity" parameterType="com.xuanli.oepcms.entity.PaperEntity" keyProperty="id" useGeneratedKeys="true">
+    insert into xl_paper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="paperNum != null">
+        paper_num,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="notice != null">
+        notice,
+      </if>
+      <if test="totalScore != null">
+        total_score,
+      </if>
+      <if test="totalTime != null">
+        total_time,
+      </if>
+      <if test="studySectionId != null">
+        study_section_id,
+      </if>
+      <if test="gradeLevelId != null">
+        grade_level_id,
+      </if>
+      <if test="addressProvince != null">
+        address_province,
+      </if>
+      <if test="term != null">
+        term,
+      </if>
+      <if test="paperType != null">
+        paper_type,
+      </if>
+      <if test="examType != null">
+        exam_type,
+      </if>
+      <if test="questionType != null">
+        question_type,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="cmsId != null">
+        cms_id,
+      </if>
+      <if test="paperProvince != null">
+        paper_province,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="paperNum != null">
+        #{paperNum,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null">
+        #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="totalTime != null">
+        #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="studySectionId != null">
+        #{studySectionId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null">
+        #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="addressProvince != null">
+        #{addressProvince,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        #{term,jdbcType=INTEGER},
+      </if>
+      <if test="paperType != null">
+        #{paperType,jdbcType=INTEGER},
+      </if>
+      <if test="examType != null">
+        #{examType,jdbcType=INTEGER},
+      </if>
+      <if test="questionType != null">
+        #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        #{cmsId,jdbcType=BIGINT},
+      </if>
+      <if test="paperProvince != null">
+        #{paperProvince,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updatePaperEntity" parameterType="com.xuanli.oepcms.entity.PaperEntity">
+    update xl_paper
+    <set>
+      <if test="paperNum != null">
+        paper_num = #{paperNum,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null">
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="totalTime != null">
+        total_time = #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="studySectionId != null">
+        study_section_id = #{studySectionId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null">
+        grade_level_id = #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="addressProvince != null">
+        address_province = #{addressProvince,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        term = #{term,jdbcType=INTEGER},
+      </if>
+      <if test="paperType != null">
+        paper_type = #{paperType,jdbcType=INTEGER},
+      </if>
+      <if test="examType != null">
+        exam_type = #{examType,jdbcType=INTEGER},
+      </if>
+      <if test="questionType != null">
+        question_type = #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null">
+        cms_id = #{cmsId,jdbcType=BIGINT},
+      </if>
+      <if test="paperProvince != null">
+        paper_province = #{paperProvince,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateSyncPaperEntity" parameterType="com.xuanli.oepcms.entity.PaperEntity">
+    update xl_paper
+    <set>
+      <if test="paperNum != null">
+        paper_num = #{paperNum,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="notice != null">
+        notice = #{notice,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="totalTime != null">
+        total_time = #{totalTime,jdbcType=INTEGER},
+      </if>
+      <if test="studySectionId != null">
+        study_section_id = #{studySectionId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null">
+        grade_level_id = #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="addressProvince != null">
+        address_province = #{addressProvince,jdbcType=INTEGER},
+      </if>
+      <if test="term != null">
+        term = #{term,jdbcType=INTEGER},
+      </if>
+      <if test="paperType != null">
+        paper_type = #{paperType,jdbcType=INTEGER},
+      </if>
+      <if test="examType != null">
+        exam_type = #{examType,jdbcType=INTEGER},
+      </if>
+      <if test="questionType != null">
+        question_type = #{questionType,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="paperProvince != null">
+        paper_province = #{paperProvince,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findPaperByPageTotal" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select 
+    	 count(id)
+    from
+    	 xl_paper
+    where 
+    	enable_flag = 'T' 
+    <if test="paperNum != null">
+        and paper_num = #{paperNum,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="notice != null">
+        and notice = #{notice,jdbcType=VARCHAR}
+      </if>
+      <if test="totalScore != null">
+        and total_score = #{totalScore,jdbcType=DOUBLE}
+      </if>
+      <if test="totalTime != null">
+        and total_time = #{totalTime,jdbcType=INTEGER}
+      </if>
+      <if test="studySectionId != null">
+        and study_section_id = #{studySectionId,jdbcType=INTEGER}
+      </if>
+      <if test="gradeLevelId != null">
+        and grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
+      </if>
+      <if test="addressProvince != null">
+        and address_province = #{addressProvince,jdbcType=INTEGER}
+      </if>
+      <if test="term != null">
+        and term = #{term,jdbcType=INTEGER}
+      </if>
+      <if test="paperType != null">
+        and paper_type = #{paperType,jdbcType=INTEGER}
+      </if>
+      <if test="examType != null">
+        and exam_type = #{examType,jdbcType=INTEGER}
+      </if>
+      <if test="questionType != null">
+        and question_type = #{questionType,jdbcType=INTEGER}
+      </if>
+      <if test="addressArea != null">
+        and paper_province LIKE CONCAT(CONCAT('%',#{addressArea}),'%')
+      </if>
+  </select>
+  <select id="findPaperByPage" parameterType="map" resultType="map">
+    select 
+    	 id, paper_num paperNum, name, notice, total_score totalScore, total_time totalTime, study_section_id, grade_level_id, 
+	    address_province, term, paper_type, exam_type, question_type questionType, create_id, create_date, update_id, 
+	    update_date, enable_flag, paper_province
+    from
+    	 (
+		SELECT
+			*, (
+				SELECT
+					count(id)
+				FROM
+					xl_exam xe
+				WHERE
+					xe.paper_id = xp.id
+			) size
+		FROM
+			xl_paper xp
+	) a
+    where 
+    	enable_flag = 'T' 
+      <if test="paperNum != null">
+        and paper_num = #{paperNum,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="notice != null">
+        and notice = #{notice,jdbcType=VARCHAR}
+      </if>
+      <if test="totalScore != null">
+        and total_score = #{totalScore,jdbcType=DOUBLE}
+      </if>
+      <if test="totalTime != null">
+        and total_time = #{totalTime,jdbcType=INTEGER}
+      </if>
+      <if test="studySectionId != null">
+        and study_section_id = #{studySectionId,jdbcType=INTEGER}
+      </if>
+      <if test="gradeLevelId != null">
+        and grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
+      </if>
+      <if test="addressProvince != null">
+        and address_province = #{addressProvince,jdbcType=INTEGER}
+      </if>
+      <if test="term != null">
+        and term = #{term,jdbcType=INTEGER}
+      </if>
+      <if test="paperType != null">
+        and paper_type = #{paperType,jdbcType=INTEGER}
+      </if>
+      <if test="examType != null">
+        and exam_type = #{examType,jdbcType=INTEGER}
+      </if>
+      <if test="questionType != null">
+        and question_type = #{questionType,jdbcType=INTEGER}
+      </if>
+      <if test="addressArea != null">
+        and paper_province LIKE CONCAT(CONCAT('%',#{addressArea}),'%')
+      </if>
+      <if test="ob!=null">
+      	order by ${ob}
+      	<if test="sb!=null">
+      		${sb}
+      	</if>
+      </if>
+      limit #{start},#{end}
+  </select>
+	<select id="getPaperDetail" parameterType="map" resultType="map">
+		SELECT
+			p.id paperId,
+			ps.id paperSubjectId,
+			ps.subject_num subjectNum,
+			ps.`subject` `subject`,
+			psd.id paperSubjectDetailId,
+			ps.audio,
+			ps.type type,
+			psd.guide,
+			psd.question,
+			psd.guide_audio guideAudio,
+			psd.read_time readTime,
+			psd.question_audio questionAudio,
+			psd.write_time writeTime,
+			psd.score,
+			po.result,
+			po.correct_result correntResult,
+			psd.repeat_count repeatCount,
+			psd.type detailType,
+			ess.id essId
+		FROM
+			xl_paper p
+		LEFT JOIN xl_paper_subject ps ON ps.paper_id = p.id
+		LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+		left JOIN xl_exam_student_score ess ON ess.student_id = #{studentId} and ess.exam_id = #{examId} and ess.subject_detail_id = psd.id
+		WHERE
+			p.id = #{paperId}
+		order by ps.id,psd.id
+	</select>
+  <select id="getPaperDetail1" parameterType="java.lang.Long" resultType="java.util.Map">
+		SELECT
+			p.id paperId,
+			ps.id paperSubjectId,
+			ps.subject_num subjectNum,
+			ps.`subject` `subject`,
+			psd.id paperSubjectDetailId,
+			ps.audio,
+			ps.type type,
+			psd.guide,
+			psd.question,
+			psd.guide_audio guideAudio,
+			psd.read_time readTime,
+			psd.question_audio questionAudio,
+			psd.write_time writeTime,
+			psd.score,
+			po.result,
+			po.correct_result correntResult,
+			psd.repeat_count repeatCount,
+			psd.type detailType
+		FROM
+			xl_paper p
+		LEFT JOIN xl_paper_subject ps ON ps.paper_id = p.id
+		LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+		WHERE
+			p.id = #{value}
+		order by ps.id,psd.id
+	</select>
+	
+  <select id="getPaperDetailByTeacher" parameterType="java.lang.Long" resultType="java.util.Map">
+		SELECT
+			p.id paperId,
+			ps.id paperSubjectId,
+			ps.subject_num subjectNum,
+			ps.`subject` `subject`,
+			psd.id paperSubjectDetailId,
+			ps.audio,
+			ps.type type,
+			psd.guide,
+			psd.question,
+			psd.guide_audio guideAudio,
+			psd.read_time readTime,
+			psd.question_audio questionAudio,
+			psd.write_time writeTime,
+			psd.score,
+			psd.original_text originalText,
+			po.result,
+			po.point_result pointResult,
+			po.correct_result correntResult,
+			psd.repeat_count repeatCount,
+			psd.type detailType
+		FROM
+			xl_paper p
+		LEFT JOIN xl_paper_subject ps ON ps.paper_id = p.id
+		LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+		WHERE
+			p.id = #{value}
+		order by ps.id,psd.id
+	</select>
+	
+	
+	
+	<select id="findPaperDetailByPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+   		SELECT
+			count(ps.id)
+		FROM
+			xl_paper p
+		LEFT JOIN xl_paper_subject ps ON p.id = ps.paper_id
+		LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+		where p.cms_id is not null
+	    <if test="studySectionId != null">
+	        and p.study_section_id = #{studySectionId,jdbcType=INTEGER}
+	      </if>
+	      <if test="gradeLevelId != null">
+	        and p.grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
+	      </if>
+	      <if test="addressProvince != null">
+	        and p.address_province = #{addressProvince,jdbcType=INTEGER}
+	      </if>
+	      <if test="term != null">
+	        and p.term = #{term,jdbcType=INTEGER}
+	      </if>
+	      <if test="examType != null">
+	        and p.exam_type = #{examType,jdbcType=INTEGER}
+	      </if>
+	      <if test="questionType != null">
+	        and p.question_type = #{questionType,jdbcType=INTEGER}
+	      </if>
+  </select>
+  <select id="findPaperDetailByPage" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+		ps.id,
+		ps.type,
+		ps.question_score questionScore,
+		ps.audio subjectAudio,
+		psd.guide guide,
+		psd.question,
+		psd.guide_audio guideAudio,
+		psd.type detailType,
+		psd.read_time readTime,
+		psd.write_time writeTime,
+		psd.original_text,
+		psd.repeat_count repeatCount,
+		psd.question_no questionNo,
+		po.result,
+		po.point_result pointResult,
+		po.correct_result correntResult,
+		ps.used_count useTotal,
+		ps.create_date createDate
+	FROM
+		xl_paper p
+	LEFT JOIN xl_paper_subject ps ON p.id = ps.paper_id
+	LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+	LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+	where p.cms_id is not null 
+	 <if test="studySectionId != null">
+        and p.study_section_id = #{studySectionId,jdbcType=INTEGER}
+      </if>
+      <if test="gradeLevelId != null">
+        and p.grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
+      </if>
+      <if test="addressProvince != null">
+        and p.address_province = #{addressProvince,jdbcType=INTEGER}
+      </if>
+      <if test="term != null">
+        and p.term = #{term,jdbcType=INTEGER}
+      </if>
+      <if test="examType != null">
+        and p.exam_type = #{examType,jdbcType=INTEGER}
+      </if>
+      <if test="questionType != null">
+        and p.question_type = #{questionType,jdbcType=INTEGER}
+      </if>
+	ORDER BY
+		<if test="ob!=null">
+			<if test="ob=='createDate'">
+	      		ps.create_date
+	      	</if>
+			<if test="ob=='usedCount'">
+	      		ps.used_count
+	      	</if>
+	      	<if test="sb!=null">
+	      		<if test="sb=='asc'">
+	      			asc
+		      	</if>
+		      	<if test="sb=='desc'">
+	      			desc
+		      	</if>
+	      	</if>
+	      	,
+      	</if>
+		ps.id,
+		psd.id
+      limit #{start},#{end}
+  </select>
+	
+  <select id="selectByCmsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_paper
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="getPaperDetailAndScore" parameterType="map" resultType="map">
+		SELECT
+			p.id paperId,
+			ps.id paperSubjectId,
+			ps.subject_num subjectNum,
+			ps.`subject` `subject`,
+			psd.id paperSubjectDetailId,
+			ps.audio,
+			ps.type type,
+			psd.guide,
+			psd.question,
+			psd.guide_audio guideAudio,
+			psd.read_time readTime,
+			psd.question_audio questionAudio,
+			psd.write_time writeTime,
+			psd.score,
+			po.result,
+			po.correct_result correntResult,
+			psd.repeat_count repeatCount,
+			psd.type detailType,
+			ess.id essId,
+			ess.text studentResult,
+			ess.audio_path studentAudio,
+			psd.original_text originalText,
+			po.point_result pointResult,
+			ess.score studentScore,
+			ess.integrity,
+			ess.fluency,
+			ess.pronunciation
+		FROM
+			xl_paper p
+		LEFT JOIN xl_paper_subject ps ON ps.paper_id = p.id
+		LEFT JOIN xl_paper_subject_detail psd ON ps.id = psd.subject_id
+		LEFT JOIN xl_paper_option po ON psd.id = po.detail_id
+		left JOIN xl_exam_student_score ess ON ess.student_id = #{studentId} and ess.exam_id = #{examId} and ess.subject_detail_id = psd.id
+		WHERE
+			p.id = #{paperId}
+		order by ps.id,psd.id
+	</select>
+</mapper>

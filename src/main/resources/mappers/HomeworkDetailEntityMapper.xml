@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.HomeworkDetailEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.HomeworkDetailEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="homework_id" property="homeworkId" jdbcType="BIGINT" />
+    <result column="section_detail_id" property="sectionDetailId" jdbcType="BIGINT" />
+    <result column="homework_type" property="homeworkType" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="BIGINT" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="dialog_name" property="dialogName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, homework_id, section_detail_id, homework_type, create_id, create_date, update_id, 
+    update_date,dialog_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xl_homework_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xl_homework_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.HomeworkDetailEntity" >
+    insert into xl_homework_detail (id, homework_id, section_detail_id, 
+      homework_type, create_id, create_date, 
+      update_id, update_date)
+    values (#{id,jdbcType=BIGINT}, #{homeworkId,jdbcType=BIGINT}, #{sectionDetailId,jdbcType=BIGINT}, 
+      #{homeworkType,jdbcType=VARCHAR}, #{createId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.HomeworkDetailEntity" >
+    insert into xl_homework_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="homeworkId != null" >
+        homework_id,
+      </if>
+      <if test="sectionDetailId != null" >
+        section_detail_id,
+      </if>
+      <if test="homeworkType != null" >
+        homework_type,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="dialogName != null" >
+        dialog_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkId != null" >
+        #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="sectionDetailId != null" >
+        #{sectionDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkType != null" >
+        #{homeworkType,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dialogName != null" >
+        #{dialogName},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.HomeworkDetailEntity" >
+    update xl_homework_detail
+    <set >
+      <if test="homeworkId != null" >
+        homework_id = #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="sectionDetailId != null" >
+        section_detail_id = #{sectionDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkType != null" >
+        homework_type = #{homeworkType,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dialogName != null" >
+        dialog_name = #{dialogName},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.HomeworkDetailEntity" >
+    update xl_homework_detail
+    set homework_id = #{homeworkId,jdbcType=BIGINT},
+      section_detail_id = #{sectionDetailId,jdbcType=BIGINT},
+      homework_type = #{homeworkType,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+	<insert id="inserHomeworkDetailBatch" parameterType="java.util.List">
+		insert into xl_homework_detail(homework_id,section_detail_id,create_id,create_date,homework_type)values
+        <foreach collection ="list" item="hd" index= "index" separator =",">
+            (#{hd.homeworkId}, #{hd.sectionDetailId},#{hd.createId},#{hd.createDate},#{hd.homeworkType})
+        </foreach >
+	</insert>
+
+	<select id="reportHomeworkDetail" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		FROM
+			xl_homework_detail
+		WHERE
+			homework_id = #{homeworkId}
+		AND (
+			homework_type IN (1, 2, 3, 5)
+			OR (
+				homework_type = 4
+				AND dialog_name = 'T'
+			)
+		)
+	</select>
+
+
+	<select id="getHomeworkDetail" parameterType="com.xuanli.oepcms.controller.bean.HomeworkScoreBean" resultType="com.xuanli.oepcms.controller.bean.HomeworkScoreBean">
+	  	SELECT
+			hd.homework_type homeworktype,
+			hd.id sectiondetailid,
+			sd. NAME name,
+			sd.audio_path standeraudiopath,
+			sd.text standertext,
+			sd.m_audio_path standermaudiopath,
+			sd.w_audio_path standerwaudiopath,
+			sd.word_mean standerwordmean,
+			hd.dialog_name dialogName,
+			sd.dialog_num dialogNum,
+			hss.audio_path audioPath,
+			hss.score studentScore,
+			hss.text studentText,
+			sd.section_id sectionId
+		FROM
+			(
+				SELECT
+					*
+				FROM
+					xl_homework_detail
+				WHERE
+					homework_id = #{homeworkId}
+			) hd
+		LEFT JOIN xl_section_detail sd ON hd.section_detail_id = sd.id LEFT JOIN xl_homework_student_score hss ON hss.section_id = hd.id and hss.student_id=#{studentId}
+		ORDER BY
+			hd.homework_type,hd.id
+  </select>
+
+
+  <insert id="insertHomeworkDetailEntityDialog" parameterType="com.xuanli.oepcms.entity.HomeworkDetailEntity" >
+  	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
+	  select count(id) id from xl_homework_detail where  homework_id = #{homeworkId} and homework_type=#{homeworkType} and section_detail_id = #{sectionDetailId}
+	</selectKey>
+	<if test="allSize==0">
+	  insert into xl_homework_detail(homework_id,homework_type,section_detail_id) values(#{homeworkId},#{homeworkType},#{sectionDetailId})
+	</if>
+	<if test="allSize>0">
+	  update xl_homework_detail set update_date = NOW() where homework_id = #{homeworkId} and homework_type=#{homeworkType} and section_detail_id = #{sectionDetailId}
+	</if>
+  </insert>
+  <update id="updateHomeworkDetailEntityDialog" parameterType="com.xuanli.oepcms.entity.HomeworkDetailEntity" >
+    update xl_homework_detail
+    set  
+      create_id = #{createId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      dialog_name = #{dialogName}
+    where homework_id = #{homeworkId} and homework_type=#{homeworkType} and section_detail_id = #{sectionDetailId}
+  </update>
+</mapper>

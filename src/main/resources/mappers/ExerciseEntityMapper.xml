@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.ExerciseEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ExerciseEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="read_article_id" jdbcType="BIGINT" property="readArticleId" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="audio_path" jdbcType="VARCHAR" property="audioPath" />
+    <result column="integrity" jdbcType="DOUBLE" property="integrity" />
+    <result column="pronunciation" jdbcType="DOUBLE" property="pronunciation" />
+    <result column="fluency" jdbcType="DOUBLE" property="fluency" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, student_id, read_article_id, end_time, score, remark, audio_path, integrity, 
+    pronunciation, fluency, create_id, create_date, update_id, update_date, enable_flag
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_exercise
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteExerciseEntity" parameterType="java.lang.Long">
+    delete from xl_exercise
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertExerciseEntity" parameterType="com.xuanli.oepcms.entity.ExerciseEntity">
+    insert into xl_exercise
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="readArticleId != null">
+        read_article_id,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="audioPath != null">
+        audio_path,
+      </if>
+      <if test="integrity != null">
+        integrity,
+      </if>
+      <if test="pronunciation != null">
+        pronunciation,
+      </if>
+      <if test="fluency != null">
+        fluency,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="readArticleId != null">
+        #{readArticleId,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null">
+        #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="integrity != null">
+        #{integrity,jdbcType=DOUBLE},
+      </if>
+      <if test="pronunciation != null">
+        #{pronunciation,jdbcType=DOUBLE},
+      </if>
+      <if test="fluency != null">
+        #{fluency,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateExerciseEntity" parameterType="com.xuanli.oepcms.entity.ExerciseEntity">
+    update xl_exercise
+    <set>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="readArticleId != null">
+        read_article_id = #{readArticleId,jdbcType=BIGINT},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null">
+        audio_path = #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="integrity != null">
+        integrity = #{integrity,jdbcType=DOUBLE},
+      </if>
+      <if test="pronunciation != null">
+        pronunciation = #{pronunciation,jdbcType=DOUBLE},
+      </if>
+      <if test="fluency != null">
+        fluency = #{fluency,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findExercisePageTotal" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM
+			xl_exercise e
+		where student_id = #{studentId}
+  </select>
+  
+  <select id="findExercisePage" parameterType="com.xuanli.oepcms.entity.ExerciseEntity" resultType="java.util.Map">
+		SELECT
+			xra.id,
+			xra. NAME NAME,
+			xra.word_num wordNum,
+			xra.picture_path picturePath,
+			xra.type,
+			xra. LEVEL LEVEL,
+			xra.create_id createId,
+			xra.create_date createDate,
+			xra.update_id updateId,
+			xra.update_date updateDate,
+			xra.enable_flag enableFlag,
+			xe.score,
+			xe.update_date,
+			dd. NAME levelName,
+			dd1. NAME typeName
+		FROM
+			xl_exercise xe 
+		LEFT JOIN xl_read_article xra ON xe.read_article_id = xra.id
+		LEFT JOIN xl_dic_detail dd ON dd.dic_id = 15
+		AND dd.name_val = xra.`level`
+		LEFT JOIN xl_dic_detail dd1 ON dd1.dic_id = 16
+		AND dd1.name_val = xra.type
+		WHERE xe.student_id = #{studentId}
+		order by xra.id desc
+		limit #{start},#{end}
+  </select>
+  <select id="selectExerciseEntity" resultType="com.xuanli.oepcms.entity.ExerciseEntity">
+	SELECT
+		<include refid="Base_Column_List" />
+	FROM
+		xl_exercise
+	WHERE
+		student_id = #{studentId}
+	AND read_article_id = #{readArticleId}
+  </select>
+  
+  <select id="getStudentExerciseResult" parameterType="java.lang.Long" resultType="java.util.Map">
+	SELECT COUNT(id) word_num ,'1' type FROM xl_exercise xe
+	WHERE xe.student_id = #{studentId}
+	UNION All
+	SELECT SUM(xrs.word_num) sum_num ,'2' type FROM xl_exercise_detail xed
+	LEFT JOIN xl_read_sentence xrs ON xrs.id = xed.read_sentence_id
+	WHERE student_id = #{studentId}
+	UNION All
+	SELECT AVG(score) score ,'3' type FROM xl_exercise WHERE student_id = #{studentId} 
+	UNION All
+	select   (SELECT count(score) FROM xl_exercise WHERE student_id = #{studentId} and score>60)
+	/(SELECT count(score) FROM xl_exercise WHERE student_id = 486),'4' type  from DUAL
+  </select>
+</mapper>

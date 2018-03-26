@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.ExamStudentScoreWordEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ExamStudentScoreWordEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="exam_detail_id" jdbcType="BIGINT" property="examDetailId" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, exam_id, exam_detail_id, student_id, score, type, text
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_exam_student_score_word
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getExamStudentWords" parameterType="com.xuanli.oepcms.entity.ExamStudentScoreWordEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_exam_student_score_word
+    where 1=1 
+      <if test="examId != null">
+        and exam_id = #{examId,jdbcType=BIGINT} 
+      </if>
+      <if test="examDetailId != null">
+        and exam_detail_id = #{examDetailId,jdbcType=BIGINT} 
+      </if>
+      <if test="studentId != null">
+        and student_id = #{studentId,jdbcType=BIGINT} 
+      </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from xl_exam_student_score_word
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteExamStudentScoreWord" parameterType="java.lang.Long">
+  	DELETE
+	FROM
+		xl_exam_student_score_word
+	WHERE
+        exam_id = #{examId,jdbcType=BIGINT}
+        and exam_detail_id = #{examDetailId,jdbcType=BIGINT}
+        and student_id = #{studentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.ExamStudentScoreWordEntity">
+    insert into xl_exam_student_score_word (id, exam_id, exam_detail_id, 
+      student_id, score, type, 
+      text)
+    values (#{id,jdbcType=BIGINT}, #{examId,jdbcType=BIGINT}, #{examDetailId,jdbcType=BIGINT}, 
+      #{studentId,jdbcType=BIGINT}, #{score,jdbcType=DOUBLE}, #{type,jdbcType=VARCHAR}, 
+      #{text,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.ExamStudentScoreWordEntity">
+    insert into xl_exam_student_score_word
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="examId != null">
+        exam_id,
+      </if>
+      <if test="examDetailId != null">
+        exam_detail_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="examId != null">
+        #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="examDetailId != null">
+        #{examDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.ExamStudentScoreWordEntity">
+    update xl_exam_student_score_word
+    <set>
+      <if test="examId != null">
+        exam_id = #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="examDetailId != null">
+        exam_detail_id = #{examDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.ExamStudentScoreWordEntity">
+    update xl_exam_student_score_word
+    set exam_id = #{examId,jdbcType=BIGINT},
+      exam_detail_id = #{examDetailId,jdbcType=BIGINT},
+      student_id = #{studentId,jdbcType=BIGINT},
+      score = #{score,jdbcType=DOUBLE},
+      type = #{type,jdbcType=VARCHAR},
+      text = #{text,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByDetailId" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from xl_exam_student_score_word
+    where exam_detail_id in
+    <foreach collection="allIds" item="item" index="index"
+        open="(" close=")" separator=",">
+        #{item.examDetailId}
+    </foreach>
+    and student_id = #{studentId,jdbcType=BIGINT} and exam_id = #{examId,jdbcType=BIGINT}
+    order by id
+  </select>
+</mapper>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.ExamStudentScoreEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ExamStudentScoreEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="subject_detail_id" jdbcType="BIGINT" property="subjectDetailId" />
+    <result column="subject_option_id" jdbcType="BIGINT" property="subjectOptionId" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="audio_path" jdbcType="VARCHAR" property="audioPath" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="integrity" jdbcType="DOUBLE" property="integrity" />
+    <result column="pronunciation" jdbcType="DOUBLE" property="pronunciation" />
+    <result column="fluency" jdbcType="DOUBLE" property="fluency" />
+    <result column="similar_score" jdbcType="DOUBLE" property="similarScore" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, exam_id, subject_detail_id, subject_option_id, text, audio_path, score, create_date, 
+    create_id, update_date, update_id, enable_flag, remark, integrity, pronunciation, similar_score,
+    fluency, student_id
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_exam_student_score
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteExamStudentScoreEntity" parameterType="java.lang.Long">
+    delete from xl_exam_student_score
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteExamStudentScore" parameterType="java.lang.Long">
+  	DELETE
+	FROM
+		xl_exam_student_score
+	WHERE
+        exam_id = #{examId,jdbcType=BIGINT}
+        and subject_detail_id = #{subjectDetailId,jdbcType=BIGINT}
+        and student_id = #{studentId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertExamStudentScoreEntity" parameterType="com.xuanli.oepcms.entity.ExamStudentScoreEntity">
+    insert into xl_exam_student_score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="examId != null">
+        exam_id,
+      </if>
+      <if test="subjectDetailId != null">
+        subject_detail_id,
+      </if>
+      <if test="subjectOptionId != null">
+        subject_option_id,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+      <if test="audioPath != null">
+        audio_path,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="integrity != null">
+        integrity,
+      </if>
+      <if test="pronunciation != null">
+        pronunciation,
+      </if>
+      <if test="fluency != null">
+        fluency,
+      </if>
+      <if test="similarScore != null">
+        similar_score,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="percentScore != null">
+        percent_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="examId != null">
+        #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="subjectDetailId != null">
+        #{subjectDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="subjectOptionId != null">
+        #{subjectOptionId,jdbcType=BIGINT},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null">
+        #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="integrity != null">
+        #{integrity,jdbcType=DOUBLE},
+      </if>
+      <if test="pronunciation != null">
+        #{pronunciation,jdbcType=DOUBLE},
+      </if>
+      <if test="fluency != null">
+        #{fluency,jdbcType=DOUBLE},
+      </if>
+      <if test="similarScore != null">
+        #{similarScore,jdbcType=DOUBLE},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="percentScore != null">
+        #{percentScore},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateExamStudentScoreEntity" parameterType="com.xuanli.oepcms.entity.ExamStudentScoreEntity">
+    update xl_exam_student_score
+    <set>
+      <if test="examId != null">
+        exam_id = #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="subjectDetailId != null">
+        subject_detail_id = #{subjectDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="subjectOptionId != null">
+        subject_option_id = #{subjectOptionId,jdbcType=BIGINT},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null">
+        audio_path = #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="integrity != null">
+        integrity = #{integrity,jdbcType=DOUBLE},
+      </if>
+      <if test="pronunciation != null">
+        pronunciation = #{pronunciation,jdbcType=DOUBLE},
+      </if>
+      <if test="fluency != null">
+        fluency = #{fluency,jdbcType=DOUBLE},
+      </if>
+      <if test="similarScore != null">
+        similar_score = #{similarScore,jdbcType=DOUBLE},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+	<select id="getExamSubjectTypeScore" resultType="map" parameterType="map">
+		SELECT
+			count(ess.student_id) totalNum,
+			sum(ess.score) totalScore,
+			AVG(ess.score) avgScore,
+			ps.type type
+		FROM
+			xl_exam_student_score ess
+		LEFT JOIN xl_paper_subject_detail psd ON ess.subject_detail_id = psd.id
+		LEFT JOIN xl_paper_subject ps ON psd.subject_id = ps.id
+		WHERE ess.exam_id = #{examId}
+		GROUP BY
+			ps.type
+	</select>
+	<select id="examSubjectDetailScore" resultType="map" parameterType="map">
+		SELECT
+			count(ess.student_id) totalNum,
+			sum(ess.score) totalScore,
+			AVG(ess.score) avgScore,
+			AVG(ess.integrity) integrity,
+			AVG(ess.fluency) fluency,
+			AVG(ess.pronunciation) pronunciation,
+			psd.id subjectDetailId,
+			avg(ess.percent_score) avgNum
+		FROM
+			xl_exam_student_score ess
+		LEFT JOIN xl_paper_subject_detail psd ON ess.subject_detail_id = psd.id
+		WHERE
+			ess.exam_id = #{examId}
+		GROUP BY
+			psd.id
+	</select>
+</mapper>

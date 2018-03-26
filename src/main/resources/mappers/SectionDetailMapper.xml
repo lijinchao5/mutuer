@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.SectionDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.SectionDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="person_name" property="personName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="section_id" property="sectionId" jdbcType="VARCHAR" />
+    <result column="audio_path" property="audioPath" jdbcType="VARCHAR" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    <result column="m_audio_path" property="mAudioPath" jdbcType="VARCHAR" />
+    <result column="w_audio_path" property="wAudioPath" jdbcType="VARCHAR" />
+    <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+    <result column="word_type" property="wordType" jdbcType="VARCHAR" />
+    <result column="word_mean" property="wordMean" jdbcType="VARCHAR" />
+    <result column="point_type" property="pointType" jdbcType="VARCHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="dialog_num" property="dialogNum" jdbcType="INTEGER" />
+    <result column="cms_id" property="cmsId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, person_name, name, type, section_id, audio_path, text, create_id, create_date, 
+    update_id, update_date, enable_flag, m_audio_path, w_audio_path, picture_path, word_type, 
+    word_mean, point_type,order_num,dialog_num
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xl_section_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCmsId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xl_section_detail
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteSectionDetail" parameterType="java.lang.Long" >
+    delete from xl_section_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSectionDetailEntity" parameterType="com.xuanli.oepcms.entity.SectionDetail" useGeneratedKeys="true" keyProperty="id">
+    insert into xl_section_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="personName != null" >
+        person_name,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="sectionId != null" >
+        section_id,
+      </if>
+      <if test="audioPath != null" >
+        audio_path,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="mAudioPath != null" >
+        m_audio_path,
+      </if>
+      <if test="wAudioPath != null" >
+        w_audio_path,
+      </if>
+      <if test="picturePath != null" >
+        picture_path,
+      </if>
+      <if test="wordType != null" >
+        word_type,
+      </if>
+      <if test="wordMean != null" >
+        word_mean,
+      </if>
+      <if test="pointType != null" >
+        point_type,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="dialogNum != null" >
+        dialog_num,
+      </if>
+      <if test="cmsId != null" >
+        cms_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="personName != null" >
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null" >
+        #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mAudioPath != null" >
+        #{mAudioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="wAudioPath != null" >
+        #{wAudioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="picturePath != null" >
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="wordType != null" >
+        #{wordType,jdbcType=VARCHAR},
+      </if>
+      <if test="wordMean != null" >
+        #{wordMean,jdbcType=VARCHAR},
+      </if>
+      <if test="pointType != null" >
+        #{pointType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null" >
+      	#{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="dialogNum != null" >
+      	#{dialogNum,jdbcType=INTEGER},
+      </if>
+      <if test="cmsId != null" >
+      	#{cmsId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateSectionDetail" parameterType="com.xuanli.oepcms.entity.SectionDetail" >
+    update xl_section_detail
+    <set >
+      <if test="personName != null" >
+        person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        section_id = #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null" >
+        audio_path = #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mAudioPath != null" >
+        m_audio_path = #{mAudioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="wAudioPath != null" >
+        w_audio_path = #{wAudioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="picturePath != null" >
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="wordType != null" >
+        word_type = #{wordType,jdbcType=VARCHAR},
+      </if>
+      <if test="wordMean != null" >
+        word_mean = #{wordMean,jdbcType=VARCHAR},
+      </if>
+      <if test="pointType != null" >
+        point_type = #{pointType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="dialogNum != null" >
+        dialog_num = #{dialogNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <update id="updateSyncSectionDetail" parameterType="com.xuanli.oepcms.entity.SectionDetail" >
+    update xl_section_detail
+    <set >
+      <if test="personName != null" >
+        person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="sectionId != null" >
+        section_id = #{sectionId,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null" >
+        audio_path = #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mAudioPath != null" >
+        m_audio_path = #{mAudioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="wAudioPath != null" >
+        w_audio_path = #{wAudioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="picturePath != null" >
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="wordType != null" >
+        word_type = #{wordType,jdbcType=VARCHAR},
+      </if>
+      <if test="wordMean != null" >
+        word_mean = #{wordMean,jdbcType=VARCHAR},
+      </if>
+      <if test="pointType != null" >
+        point_type = #{pointType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="dialogNum != null" >
+        dialog_num = #{dialogNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cms_id = #{cmsId,jdbcType=BIGINT}
+  </update>
+  
+    <!-- 增加查看题目信息  -->
+  <select id="getSectionDetails" parameterType="com.xuanli.oepcms.entity.SectionDetail" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_section_detail
+    where enable_flag='T'
+    <if test="type != null">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="sectionId != null">
+        and section_id = #{sectionId,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <select id="getSectionDetailsDialogs" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.SectionDetail" >
+    select 
+    <include refid="Base_Column_List" />
+	FROM
+		xl_section_detail sd
+	WHERE
+		sd.type = #{type}
+	AND section_id IN (
+		SELECT
+			sd.section_id
+		FROM
+			xl_section_detail sd
+		WHERE
+			sd.id = #{id}
+		AND sd.type = #{type}
+	)
+	AND sd.dialog_num IN (
+		SELECT
+			sd.dialog_num
+		FROM
+			xl_section_detail sd
+		WHERE
+			sd.id = #{id}
+		AND sd.type = #{type}
+	)
+  </select>
+  <insert id="insertSectionDetail" parameterType="com.xuanli.oepcms.entity.SectionDetail" >
+  	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
+	  select count(*) id from xl_user_clas where user_id=#{userId,jdbcType=BIGINT} and clas_id=#{clasId,jdbcType=BIGINT}
+	</selectKey>
+	
+	
+	
+  </insert>
+</mapper>
