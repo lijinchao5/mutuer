@@ -29,8 +29,8 @@ import com.xuanli.oepcms.controller.bean.HomeworkScoreBean;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFBean;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFMapBean;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFWeiBean;
-import com.xuanli.oepcms.util.AliOSSUtil;
 import com.xuanli.oepcms.util.StringUtil;
+import com.xuanli.oepcms.util.ThirdAliOSSUtil;
 
 /**
  * @author QiaoYu
@@ -42,7 +42,7 @@ public class YunZhiSDK {
 	SystemConfig systemConfig;
 
 	@Autowired
-	AliOSSUtil aliOSSUtil;
+	ThirdAliOSSUtil thirdAliOSSUtil;
 
 	public String generatorStudentExamScore(String id, String text, String mode) {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -59,7 +59,7 @@ public class YunZhiSDK {
 			httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 1000);
 			customMultiPartEntity.addPart("text", new StringBody(text, Charset.forName("UTF-8")));
 			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
-			InputStream is = aliOSSUtil.downloadFile(id);
+			InputStream is = thirdAliOSSUtil.downloadFile(id);
 			ContentBody fileBody = new InputStreamBody(is, uuid);
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);
@@ -98,7 +98,7 @@ public class YunZhiSDK {
 			httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 1000);
 			customMultiPartEntity.addPart("text", new StringBody(getJSGF(pointResult,currentResult), Charset.forName("UTF-8")));
 			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
-			InputStream is = aliOSSUtil.downloadFile(id);
+			InputStream is = thirdAliOSSUtil.downloadFile(id);
 			ContentBody fileBody = new InputStreamBody(is, uuid);
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);
@@ -146,7 +146,7 @@ public class YunZhiSDK {
 			customMultiPartEntity.addPart("text", new StringBody(result.getStanderText(), Charset.forName("UTF-8")));
 			// ContentBody fileBody = new FileBody(new File(result.getAudioPath()));
 			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
-			InputStream is = aliOSSUtil.downloadFile(result.getAudioPath());
+			InputStream is = thirdAliOSSUtil.downloadFile(result.getAudioPath());
 			ContentBody fileBody = new InputStreamBody(is, uuid);
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);
@@ -191,7 +191,7 @@ public class YunZhiSDK {
 			customMultiPartEntity.addPart("text", new StringBody(text, Charset.forName("UTF-8")));
 			// ContentBody fileBody = new FileBody(new File(result.getAudioPath()));
 			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
-			InputStream is = aliOSSUtil.downloadFile(file);
+			InputStream is = thirdAliOSSUtil.downloadFile(file);
 			ContentBody fileBody = new InputStreamBody(is, uuid);
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);

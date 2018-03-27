@@ -54,7 +54,7 @@ public class ThirdAliOSSUtil {
 			e.printStackTrace();
 			return "";
 		} finally {
-			if (null!=is) {
+			if (null != is) {
 				try {
 					is.close();
 				} catch (IOException e) {
@@ -129,6 +129,41 @@ public class ThirdAliOSSUtil {
 					logger.error("文件OSID:[" + source + "]文件不存在");
 				}
 			}
+		}
+
+	}
+
+	/**
+	 * 转换文件
+	 * 
+	 * @Description: TODO
+	 * @CreateName: QiaoYu
+	 * @CreateDate: 2018年2月2日 上午10:01:09
+	 */
+	public void converterFileTest(String source) {
+		logger.info("文件OSID:[" + source + "]从玄历科技oss同步到第三方的oss");
+		OSSClient ossClient = aliOSSPool.ossClient;
+		boolean exists = ossClient.doesObjectExist(aliOSSPool.BUCKET_NAME, source);
+		InputStream is = null;
+		if (exists) {
+			try {
+				OSSObject object = ossClient.getObject(aliOSSPool.BUCKET_NAME, source);
+				is = object.getObjectContent();
+				OSSClient thirdClient = thirdAliOSSPool.ossClient;
+				thirdClient.putObject(new PutObjectRequest(thirdAliOSSPool.BUCKET_NAME, source, is));
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (null != is) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		} else {
+			logger.error("文件OSID:[" + source + "]文件不存在");
 		}
 
 	}

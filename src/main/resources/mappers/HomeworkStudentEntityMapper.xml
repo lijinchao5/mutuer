@@ -335,6 +335,7 @@
 	WHERE
 		hd.homework_id = #{homeworkId}
 	AND hd.homework_type IN (2, 3, 4)
+	AND hss.student_id = #{studentId}
 	GROUP BY
 		hd.homework_type
   </select>
