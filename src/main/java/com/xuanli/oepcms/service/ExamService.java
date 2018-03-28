@@ -607,4 +607,12 @@ public class ExamService extends BaseService {
 			return "0";
 		}
 	}
+
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年3月28日 下午3:46:57
+	 */
+	public String getExamStudent(Long examId) {
+		return examEntityMapper.getExamStudent(examId);
+	}
 }

@@ -89,7 +89,7 @@ systemconfig:
       allowCredentials: "false"
       maxAge: 86400
   aliOSS:
-    endpoint: http://oss-cn-beijing.aliyuncs.com
+    endpoint: http://oss-cn-beijing-internal.aliyuncs.com
     accessKeyId: LTAIJuAAYm5fDqwm
     accessKeySecret: 4TbWkvkDyx7F4ivsSNtuVHGmnvoj8G
     bucketName: xl-oss-pro

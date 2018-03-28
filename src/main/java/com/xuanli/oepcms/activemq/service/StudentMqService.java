@@ -9,6 +9,8 @@ package com.xuanli.oepcms.activemq.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.xuanli.oepcms.activemq.bean.ActivemqMsgBean;
 import com.xuanli.oepcms.activemq.publish.MQPublisherServer;
 
 /**
@@ -19,7 +21,7 @@ public class StudentMqService {
 	@Autowired
 	MQPublisherServer publisherServer;
 
-	public void sendMsg(String message) {
-		publisherServer.publish("student.aienglish.topic", message);
+	public void sendMsg(ActivemqMsgBean activemqMsgBean) {
+		publisherServer.publish("student.aienglish.topic", JSONObject.toJSONString(activemqMsgBean));
 	}
 }

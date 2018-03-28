@@ -53,4 +53,9 @@ public interface HomeworkEntityMapper {
 	 * @return
 	 */
 	int getTimeOutCount(Long homeworkId);
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年3月28日 下午3:44:07
+	 */
+	String getHomeworkStudent(Long homeworkId);
 }

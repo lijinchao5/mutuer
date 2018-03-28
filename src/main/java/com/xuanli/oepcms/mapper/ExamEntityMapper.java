@@ -89,4 +89,10 @@ public interface ExamEntityMapper {
 	 * @return
 	 */
 	int getTimeOutCount(Long examId);
+
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年3月28日 下午3:47:21
+	 */
+	String getExamStudent(Long examId);
 }

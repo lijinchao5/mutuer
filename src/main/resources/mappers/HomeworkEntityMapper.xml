@@ -289,4 +289,16 @@
 			h.id = #{value}
 		AND h.end_time > now()
 	</select>
+	<select id="getHomeworkStudent" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT
+			GROUP_CONCAT(student_id) studentId
+		FROM
+			xl_homework_student
+		WHERE
+			homework_id = #{value}
+		GROUP BY
+			homework_id
+	</select>
+	
+	
 </mapper>

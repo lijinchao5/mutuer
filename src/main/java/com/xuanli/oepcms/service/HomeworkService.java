@@ -682,4 +682,12 @@ public class HomeworkService extends BaseService {
 
 		return okNoResult("");
 	}
+
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年3月28日 下午3:43:45
+	 */
+	public String getHomeworkStudent(Long homeworkId) {
+		return homeworkDao.getHomeworkStudent(homeworkId);
+	}
 }

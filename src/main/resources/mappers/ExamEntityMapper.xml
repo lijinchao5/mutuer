@@ -394,4 +394,14 @@
 		id = #{value}
 		AND end_time > now()
 	</select>
+	<select id="getExamStudent" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT
+			GROUP_CONCAT(student_id) studentId
+		FROM
+			xl_exam_student
+		WHERE
+			exam_id = #{value}
+		GROUP BY
+			exam_id
+	</select>
 </mapper>
