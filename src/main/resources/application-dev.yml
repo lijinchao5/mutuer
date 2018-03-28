@@ -36,6 +36,22 @@ mybatis:
 #    date-format: yyyy-MM-dd HH:mm:ss
 
 spring:
+  jms:
+    pub-sub-domain: true
+    listener:
+      auto-startup: true
+  activemq:
+      broker-url: tcp://39.106.190.46:3377
+      in-memory: true
+      password: admin
+      user: admin
+      pool:
+        enabled: true
+        create-connection-on-startup: true
+        expiry-timeout: 10000
+        idle-timeout: 30000
+        max-connections: 50
+        reconnect-on-exception: true
   session:
     store-type: REDIS
     redis:

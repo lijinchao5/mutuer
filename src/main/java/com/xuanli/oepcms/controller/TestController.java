@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.TextMessage;
 
+import com.xuanli.oepcms.activemq.service.StudentMqService;
 import com.xuanli.oepcms.service.UserService;
 import com.xuanli.oepcms.websocket.StudentWebSocketHandler;
 
@@ -28,6 +29,8 @@ public class TestController {
 	StudentWebSocketHandler studentWebSocketHandler;
 	@Autowired
 	UserService userService;
+	@Autowired
+	StudentMqService studentMqService;
 	
 	@ApiIgnore
 	@RequestMapping(value = "testWebSocket.do")
@@ -45,5 +48,17 @@ public class TestController {
 	public String login(String username) {
 		String result = userService.loginTest(username);
 		return result;
+	}
+	
+	@ApiIgnore
+	@RequestMapping(value = "testActivemq.do")
+	public String testActivemq() {
+		try {
+			studentMqService.sendMsg("这是通过mq推送的消息");
+			return "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 }
