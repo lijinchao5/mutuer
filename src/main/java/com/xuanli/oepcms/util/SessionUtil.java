@@ -33,8 +33,7 @@ public class SessionUtil {
 	public void setSessionUser(String key, UserEntity userEntity) {
 		myRedisCache.put(key, JSONObject.toJSONString(userEntity));
 	}
-	
-	
+
 	public void removeSessionUser(String key) {
 		myRedisCache.remove(key);
 	}
@@ -45,7 +44,7 @@ public class SessionUtil {
 	}
 
 	public void setRandomNum(String key, String num) {
-		myRedisCache.put(key + "_" + SystemContents.RANDOM_NUM, num);
+		myRedisCache.put(key + "_" + SystemContents.RANDOM_NUM, num, 5);
 	}
 
 	public String getMobileRandomNum(String key) {
@@ -54,16 +53,24 @@ public class SessionUtil {
 	}
 
 	public void setMobileRandomNum(String key, String num) {
-		myRedisCache.put(key + "_" + SystemContents.MOBILE_RANDOM_NUM, num);
+		myRedisCache.put(key + "_" + SystemContents.MOBILE_RANDOM_NUM, num, 5);
 	}
 
 	public String getMobileMessageRandomNum(String key) {
 		String value = myRedisCache.get(key + "_" + SystemContents.MOBILE_MESSAGE_RANDOM_NUM);
-		logger.debug("获取出来的value为:"+value);
+		logger.debug("获取出来的value为:" + value);
 		return value;
 	}
 
 	public void setMobileMessageRandomNum(String key, String num) {
-		myRedisCache.put(key + "_" + SystemContents.MOBILE_MESSAGE_RANDOM_NUM, num);
+		myRedisCache.put(key + "_" + SystemContents.MOBILE_MESSAGE_RANDOM_NUM, num, 5);
+	}
+
+	public void removeMobileRandomNum(String key) {
+		myRedisCache.remove(key + "_" + SystemContents.MOBILE_RANDOM_NUM);
+	}
+
+	public void removeMobileMessageRandomNum(String key) {
+		myRedisCache.remove(key + "_" + SystemContents.MOBILE_MESSAGE_RANDOM_NUM);
 	}
 }

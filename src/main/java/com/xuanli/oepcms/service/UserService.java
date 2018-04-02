@@ -497,6 +497,7 @@ public class UserService extends BaseService {
 		if (!mobileRandomStr.equalsIgnoreCase(sessionUtil.getMobileMessageRandomNum(randomKey))) {
 			return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机短信验证码错误.");
 		}
+		sessionUtil.removeMobileMessageRandomNum(randomKey);
 		UserEntity userEntity = new UserEntity();
 		userEntity.setMobile(mobile);
 		userEntity.setPassword(PasswordUtil.generate(password));

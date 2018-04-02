@@ -47,6 +47,7 @@ public class MobileMessageController extends BaseController {
 	@RequestMapping(value = "registMsg.do", method = RequestMethod.GET)
 	public RestResult<String> registMsg(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String randomKey) {
 		if (StringUtil.isNotEmpty(randomStr) && randomStr.equalsIgnoreCase(sessionUtil.getMobileRandomNum(randomKey))) {
+			sessionUtil.removeMobileRandomNum(randomKey);
 			if (!StringUtil.isMobile(mobile)) {
 				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
 			}
@@ -86,6 +87,7 @@ public class MobileMessageController extends BaseController {
 	@RequestMapping(value = "forgetPassword.do", method = RequestMethod.GET)
 	public RestResult<String> forgetPassword(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String randomKey) {
 		if (StringUtil.isNotEmpty(randomStr) && randomStr.equalsIgnoreCase(sessionUtil.getMobileRandomNum(randomKey))) {
+			sessionUtil.removeMobileRandomNum(randomKey);
 			if (!StringUtil.isMobile(mobile)) {
 				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
 			}

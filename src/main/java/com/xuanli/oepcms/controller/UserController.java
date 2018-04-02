@@ -103,6 +103,7 @@ public class UserController extends BaseController {
 			if (!mobileRandomStr.equalsIgnoreCase(sessionUtil.getMobileMessageRandomNum(randomKey))) {
 				return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机短信验证码错误.");
 			}
+			sessionUtil.removeMobileMessageRandomNum(randomKey);
 			String result = userService.teacherRegist(schoolId, mobile, password);
 			if (result.equals("1")) {
 				return failed(ExceptionCode.USERINFO_ERROR_CODE, "校区ID错误.");
@@ -151,6 +152,7 @@ public class UserController extends BaseController {
 			if (!mobileRandomStr.equalsIgnoreCase(sessionUtil.getMobileMessageRandomNum(randomKey))) {
 				return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机短信验证码错误.");
 			}
+			sessionUtil.removeMobileMessageRandomNum(randomKey);
 			String result = userService.studentRegist(classId, mobile, password);
 			if (result.equals("1")) {
 				return failed(ExceptionCode.USERINFO_ERROR_CODE, "班级ID错误.");
@@ -519,6 +521,7 @@ public class UserController extends BaseController {
 			if (!mobileRandomStr.equalsIgnoreCase(sessionUtil.getMobileMessageRandomNum(mobileRandomKey))) {
 				return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "短信验证码错误");
 			}
+			sessionUtil.removeMobileMessageRandomNum(mobileRandomKey);
 			Long userId = getCurrentUser().getId();
 			String result = userService.updateMobile(userId, password, newMobile, mobileRandomStr, mobileRandomKey);
 			if (result.equals("1")) {
