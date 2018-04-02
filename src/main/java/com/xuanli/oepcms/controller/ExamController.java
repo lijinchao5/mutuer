@@ -50,6 +50,9 @@ public class ExamController extends BaseController {
 	@RequestMapping(value = "genteratorExam.do", method = RequestMethod.POST)
 	public RestResult<String> genteratorExam(String name, String notice, String classIds, Date startTime, Date endTime, Long paperId) {
 		try {
+			if (startTime.getTime() > endTime.getTime()) {
+				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "结束时间不能小于开始时间");
+			}
 			Long userId = getCurrentUser().getId();
 			return examService.genteratorExam(userId, name, notice, classIds, startTime, endTime, paperId);
 		} catch (Exception e) {
