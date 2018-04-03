@@ -64,7 +64,7 @@ public class YunZhiSDK {
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);
 			httpPost.setHeader("appkey", systemConfig.YUN_ZHI_APPKEY);
-			httpPost.setHeader("score-coefficient", "1.9");
+			httpPost.setHeader("score-coefficient", "1.2");
 			String uuid_str = UUID.randomUUID().toString();
 			httpPost.setHeader("session-id", uuid_str);
 			httpPost.setHeader("device-id", uuid_str);
@@ -103,7 +103,7 @@ public class YunZhiSDK {
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);
 			httpPost.setHeader("appkey", systemConfig.YUN_ZHI_APPKEY);
-			httpPost.setHeader("score-coefficient", "1.9");
+			httpPost.setHeader("score-coefficient", "1.2");
 			String uuid_str = UUID.randomUUID().toString();
 			httpPost.setHeader("session-id", uuid_str);
 			httpPost.setHeader("device-id", uuid_str);
