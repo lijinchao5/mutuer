@@ -81,6 +81,7 @@ public class StudentWebSocketHandler implements WebSocketHandler {
 					while (iterator.hasNext()) {
 						String k = iterator.next();
 						WebSocketSession session = swsm.get(k);
+						logger.debug("批量推送消息:["+k+"]内容为:"+message);
 						if (session.isOpen()) {
 							session.sendMessage(new TextMessage(message));
 						}
