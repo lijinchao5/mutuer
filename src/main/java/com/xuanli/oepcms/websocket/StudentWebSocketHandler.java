@@ -1,7 +1,9 @@
 package com.xuanli.oepcms.websocket;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.xuanli.oepcms.cache.StudentWebSocketMap;
+import com.xuanli.oepcms.util.StringUtil;
 
 @Component
 public class StudentWebSocketHandler implements WebSocketHandler {
@@ -68,18 +71,38 @@ public class StudentWebSocketHandler implements WebSocketHandler {
 	}
 
 	public void sendMessageToUsers(String userId, String message) {
-		String[] userIds = userId.split(",");
-		for (int i = 0; i < userIds.length; i++) {
-			Map<String, WebSocketSession> swsm = studentWebSocketMap.getStudentWebSocketMap();
-			WebSocketSession session = swsm.get(userIds[i]);
-			try {
-				if (null != session) {
-					if (session.isOpen()) {
-						session.sendMessage(new TextMessage(message));
+		if (StringUtil.isNotEmpty(userId)) {
+			if (userId.equals("all")) {
+				Map<String, WebSocketSession> swsm = studentWebSocketMap.getStudentWebSocketMap();
+
+				try {
+					Set<String> set = swsm.keySet();
+					Iterator<String> iterator = set.iterator();
+					while (iterator.hasNext()) {
+						String k = iterator.next();
+						WebSocketSession session = swsm.get(k);
+						if (session.isOpen()) {
+							session.sendMessage(new TextMessage(message));
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				String[] userIds = userId.split(",");
+				for (int i = 0; i < userIds.length; i++) {
+					Map<String, WebSocketSession> swsm = studentWebSocketMap.getStudentWebSocketMap();
+					WebSocketSession session = swsm.get(userIds[i]);
+					try {
+						if (null != session) {
+							if (session.isOpen()) {
+								session.sendMessage(new TextMessage(message));
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 
