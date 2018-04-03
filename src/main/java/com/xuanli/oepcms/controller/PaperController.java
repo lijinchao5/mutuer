@@ -21,6 +21,7 @@ import com.xuanli.oepcms.vo.RestResult;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author QiaoYu
@@ -48,6 +49,7 @@ public class PaperController extends BaseController {
 		Map<String, Object> requestMap = new HashMap<String, Object>();
 		Map<String, String[]> requestMap1 = request.getParameterMap();
 		requestMap = requestParamToMap(requestMap1);
+		requestMap.put("createId", getCurrentUser().getId());
 		// requestMap.put("gradeLevelId", gradeLevelId);
 		// requestMap.put("term", term);
 		// requestMap.put("addressArea", addressArea);
@@ -56,7 +58,6 @@ public class PaperController extends BaseController {
 		paperService.findPaperByPage(requestMap, pageBean);
 		return ok(pageBean);
 	}
-
 	@ApiOperation(value = "获取试卷详细信息", notes = "获取试卷信息信息方法")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "paperId", value = "试卷id", required = true, dataType = "Long") })
 	@RequestMapping(value = "getPaperDetail.do", method = RequestMethod.GET)

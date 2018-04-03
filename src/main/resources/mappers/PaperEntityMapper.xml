@@ -296,7 +296,7 @@
     from
     	 xl_paper
     where 
-    	enable_flag = 'T' 
+    	enable_flag = 'T' and (create_id = 1 or create_id = #{createId})
     <if test="paperNum != null">
         and paper_num = #{paperNum,jdbcType=VARCHAR}
       </if>
@@ -357,7 +357,7 @@
 			xl_paper xp
 	) a
     where 
-    	enable_flag = 'T' 
+    	enable_flag = 'T' and (create_id = 1 or create_id = #{createId})
       <if test="paperNum != null">
         and paper_num = #{paperNum,jdbcType=VARCHAR}
       </if>

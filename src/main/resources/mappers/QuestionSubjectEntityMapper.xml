@@ -248,7 +248,7 @@
 
 
 
-	<select id="findPaperDetailByPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	<select id="findQuestionDetailByPageCount" parameterType="java.util.Map" resultType="java.lang.Integer">
 		SELECT
 			count(ps.id)
 		FROM
@@ -256,7 +256,7 @@
 		LEFT JOIN xl_question_subject_detail psd ON ps.id = psd.subject_id
 		LEFT JOIN xl_question_option po ON psd.id = po.detail_id
 		WHERE
-			1 = 1
+			ps.enable_flag = 'T'
 		<if test="gradeLevelId != null">
 		  and ps.grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
 		</if>
@@ -266,8 +266,12 @@
 		<if test="type != null">
 		  and ps.type = #{type,jdbcType=INTEGER}
 		</if>
+		<choose>  
+	        <when test="quesType == 0 ">and (ps.create_id = 1 or ps.create_id is null)</when>  
+	        <when test="quesType != 0">and ps.create_id=#{quesType}</when>  
+	    </choose>
   </select>
-  <select id="findPaperDetailByPage" parameterType="java.util.Map" resultType="java.util.Map">
+  <select id="findQuestionDetailByPage" parameterType="java.util.Map" resultType="java.util.Map">
     SELECT
 		ps.id,
 		ps.type,
@@ -292,7 +296,7 @@
 	LEFT JOIN xl_question_subject_detail psd ON ps.id = psd.subject_id
 	LEFT JOIN xl_question_option po ON psd.id = po.detail_id
 	WHERE
-		1 = 1
+		ps.enable_flag = 'T'
 	<if test="gradeLevelId != null">
 	  and ps.grade_level_id = #{gradeLevelId,jdbcType=INTEGER}
 	</if>
@@ -302,6 +306,10 @@
 	<if test="type != null">
 	  and ps.type = #{type,jdbcType=INTEGER}
 	</if>
+  	<choose>  
+        <when test="quesType == 0 ">and (ps.create_id=1 or ps.create_id is null)</when>  
+        <when test="quesType != 0">and ps.create_id=#{quesType}</when>  
+    </choose>
 	ORDER BY
 		<if test="ob!=null">
 			<if test="ob=='createDate'">
