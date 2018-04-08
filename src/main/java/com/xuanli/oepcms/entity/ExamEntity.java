@@ -42,10 +42,15 @@ public class ExamEntity extends BasePageBean{
     
     private Long paperId;
     
+	private String className;
     
-    
-    
-    
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
     
     public Long getPaperId() {
 		return paperId;

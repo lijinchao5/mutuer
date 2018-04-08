@@ -497,7 +497,7 @@ public class ExamService extends BaseService {
 	 */
 	public RestResult<Map<String, Object>> findStudentExamDetail(Long examId, Long studentId) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		ExamEntity examEntity = examEntityMapper.selectById(examId);
+		ExamEntity examEntity = examEntityMapper.getExamDetail(examId);
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("paperId", examEntity.getPaperId());
 		map2.put("examId", examId);
