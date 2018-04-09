@@ -2,11 +2,6 @@ package com.xuanli.oepcms.vo;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class RestResult<T> {
 	/**状态*/
     private int code;
