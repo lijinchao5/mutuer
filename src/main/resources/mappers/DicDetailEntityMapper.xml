@@ -98,6 +98,8 @@
 		xl_dic_detail dd
 	LEFT JOIN xl_dic d ON dd.dic_id = d.id
 	WHERE
+		dd.enable_flag = 'T'
+	AND
 		d.type = #{type,jdbcType=VARCHAR}
   </select>
   <select id="findDicByType9" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.DicEntity" >

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.UserMessageEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.UserMessageEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="flags" jdbcType="BIT" property="flags" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, text, user_id, flags
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getUserMessageByUser" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_message
+    where user_id = #{value}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from xl_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.UserMessageEntity">
+    insert into xl_message (id, type, text, 
+      user_id, flags)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{flags,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.UserMessageEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into xl_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="flags != null">
+        flags,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="flags != null">
+        #{flags,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.UserMessageEntity">
+    update xl_message
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="flags != null">
+        flags = #{flags,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.UserMessageEntity">
+    update xl_message
+    set type = #{type,jdbcType=VARCHAR},
+      text = #{text,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      flags = #{flags,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteMsgByUser" parameterType="java.lang.Long">
+  	delete from xl_message where user_id= #{value}
+  </delete>
+</mapper>

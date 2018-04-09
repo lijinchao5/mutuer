@@ -16,6 +16,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.xuanli.oepcms.cache.StudentWebSocketMap;
+import com.xuanli.oepcms.service.UserMessageEntityService;
 import com.xuanli.oepcms.util.StringUtil;
 
 @Component
@@ -23,6 +24,8 @@ public class StudentWebSocketHandler implements WebSocketHandler {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	StudentWebSocketMap studentWebSocketMap;
+	@Autowired
+	UserMessageEntityService userMessageEntityService;
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
@@ -99,6 +102,8 @@ public class StudentWebSocketHandler implements WebSocketHandler {
 							if (session.isOpen()) {
 								session.sendMessage(new TextMessage(message));
 							}
+							Long user = Long.parseLong(userIds[i]);
+							userMessageEntityService.deleteMsgByUser(user);
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -106,6 +111,5 @@ public class StudentWebSocketHandler implements WebSocketHandler {
 				}
 			}
 		}
-
 	}
 }
