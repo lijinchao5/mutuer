@@ -400,7 +400,7 @@
 		FROM
 			xl_exam_student
 		WHERE
-			exam_id = #{value}
+			exam_id = #{value} and complate = 'F'
 		GROUP BY
 			exam_id
 	</select>

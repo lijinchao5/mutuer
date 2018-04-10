@@ -295,7 +295,7 @@
 		FROM
 			xl_homework_student
 		WHERE
-			homework_id = #{value}
+			homework_id = #{value} and work_complate = 'F'
 		GROUP BY
 			homework_id
 	</select>
