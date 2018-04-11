@@ -294,6 +294,48 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月16日 下午4:08:24
 	 */
+	public int addClasStudentBatchTest(int size, Long clasId, Long userId) {
+		UserEntity userEntity1 = new UserEntity();
+		userEntity1.setClasId(clasId.longValue() + "");
+		List<UserEntity> userEntities = userDao.exportNameNum(userEntity1);
+		if (null != userEntities && userEntities.size() > 0) {
+			return -1;
+		}
+		int j = 0;
+		for (int i = 0; i < size; i++) {
+			try {
+				UserEntity userEntity = new UserEntity();
+				userEntity.setCreateDate(new Date());
+				userEntity.setCreateId(userId.longValue() + "");
+				userEntity.setRoleId(new Integer(4));
+				userEntity.setEnableFlag("T");
+				userEntity.setPassword(PasswordUtil.generate("888888"));
+				userEntity.setUserBatch(0);
+				userDao.insertUserEntity(userEntity);
+				UserClasEntity userClasEntity = new UserClasEntity();
+				userClasEntity.setClasId(clasId);
+				userClasEntity.setUserId(userEntity.getId());
+				userDao.inserUserClas(userClasEntity);
+				UserEntity userEntity2 = new UserEntity();
+				userEntity2.setId(userEntity.getId());
+				String nameNum = userEntity.getId().longValue() + StringUtil.getRandomZM(2);
+				System.out.println("教师id:["+userId+"]批量生成学生账号:"+nameNum);
+				userEntity2.setNameNum(nameNum);
+				userEntity2.setUpdateDate(new Date());
+				userDao.updateUserEntity(userEntity2);
+				j++;
+			} catch (Exception e) {
+				logger.error("批量添加用户出现错误.");
+				e.printStackTrace();
+			}
+		}
+		return j;
+	}
+	/**
+	 * @Description: TODO
+	 * @CreateName: QiaoYu
+	 * @CreateDate: 2018年1月16日 下午4:08:24
+	 */
 	public int addClasStudentBatch(int size, Long clasId, Long userId) {
 		UserEntity userEntity1 = new UserEntity();
 		userEntity1.setClasId(clasId.longValue() + "");
