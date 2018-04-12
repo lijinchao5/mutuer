@@ -40,6 +40,7 @@ public class CustomerService {
 				studentWebSocketHandler.sendMessageToUsers(activemqMsgBean.getUsers(), activemqMsgBean.getMsg());
 			} else {
 				logger.info("模拟考试推送");
+				studentWebSocketHandler.sendMessageToUsers(activemqMsgBean.getUsers(), activemqMsgBean.getMsg());
 			}
 			message.acknowledge();
 		} catch (JMSException e) {
