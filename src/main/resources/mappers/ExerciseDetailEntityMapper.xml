@@ -275,7 +275,7 @@
 		AVG(integrity) integrity,
 		AVG(pronunciation) pronunciation,
 		AVG(similar_score) similarScore,
-		SUM(fluency) fluency
+		AVG(fluency) fluency
 	FROM
 		xl_exercise_detail
 	WHERE
