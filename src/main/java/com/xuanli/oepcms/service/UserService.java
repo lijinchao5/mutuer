@@ -18,6 +18,8 @@ import com.xuanli.oepcms.activemq.bean.ActivemqMsgBean;
 import com.xuanli.oepcms.activemq.service.StudentMqService;
 import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.entity.ClasEntity;
+import com.xuanli.oepcms.entity.ExamEntity;
+import com.xuanli.oepcms.entity.HomeworkEntity;
 import com.xuanli.oepcms.entity.SchoolEntity;
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
@@ -440,11 +442,12 @@ public class UserService extends BaseService {
 	 */
 	public void pushMsgByClass(Long classId, Long homeworkId, String content, String type) {
 		String studentId = homeworkService.getHomeworkStudent(homeworkId);
+		HomeworkEntity homeworkEntity = homeworkService.getHomeworkName(homeworkId);
 		ActivemqMsgBean activemqMsgBean = new ActivemqMsgBean();
 		activemqMsgBean.setId("1");
 		activemqMsgBean.setType("1");
 		activemqMsgBean.setUsers(studentId);
-		activemqMsgBean.setMsg("老师开始催收作业了,请同学们尽快完成提交作业!");
+		activemqMsgBean.setMsg(homeworkEntity.getName());
 		studentMqService.sendMsg(activemqMsgBean);
 		logger.info("发送消息" + classId);
 	}
@@ -502,11 +505,12 @@ public class UserService extends BaseService {
 	 */
 	public void pushMsgByExam(Long examId, String content, String type) {
 		String studentId = examService.getExamStudent(examId);
+		ExamEntity examEntity = examService.getExamName(examId);
 		ActivemqMsgBean activemqMsgBean = new ActivemqMsgBean();
 		activemqMsgBean.setId("1");
 		activemqMsgBean.setType("2");
 		activemqMsgBean.setUsers(studentId);
-		activemqMsgBean.setMsg("老师开始催收模拟考试了,请同学们尽快完成模拟考试并提交!");
+		activemqMsgBean.setMsg(examEntity.getName());
 		studentMqService.sendMsg(activemqMsgBean);
 	}
 

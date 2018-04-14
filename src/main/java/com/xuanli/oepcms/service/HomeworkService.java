@@ -690,4 +690,8 @@ public class HomeworkService extends BaseService {
 	public String getHomeworkStudent(Long homeworkId) {
 		return homeworkDao.getHomeworkStudent(homeworkId);
 	}
+
+	public HomeworkEntity getHomeworkName(Long homeworkId) {
+		return homeworkDao.selectById(homeworkId);
+	}
 }

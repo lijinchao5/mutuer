@@ -615,4 +615,8 @@ public class ExamService extends BaseService {
 	public String getExamStudent(Long examId) {
 		return examEntityMapper.getExamStudent(examId);
 	}
+
+	public ExamEntity getExamName(Long examId) {
+		return examEntityMapper.selectById(examId);
+	}
 }
