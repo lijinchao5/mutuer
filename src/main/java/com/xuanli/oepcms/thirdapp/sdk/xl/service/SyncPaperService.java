@@ -140,10 +140,17 @@ public class SyncPaperService {
 										if (StringUtil.compareStr(subjectDetailBean.getQuestionAudio(), SyncPaperSubjectDetailEntity.getQuestionAudio())) {
 											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestionAudio());
 										}
+										if (StringUtil.compareStr(subjectDetailBean.getQuestion(), SyncPaperSubjectDetailEntity.getQuestion())
+												&& subjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
+											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestion());
+										}
 										PaperSubjectDetailDao.updateSyncPaperSubjectDetailEntity(subjectDetail);
 									} else {
 										thirdAliOSSUtil.converterFile(subjectDetailBean.getGuideAudio());
 										thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestionAudio());
+										if (subjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
+											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestion());
+										}
 										PaperSubjectDetailDao.insertPaperSubjectDetailEntity(subjectDetail);
 									}
 									for (PaperOptionBean paperOptionBean : syncPaperDetailBean.getResult().getOptions()) {
