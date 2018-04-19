@@ -221,6 +221,7 @@ public class HomeworkService extends BaseService {
 		for (HomeworkScoreBean result : homeworkScoreBeans) {
 			// 如果题型是听写的那么就不用让sdk评分了
 			HomeworkStudentScoreEntity homeworkStudentScoreEntity = new HomeworkStudentScoreEntity();
+			List<String> audioCheckList = new ArrayList<String>();
 			homeworkStudentScoreEntity.setId(result.getId());
 			if (null != result.getHomeworkType() && result.getHomeworkType().intValue() == 5) {
 				if (result.getStanderText().trim().equalsIgnoreCase(result.getStudentText())) {
@@ -234,11 +235,7 @@ public class HomeworkService extends BaseService {
 					System.out.println(result.getId() + "---出现问题,不能计算");
 				} else {
 					YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
-					String audioCheck = yunZhiSDK.checkAudio(yunZhiBean.getAudioCheck());
-					if (audioCheck.equals("0")) {
-					}else {
-						return failed(ExceptionCode.AUDIO_CHECK_ERROR, audioCheck);
-					}
+					audioCheckList = yunZhiSDK.checkAudio(yunZhiBean.getAudioCheck());
 					// 开始分析作业分数并且更新到数据库中
 					// 设置分数
 					homeworkStudentScoreEntity.setScore(yunZhiBean.getScore());
@@ -333,6 +330,7 @@ public class HomeworkService extends BaseService {
 			map.put("homeworkStudentScoreWordEntities", homeworkStudentScoreWordEntities);
 			// 返回分数等信息
 			map.put("homeworkStudentScoreEntity", homeworkStudentScoreEntity);
+			map.put("audioCheck", audioCheckList);
 			return ok(map);
 		}
 		return failed(ExceptionCode.UNKNOW_CODE, "未知错误.");

@@ -8,7 +8,9 @@ package com.xuanli.oepcms.thirdapp.sdk.yunzhi;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -87,7 +89,8 @@ public class YunZhiSDK {
 			httpclient.close();
 		}
 	}
-	public String generatorStudentExamScoreJSGF(String id,String pointResult,String currentResult, String mode) {
+
+	public String generatorStudentExamScoreJSGF(String id, String pointResult, String currentResult, String mode) {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(systemConfig.YUN_ZHI_URL);
 		MultipartEntity customMultiPartEntity = new MultipartEntity();
@@ -100,7 +103,7 @@ public class YunZhiSDK {
 			customMultiPartEntity.addPart("mode", new StringBody(mode, Charset.forName("UTF-8")));
 			httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10 * 1000);
 			httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 1000);
-			customMultiPartEntity.addPart("text", new StringBody(getJSGF(pointResult,currentResult), Charset.forName("UTF-8")));
+			customMultiPartEntity.addPart("text", new StringBody(getJSGF(pointResult, currentResult), Charset.forName("UTF-8")));
 			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
 			InputStream is = thirdAliOSSUtil.downloadFile(id);
 			ContentBody fileBody = new InputStreamBody(is, uuid);
@@ -149,7 +152,7 @@ public class YunZhiSDK {
 			httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 1000);
 			Map<String, Object> map = new HashMap<>();
 			map.put("AudioCheck", true);
-			map.put("DisplayText", result.getStanderText()+"");
+			map.put("DisplayText", result.getStanderText() + "");
 			customMultiPartEntity.addPart("text", new StringBody(JSONObject.toJSONString(map), Charset.forName("UTF-8")));
 			// ContentBody fileBody = new FileBody(new File(result.getAudioPath()));
 			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
@@ -178,22 +181,24 @@ public class YunZhiSDK {
 			httpclient.close();
 		}
 	}
-	/**Title: generatorExerciseScore 
-	 * Description:  
+
+	/**
+	 * Title: generatorExerciseScore Description:
+	 * 
 	 * @date 2018年3月13日 上午9:30:45
 	 * @param result
-	 * @return  
+	 * @return
 	 */
-	public String generatorExerciseScore(String text,String file) {
+	public String generatorExerciseScore(String text, String file) {
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(systemConfig.YUN_ZHI_URL);
 		MultipartEntity customMultiPartEntity = new MultipartEntity();
 		try {
 			HttpResponse response = null;
-				// 单词跟读 有音标判分
-				customMultiPartEntity.addPart("mode", new StringBody("D", Charset.forName("UTF-8")));
-				// 句子的有流畅度等..
-				customMultiPartEntity.addPart("mode", new StringBody("E", Charset.forName("UTF-8")));
+			// 单词跟读 有音标判分
+			customMultiPartEntity.addPart("mode", new StringBody("D", Charset.forName("UTF-8")));
+			// 句子的有流畅度等..
+			customMultiPartEntity.addPart("mode", new StringBody("E", Charset.forName("UTF-8")));
 			httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10 * 1000);
 			httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 1000);
 			customMultiPartEntity.addPart("text", new StringBody(text, Charset.forName("UTF-8")));
@@ -223,6 +228,7 @@ public class YunZhiSDK {
 			httpclient.close();
 		}
 	}
+
 	public static String getJSGF(String pointResult, String currentResult) {
 		if (StringUtil.isEmpty(currentResult)) {
 			System.out.println("句式为空,不能评分!");
@@ -245,41 +251,43 @@ public class YunZhiSDK {
 		}
 		JSGFWeiBean jsgfWeiBean = new JSGFWeiBean();
 		jsgfWeiBean.setWeight_struct(objects);
-		
+
 		currentResult = currentResult.replaceAll("\\|\\|", "|");
-		
+
 		JSGFBean jsgfBean = new JSGFBean(JSON.toJSONString(jsgfWeiBean), currentResult);
 		System.out.println(JSON.toJSONString(jsgfBean));
 		return JSON.toJSONString(jsgfBean);
 	}
-	
-	
-	public String checkAudio(AudioCheck audioCheck) {
+
+	public List<String> checkAudio(AudioCheck audioCheck) {
+		List<String> result = new ArrayList<String>();
 		if (null == audioCheck) {
-			System.out.println("检测audioCheck是空的无需检测!");
-			return "0";
+			return result;
 		}
-		Integer clipping=audioCheck.getClipping();
-		Integer cut=audioCheck.getCut();
-		Integer noise=audioCheck.getNoise();
-		Integer volume=audioCheck.getVolume();
+		Integer clipping = audioCheck.getClipping();
+		Integer cut = audioCheck.getCut();
+		Integer noise = audioCheck.getNoise();
+		Integer volume = audioCheck.getVolume();
 		Boolean empty = audioCheck.getEmptyAudio();
 		Boolean tooShort = audioCheck.getTooShort();
 		if (null != clipping && clipping == 10) {
-			return "截幅问题";
-		}else if(null != cut && cut == 10) {
-			return "截断问题";
-		}else if(null != noise && noise == 10) {
-			return "噪音过大问题";
-		}else if(null != volume && volume == 10) {
-			return "音量过小问题";
-		}else if(null != empty && empty) {
-			return "音频过短问题";
-		}else if(null != tooShort && tooShort) {
-			return "空音频问题";
-		}else {
-			return "0";
+			result.add("截幅问题");
 		}
-		
+		if (null != cut && cut == 10) {
+			result.add("截断问题");
+		}
+		if (null != noise && noise == 10) {
+			result.add("噪音过大问题");
+		}
+		if (null != volume && volume == 10) {
+			result.add("音量过小问题");
+		}
+		if (null != empty && empty) {
+			result.add("音频过短问题");
+		}
+		if (null != tooShort && tooShort) {
+			result.add("空音频问题");
+		}
+		return result;
 	}
 }
