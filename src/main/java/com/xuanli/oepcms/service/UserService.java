@@ -69,23 +69,24 @@ public class UserService extends BaseService {
 			UserEntity result = userEntities.get(0);
 			if (result.getEnableFlag().equalsIgnoreCase("T")) {
 				if (PasswordUtil.verify(password, result.getPassword())) {
-					String roleId = result.getRoleId() + "";
-					System.out.println("roleId:" + roleId);
-					if (roleId.equals("5") || roleId.equals("6") || roleId.equals("7")) {
-						if (!usableUtil.getEndDateByAreaId(result.getAreaid())) {
-							return "4";
-						}
-					}
-					if (roleId.equals("3") || roleId.equals("8")) {
-						if (!usableUtil.getEndDateBySchoolId(result.getId())) {
-							return "4";
-						}
-					}
-					if (roleId.equals("4")) {
-						if (!usableUtil.getEndDateByUserId(result.getId())) {
-							return "4";
-						}
-					}
+					
+					//后期修改 不需要判断 时候过期问题
+//					String roleId = result.getRoleId() + "";
+//					if (roleId.equals("5") || roleId.equals("6") || roleId.equals("7")) {
+//						if (!usableUtil.getEndDateByAreaId(result.getAreaid())) {
+//							return "4";
+//						}
+//					}
+//					if (roleId.equals("3") || roleId.equals("8")) {
+//						if (!usableUtil.getEndDateBySchoolId(result.getId())) {
+//							return "4";
+//						}
+//					}
+//					if (roleId.equals("4")) {
+//						if (!usableUtil.getEndDateByUserId(result.getId())) {
+//							return "4";
+//						}
+//					}
 					UserEntity up = new UserEntity();
 					up.setUpdateDate(new Date());
 					up.setId(result.getId());
