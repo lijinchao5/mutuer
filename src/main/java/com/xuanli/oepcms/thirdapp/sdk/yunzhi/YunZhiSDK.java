@@ -8,6 +8,8 @@ package com.xuanli.oepcms.thirdapp.sdk.yunzhi;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.http.HttpResponse;
@@ -24,8 +26,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.xuanli.oepcms.config.SystemConfig;
 import com.xuanli.oepcms.controller.bean.HomeworkScoreBean;
+import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.AudioCheck;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFBean;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFMapBean;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFWeiBean;
@@ -143,7 +147,10 @@ public class YunZhiSDK {
 			}
 			httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10 * 1000);
 			httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 1000);
-			customMultiPartEntity.addPart("text", new StringBody(result.getStanderText(), Charset.forName("UTF-8")));
+			Map<String, Object> map = new HashMap<>();
+			map.put("AudioCheck", true);
+			map.put("DisplayText", result.getStanderText()+"");
+			customMultiPartEntity.addPart("text", new StringBody(JSONObject.toJSONString(map), Charset.forName("UTF-8")));
 			// ContentBody fileBody = new FileBody(new File(result.getAudioPath()));
 			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
 			InputStream is = thirdAliOSSUtil.downloadFile(result.getAudioPath());
@@ -151,13 +158,14 @@ public class YunZhiSDK {
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);
 			httpPost.setHeader("appkey", systemConfig.YUN_ZHI_APPKEY);
-			httpPost.setHeader("score-coefficient", "1.9");
+			httpPost.setHeader("score-coefficient", "1.6");
 			String uuid_str = UUID.randomUUID().toString();
 			httpPost.setHeader("session-id", uuid_str);
 			httpPost.setHeader("device-id", uuid_str);
 			response = httpclient.execute(httpPost);
 			if (response != null && response.getStatusLine().getStatusCode() == 200) {
 				String text = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+				System.out.println(text);
 				return text;
 			} else {
 				return "";
@@ -196,7 +204,7 @@ public class YunZhiSDK {
 			customMultiPartEntity.addPart("voice", fileBody);
 			httpPost.setEntity(customMultiPartEntity);
 			httpPost.setHeader("appkey", systemConfig.YUN_ZHI_APPKEY);
-			httpPost.setHeader("score-coefficient", "1.9");
+			httpPost.setHeader("score-coefficient", "1.6");
 			String uuid_str = UUID.randomUUID().toString();
 			httpPost.setHeader("session-id", uuid_str);
 			httpPost.setHeader("device-id", uuid_str);
@@ -243,5 +251,35 @@ public class YunZhiSDK {
 		JSGFBean jsgfBean = new JSGFBean(JSON.toJSONString(jsgfWeiBean), currentResult);
 		System.out.println(JSON.toJSONString(jsgfBean));
 		return JSON.toJSONString(jsgfBean);
+	}
+	
+	
+	public String checkAudio(AudioCheck audioCheck) {
+		if (null == audioCheck) {
+			System.out.println("检测audioCheck是空的无需检测!");
+			return "0";
+		}
+		Integer clipping=audioCheck.getClipping();
+		Integer cut=audioCheck.getCut();
+		Integer noise=audioCheck.getNoise();
+		Integer volume=audioCheck.getVolume();
+		Boolean empty = audioCheck.getEmptyAudio();
+		Boolean tooShort = audioCheck.getTooShort();
+		if (null != clipping && clipping == 10) {
+			return "截幅问题";
+		}else if(null != cut && cut == 10) {
+			return "截断问题";
+		}else if(null != noise && noise == 10) {
+			return "噪音过大问题";
+		}else if(null != volume && volume == 10) {
+			return "音量过小问题";
+		}else if(null != empty && empty) {
+			return "音频过短问题";
+		}else if(null != tooShort && tooShort) {
+			return "空音频问题";
+		}else {
+			return "0";
+		}
+		
 	}
 }

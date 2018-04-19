@@ -234,7 +234,11 @@ public class HomeworkService extends BaseService {
 					System.out.println(result.getId() + "---出现问题,不能计算");
 				} else {
 					YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
-					System.out.println(JSON.toJSONString(yunZhiBean));
+					String audioCheck = yunZhiSDK.checkAudio(yunZhiBean.getAudioCheck());
+					if (audioCheck.equals("0")) {
+					}else {
+						return failed(ExceptionCode.AUDIO_CHECK_ERROR, audioCheck);
+					}
 					// 开始分析作业分数并且更新到数据库中
 					// 设置分数
 					homeworkStudentScoreEntity.setScore(yunZhiBean.getScore());

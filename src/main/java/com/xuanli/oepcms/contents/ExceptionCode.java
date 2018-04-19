@@ -66,4 +66,7 @@ public class ExceptionCode {
 
 	/** 用户未登陆 **/
 	public static final Integer USER_NO_LOGIN = 99998;
+	
+	/** 评分音频错误 **/
+	public static final int AUDIO_CHECK_ERROR = 4001;
 }

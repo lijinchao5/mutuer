@@ -16,6 +16,14 @@ public class YunZhiBean {
 	private String version;
 	private double score;
 	private List<YunZhiline> lines;
+	private AudioCheck audioCheck;
+	
+	public AudioCheck getAudioCheck() {
+		return audioCheck;
+	}
+	public void setAudioCheck(AudioCheck audioCheck) {
+		this.audioCheck = audioCheck;
+	}
 	public String getEvalType() {
 		return EvalType;
 	}
