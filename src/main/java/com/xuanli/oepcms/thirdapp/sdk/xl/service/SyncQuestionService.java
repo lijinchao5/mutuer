@@ -18,6 +18,7 @@ import com.xuanli.oepcms.mapper.QuestionSubjectEntityMapper;
 import com.xuanli.oepcms.thirdapp.sdk.xl.bean.QuestionOptionBean;
 import com.xuanli.oepcms.thirdapp.sdk.xl.bean.QuestionSubjectBean;
 import com.xuanli.oepcms.thirdapp.sdk.xl.bean.QuestionSubjectDetailBean;
+import com.xuanli.oepcms.thirdapp.sdk.xl.bean.SyncQuestionSubjectBean;
 import com.xuanli.oepcms.thirdapp.sdk.xl.bean.SyncQuestionSubjectDetailBean;
 import com.xuanli.oepcms.util.StringUtil;
 import com.xuanli.oepcms.util.SyncUtil;
@@ -42,10 +43,10 @@ public class SyncQuestionService {
 	ThirdAliOSSUtil thirdAliOSSUtil;
 
 	public String SyncQusetions() {
-		String questionJson = SyncUtil.sendPostUTF8(systemConfig.QUESTION_CONTENT_URL, null);
-		SyncQuestionSubjectDetailBean syncQuestionSubjectDetailBean = JSONObject.parseObject(questionJson, SyncQuestionSubjectDetailBean.class);
-		if (null != syncQuestionSubjectDetailBean && syncQuestionSubjectDetailBean.getCode() == 0) {
-			for (QuestionSubjectBean questionSubjectBean : syncQuestionSubjectDetailBean.getResult().getSubjects()) {
+		String questionJson = SyncUtil.sendPostUTF8(systemConfig.QUESTION_URL, null);
+		SyncQuestionSubjectBean syncQuestionSubjectBean = JSONObject.parseObject(questionJson, SyncQuestionSubjectBean.class);
+		if (null != syncQuestionSubjectBean && syncQuestionSubjectBean.getCode() == 0) {
+			for (QuestionSubjectBean questionSubjectBean : syncQuestionSubjectBean.getResult()) {
 				QuestionSubjectEntity questionSubjectEntity = new QuestionSubjectEntity();
 				questionSubjectEntity.setAudio(questionSubjectBean.getAudio());
 				questionSubjectEntity.setCmsId(questionSubjectBean.getId());
@@ -72,6 +73,8 @@ public class SyncQuestionService {
 					thirdAliOSSUtil.converterFile(questionSubjectBean.getAudio());
 					QuestionSubjectDao.insertQuestionSubjectEntity(questionSubjectEntity);
 				}
+				String questionDetilsJson = SyncUtil.sendPostUTF8(systemConfig.QUESTION_CONTENT_URL + "?subjectId=" + questionSubjectBean.getId().longValue(), null);
+				SyncQuestionSubjectDetailBean syncQuestionSubjectDetailBean = JSONObject.parseObject(questionDetilsJson, SyncQuestionSubjectDetailBean.class);
 				for (QuestionSubjectDetailBean questionSubjectDetailBean : syncQuestionSubjectDetailBean.getResult().getDetails()) {
 					if (null != questionSubjectDetailBean.getSubjectId() && null != questionSubjectBean.getId()
 							&& questionSubjectDetailBean.getSubjectId().longValue() == questionSubjectBean.getId().longValue()) {
@@ -96,25 +99,41 @@ public class SyncQuestionService {
 						questionSubjectDetailEntity.setWriteTime(questionSubjectDetailBean.getWriteTime());
 						QuestionSubjectDetailEntity subjectDetailEntity = QuestionSubjectDetailDao.selectByCmsId(questionSubjectDetailBean.getId());
 						if (null != subjectDetailEntity) {
+							if (StringUtil.compareStr(questionSubjectDetailBean.getGuideAudio(), subjectDetailEntity.getGuideAudio())) {
+								thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getGuideAudio());
+							}
+							if (StringUtil.compareStr(questionSubjectDetailBean.getQuestionAudio(), subjectDetailEntity.getQuestionAudio())) {
+								thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getQuestionAudio());
+							}
+							if (StringUtil.compareStr(questionSubjectDetailBean.getQuestion(), subjectDetailEntity.getQuestion())
+									&& questionSubjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
+								thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getQuestion());
+							}
 							QuestionSubjectDetailDao.updateSyncQuestionSubjectDetailEntity(questionSubjectDetailEntity);
 						} else {
+							thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getGuideAudio());
+							thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getQuestionAudio());
+							if (null != questionSubjectDetailBean.getQuestion() && questionSubjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
+								thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getQuestion());
+							}
 							QuestionSubjectDetailDao.insertQuestionSubjectDetailEntity(questionSubjectDetailEntity);
 						}
 						for (QuestionOptionBean questionOptionBean : syncQuestionSubjectDetailBean.getResult().getOptions()) {
-							if (null != questionOptionBean.getDetailId() && null != questionSubjectDetailEntity.getId()
-									&& questionOptionBean.getDetailId().longValue() == questionSubjectDetailEntity.getId().longValue()) {
+							if (null != questionOptionBean.getDetailId() && null != questionSubjectDetailBean.getId()
+									&& questionOptionBean.getDetailId().longValue() == questionSubjectDetailBean.getId().longValue()) {
 								QuestionOptionEntity questionOptionEntity = new QuestionOptionEntity();
 								questionOptionEntity.setCmsId(questionOptionBean.getId());
 								questionOptionEntity.setCorrectResult(questionOptionBean.getCorrectResult());
 								questionOptionEntity.setCreateDate(questionOptionBean.getCreateDate());
 								questionOptionEntity.setCreateId((long) 0);
 								questionOptionEntity.setDetailId(questionSubjectDetailEntity.getId());
+								System.out.println(questionSubjectDetailEntity.getId());
 								questionOptionEntity.setEnableFlag(questionOptionBean.getEnableFlag());
 								questionOptionEntity.setPointResult(questionOptionBean.getPointResult());
 								questionOptionEntity.setResult(questionOptionBean.getResult());
 								questionOptionEntity.setUpdateDate(questionOptionBean.getUpdateDate());
 								questionOptionEntity.setUpdateId(questionOptionBean.getUpdateId());
-								QuestionOptionEntity optionEntity = QuestionOptionDao.selectCmsById(questionOptionBean.getId());
+								QuestionOptionEntity optionEntity = QuestionOptionDao.selectByCmsId(questionOptionBean.getId());
 								if (null != optionEntity) {
 									QuestionOptionDao.updateSyncQuestionOptionEntity(questionOptionEntity);
 								} else {
@@ -127,7 +146,7 @@ public class SyncQuestionService {
 			}
 			return "1";
 		} else {
-			System.out.println("questionSubjectDetailBean是空的");
+			System.out.println("syncQuestionSubjectBean是空的");
 			return "0";
 		}
 	}

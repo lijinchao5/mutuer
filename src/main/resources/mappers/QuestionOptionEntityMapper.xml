@@ -35,7 +35,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-  <insert id="insertQuestionOptionEntity" parameterType="com.xuanli.oepcms.entity.QuestionOptionEntity">
+  <insert id="insertQuestionOptionEntity" parameterType="com.xuanli.oepcms.entity.QuestionOptionEntity" keyProperty="id" useGeneratedKeys="true">
     insert into xl_question_option
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

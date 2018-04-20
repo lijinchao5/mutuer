@@ -37,14 +37,15 @@ public interface QuestionOptionEntityMapper {
      * @return
      */
     int updateQuestionOptionEntity(QuestionOptionEntity record);
-    /**
-     * Title: selectCmsById 
-     * Description:  
-     * @date 2018年3月15日 下午12:06:05
-     * @param id
-     * @return
-     */
-    QuestionOptionEntity selectCmsById(Long cmsId);
+    
+	/**
+	 * Title: selectByCmsId 
+	 * Description:  
+	 * @date 2018年3月15日 下午12:06:05
+	 * @param id
+	 * @return
+	 */
+	QuestionOptionEntity selectByCmsId(Long cmsId);
 	/**Title: updateSyncQuestionOptionEntity 
 	 * Description:  
 	 * @date 2018年3月15日 下午12:38:11

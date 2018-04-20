@@ -132,15 +132,15 @@ public class SyncPaperService {
 									subjectDetail.setEnableFlag(subjectDetailBean.getEnableFlag());
 									subjectDetail.setQuestionNo(subjectDetailBean.getQuestionNo());
 									subjectDetail.setRepeatCount(subjectDetailBean.getRepeatCount());
-									PaperSubjectDetailEntity SyncPaperSubjectDetailEntity = PaperSubjectDetailDao.selectByCmsId(subjectDetailBean.getId());
-									if (null != SyncPaperSubjectDetailEntity) {
-										if (StringUtil.compareStr(subjectDetailBean.getGuideAudio(), SyncPaperSubjectDetailEntity.getGuideAudio())) {
+									PaperSubjectDetailEntity paperSubjectDetailEntity = PaperSubjectDetailDao.selectByCmsId(subjectDetailBean.getId());
+									if (null != paperSubjectDetailEntity) {
+										if (StringUtil.compareStr(subjectDetailBean.getGuideAudio(), paperSubjectDetailEntity.getGuideAudio())) {
 											thirdAliOSSUtil.converterFile(subjectDetailBean.getGuideAudio());
 										}
-										if (StringUtil.compareStr(subjectDetailBean.getQuestionAudio(), SyncPaperSubjectDetailEntity.getQuestionAudio())) {
+										if (StringUtil.compareStr(subjectDetailBean.getQuestionAudio(), paperSubjectDetailEntity.getQuestionAudio())) {
 											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestionAudio());
 										}
-										if (StringUtil.compareStr(subjectDetailBean.getQuestion(), SyncPaperSubjectDetailEntity.getQuestion())
+										if (StringUtil.compareStr(subjectDetailBean.getQuestion(), paperSubjectDetailEntity.getQuestion())
 												&& subjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
 											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestion());
 										}
@@ -148,7 +148,7 @@ public class SyncPaperService {
 									} else {
 										thirdAliOSSUtil.converterFile(subjectDetailBean.getGuideAudio());
 										thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestionAudio());
-										if (subjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
+										if (null != subjectDetailBean.getQuestion() && subjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
 											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestion());
 										}
 										PaperSubjectDetailDao.insertPaperSubjectDetailEntity(subjectDetail);

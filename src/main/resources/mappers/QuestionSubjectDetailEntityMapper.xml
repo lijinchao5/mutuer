@@ -33,7 +33,7 @@
     from xl_question_subject_detail
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectCmsById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByCmsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from xl_question_subject_detail
@@ -44,7 +44,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-  <insert id="insertQuestionSubjectDetailEntity" parameterType="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity">
+  <insert id="insertQuestionSubjectDetailEntity" parameterType="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity" keyProperty="id" useGeneratedKeys="true">
     insert into xl_question_subject_detail
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

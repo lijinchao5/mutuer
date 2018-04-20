@@ -140,7 +140,8 @@ systemconfig:
     paper_content: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncPaperContent.do
     article_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncReads.do
     sentence_content_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncReadContent.do
-#    question_content_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncQusetionContent.do
+    question_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncQuestions.do
+    question_content_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncQuestionContent.do
     other_link_url: http://39.106.169.185:8080/oep-be-cms/resourceSync/syncLinks.do
 # 日志输出
 logging:

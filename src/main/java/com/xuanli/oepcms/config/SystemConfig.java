@@ -32,6 +32,7 @@ public class SystemConfig implements EnvironmentAware {
 	public String PAPER_CONTENT = "";
 	public String ARTICLE_URL = "";
 	public String SENTENCE_CONTENT_URL = "";
+	public String QUESTION_URL = "";
 	public String QUESTION_CONTENT_URL = "";
 	public String OTHER_LINK_URL = "";
 
@@ -47,6 +48,7 @@ public class SystemConfig implements EnvironmentAware {
 		PAPER_CONTENT = propertyResolver.getProperty("sync_url.paper_content");
 		ARTICLE_URL = propertyResolver.getProperty("sync_url.article_url");
 		SENTENCE_CONTENT_URL = propertyResolver.getProperty("sync_url.sentence_content_url");
+		QUESTION_URL = propertyResolver.getProperty("sync_url.question_url");
 		QUESTION_CONTENT_URL = propertyResolver.getProperty("sync_url.question_content_url");
 		OTHER_LINK_URL = propertyResolver.getProperty("sync_url.other_link_url");
 		logger.debug("初始化完成系统配置信息...");
