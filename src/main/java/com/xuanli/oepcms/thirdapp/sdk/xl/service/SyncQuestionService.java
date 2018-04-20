@@ -127,7 +127,6 @@ public class SyncQuestionService {
 								questionOptionEntity.setCreateDate(questionOptionBean.getCreateDate());
 								questionOptionEntity.setCreateId((long) 0);
 								questionOptionEntity.setDetailId(questionSubjectDetailEntity.getId());
-								System.out.println(questionSubjectDetailEntity.getId());
 								questionOptionEntity.setEnableFlag(questionOptionBean.getEnableFlag());
 								questionOptionEntity.setPointResult(questionOptionBean.getPointResult());
 								questionOptionEntity.setResult(questionOptionBean.getResult());

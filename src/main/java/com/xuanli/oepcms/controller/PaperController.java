@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.service.PaperService;
 import com.xuanli.oepcms.util.PageBean;
+import com.xuanli.oepcms.util.StringUtil;
 import com.xuanli.oepcms.vo.RestResult;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author QiaoYu
@@ -101,7 +102,11 @@ public class PaperController extends BaseController {
 			@ApiImplicitParam(name = "notice", value = "试卷须知", required = false, dataType = "String"),
 			@ApiImplicitParam(name = "paperInfo", value = "组卷信息 \"[{\"subjectId\":1,\"score\":\"1\"},{\"subjectId\":2,\"score\":\"1,3\"}]\"", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "totalTime", value = "总时长", required = true, dataType = "Integer") })
+	@RequestMapping(value = "generatorPaper.do", method = RequestMethod.POST)
 	public RestResult<String> generatorPaper(String name, String notice, Integer totalTime, String paperInfo) {
+		if (StringUtil.isEmpty(paperInfo)) {
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "组卷信息为空");
+		}
 		Long userId = getCurrentUser().getId();
 		return paperService.generatorPaper(userId, name, notice, totalTime, paperInfo);
 	}
