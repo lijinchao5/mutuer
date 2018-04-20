@@ -96,4 +96,38 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+
+
+  <select id="select1" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_area
+    where 
+    	parent_id IN (
+			SELECT
+				id
+			FROM
+				xl_area
+			WHERE
+				code1 = #{value}
+		)
+  </select>
+  
+  <select id="getRegion" parameterType="map" resultType="map">
+  	SELECT
+		texts text,
+		CODE code
+	FROM
+		xl_area
+	WHERE enable_flag= 'T' 
+	  <if test="level != null">
+        and level_type = #{level}
+      </if>
+      <if test="regionId != null">
+        and parent_id = #{regionId}
+      </if>
+	ORDER BY CODE
+  </select>
+  
 </mapper>

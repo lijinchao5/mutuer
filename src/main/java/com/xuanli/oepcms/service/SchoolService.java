@@ -6,23 +6,27 @@
  */
 package com.xuanli.oepcms.service;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuanli.oepcms.entity.SchoolEntity;
+import com.xuanli.oepcms.mapper.SchoolDataEntityMapper;
 import com.xuanli.oepcms.mapper.SchoolEntityMapper;
+import com.xuanli.oepcms.vo.RestResult;
 
 /**
  * @author QiaoYu
  */
 @Service
-public class SchoolService {
+public class SchoolService extends BaseService{
 	@Autowired
 	SchoolEntityMapper schoolEntityMapper;
-
+	@Autowired
+	SchoolDataEntityMapper schoolDataEntityMapper;
 	/**
 	 * @Description:  TODO
 	 * @CreateName:  QiaoYu 
@@ -81,5 +85,16 @@ public class SchoolService {
 	 */
 	public int saveSchool(SchoolEntity schoolEntity) {
 		return schoolEntityMapper.insertSchoolEntity(schoolEntity);
+	}
+
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年4月20日 上午10:24:36
+	 */
+	public RestResult<List<Map<String, Object>>> getSchoolByRegion(String regionId,String type) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("level", type);
+		map.put("region", regionId);
+		return ok(schoolDataEntityMapper.getSchoolByRegion(map));
 	}
 }

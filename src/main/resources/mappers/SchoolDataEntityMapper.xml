@@ -32,4 +32,25 @@
       </if>
     </trim>
   </insert>
+  
+  
+  <select id="getSchoolByRegion" parameterType="map" resultType="map">
+  	SELECT
+		id id,
+		region region,
+		type type,
+		school_name schoolName
+	FROM
+		xl_school_data
+	WHERE
+		1 = 1
+	<if test="type != null">
+       AND type = #{type}
+     </if>
+	AND region =#{region}
+  </select>
+  
+  
+  
+  
 </mapper>
