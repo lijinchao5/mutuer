@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
+import com.xuanli.oepcms.service.SchoolService;
 import com.xuanli.oepcms.service.UserService;
 import com.xuanli.oepcms.util.ExcelUtil;
 import com.xuanli.oepcms.util.ImageUtil;
@@ -39,7 +40,8 @@ public class UserController extends BaseController {
 	private UserService userService;
 	@Autowired
 	SessionUtil sessionUtil;
-
+	@Autowired
+	SchoolService schoolService;
 	@ApiIgnore
 	@RequestMapping(value = "insert.do", method = RequestMethod.POST)
 	public RestResult<String> saveUser(@RequestParam UserEntity user) {
@@ -173,9 +175,11 @@ public class UserController extends BaseController {
 			@ApiImplicitParam(name = "sex", value = "性别", required = false, dataType = "String"),
 			@ApiImplicitParam(name = "studySectionId", value = "学段(小初高)", required = false, dataType = "Integer"),
 			@ApiImplicitParam(name = "gradeLevelId", value = "年级", required = false, dataType = "Integer"),
-			@ApiImplicitParam(name = "bookVersionId", value = "教材版本", required = false, dataType = "Integer") })
+			@ApiImplicitParam(name = "bookVersionId", value = "教材版本", required = false, dataType = "Integer"),
+			@ApiImplicitParam(name = "schoolId", value = "学校id", required = false, dataType = "String")
+	})
 	@RequestMapping(value = "perfectUserInfo.do", method = RequestMethod.PUT)
-	public RestResult<String> perfectUserInfo(String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId) {
+	public RestResult<String> perfectUserInfo(String schoolId,String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(getCurrentUser().getId());
 		userEntity.setName(name);
@@ -184,6 +188,10 @@ public class UserController extends BaseController {
 		userEntity.setStudySectionId(studySectionId);
 		userEntity.setGradeLevelId(gradeLevelId);
 		userEntity.setBookVersionId(bookVersionId);
+		if (StringUtil.isNotEmpty(schoolId)) {
+			schoolService.updateUserSchool(getCurrentUser().getId());
+			schoolService.saveUserSchool(schoolId, getCurrentUser().getId());
+		}
 		try {
 			int perfectInfo = userService.updateUserInfo(userEntity, null);
 			if (perfectInfo > 0) {

@@ -27,10 +27,58 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectSchoolId" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from xl_school
-    where school_id = #{schoolId,jdbcType=VARCHAR}
+	   SELECT
+		xs.id,
+		xs.school_name,
+		(
+			SELECT
+				(
+					SELECT
+						(
+							SELECT
+								texts
+							FROM
+								xl_area
+							WHERE
+								id = xlaa.parent_id
+						)
+					FROM
+						xl_area xlaa
+					WHERE
+						xlaa.id = xla.parent_id
+				)
+			FROM
+				xl_area xla
+			WHERE
+				xla. CODE = xs.region
+		) address_province,
+		(
+			SELECT
+				(
+					SELECT
+						texts
+					FROM
+						xl_area
+					WHERE
+						id = xla.parent_id
+				)
+			FROM
+				xl_area xla
+			WHERE
+				xla. CODE = xs.region
+		) address_city,
+		(
+			SELECT
+				texts
+			FROM
+				xl_area xla
+			WHERE
+				xla. CODE = xs.region
+		) address_area
+	FROM
+		xl_school_data xs
+	WHERE
+		xs.id = #{schoolId,jdbcType=VARCHAR}
   </select>
   <select id="selectSchoolEntity" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.SchoolEntity" >
     select 
@@ -186,23 +234,44 @@
   </update>
   	<select id="getUserSchoolInfo" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.SchoolEntity">
 		SELECT
-		xs.id, xs.school_id, xs.name, xs.create_id, xs.create_date, 
-    	xs.update_id, xs.update_date, xs.enable_flag,
+			xs.id,
+			xs.school_name,
 			(
 				SELECT
-					texts
+					(
+						SELECT
+							(
+								SELECT
+									texts
+								FROM
+									xl_area
+								WHERE
+									id = xlaa.parent_id
+							)
+						FROM
+							xl_area xlaa
+						WHERE
+							xlaa.id = xla.parent_id
+					)
 				FROM
 					xl_area xla
 				WHERE
-					xla.id = xs.address_province
+					xla. CODE = xs.region
 			) address_province,
 			(
 				SELECT
-					texts
+					(
+						SELECT
+							texts
+						FROM
+							xl_area
+						WHERE
+							id = xla.parent_id
+					)
 				FROM
 					xl_area xla
 				WHERE
-					xla.id = xs.address_city
+					xla. CODE = xs.region
 			) address_city,
 			(
 				SELECT
@@ -210,11 +279,13 @@
 				FROM
 					xl_area xla
 				WHERE
-					xla.id = xs.address_area
+					xla. CODE = xs.region
 			) address_area
-				FROM
-			xl_school xs LEFT JOIN xl_user_school xus ON xus.school_id = xs.id
-		WHERE xus.user_id = #{userId}
+		FROM
+			xl_school_data xs
+		LEFT JOIN xl_user_school xus ON xus.school_id = xs.id
+		WHERE
+			xus.user_id = #{userId}
 	</select>
 
 	<insert id="saveUserSchool" parameterType="com.xuanli.oepcms.entity.SchoolEntity">

@@ -3,6 +3,9 @@
  */
 package com.xuanli.oepcms.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +31,16 @@ public class SchoolController extends BaseController {
 	@Autowired
 	SchoolService schoolService;
 
+	
+	
+	@ApiOperation(value = "根据区域获取学校列表", notes = "根据区域获取学校列表")
+	@RequestMapping(value = "getSchoolByRegion.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getSchoolByRegion(String regionId,String type){
+		return schoolService.getSchoolByRegion(regionId,type);
+	}
+	
+	
+	
 	/**
 	 * Title: getTeachingInfo Description: 获取教学信息
 	 * 

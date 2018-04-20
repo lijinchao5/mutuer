@@ -64,4 +64,5 @@ public interface SchoolEntityMapper {
 	 * @return
 	 */
 	List<UserSchoolEntity> getEndDateBySchoolId(Long userId);
+	
 }
