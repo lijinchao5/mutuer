@@ -179,7 +179,8 @@ public class UserController extends BaseController {
 			@ApiImplicitParam(name = "schoolId", value = "学校id", required = false, dataType = "String")
 	})
 	@RequestMapping(value = "perfectUserInfo.do", method = RequestMethod.PUT)
-	public RestResult<String> perfectUserInfo(String schoolId,String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId) {
+	public RestResult<String> perfectUserInfo(String schoolId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId,
+			@RequestParam(required = true) Integer bookVersionId) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(getCurrentUser().getId());
 		userEntity.setName(name);
@@ -189,7 +190,9 @@ public class UserController extends BaseController {
 		userEntity.setGradeLevelId(gradeLevelId);
 		userEntity.setBookVersionId(bookVersionId);
 		if (StringUtil.isNotEmpty(schoolId)) {
+			//解除学校关系
 			schoolService.updateUserSchool(getCurrentUser().getId());
+			//重新绑定学校关系
 			schoolService.saveUserSchool(schoolId, getCurrentUser().getId());
 		}
 		try {
@@ -451,10 +454,10 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "updatePassword.do", method = { RequestMethod.PUT, RequestMethod.POST })
 	public RestResult<String> updatePassword(String oldPassword, String newPassword) {
 		if (StringUtil.isEmpty(oldPassword)) {
-			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "真实姓名不能为空");
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "原密码不能为空");
 		}
 		if (StringUtil.isEmpty(newPassword)) {
-			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "真实姓名不能为空");
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "新密码不能为空");
 		}
 		try {
 			Long userId = getCurrentUser().getId();

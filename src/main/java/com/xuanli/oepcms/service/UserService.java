@@ -420,7 +420,7 @@ public class UserService extends BaseService {
 			logger.debug("用户头像是空的.....");
 		}
 		userEntity.setPhoto(filePath);
-		return userDao.updateUserEntity(userEntity);
+		return userDao.updateUserSchoolInfo(userEntity);
 	}
 
 	public String updateMobile(Long userId, String password, String newMobile, String mobileRandomStr, String randomKey) {

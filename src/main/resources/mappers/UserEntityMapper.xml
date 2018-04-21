@@ -264,6 +264,70 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="updateUserSchoolInfo" parameterType="com.xuanli.oepcms.entity.UserEntity" >
+    update xl_user
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        birth_date = #{birthDate,jdbcType=DATE},
+      </if>
+      <if test="studySectionId != null" >
+        study_section_id = #{studySectionId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null" >
+        grade__level_id = #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="nameNum != null" >
+        name_num = #{nameNum,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null" >
+        cms_id = #{cmsId,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        schoolid = #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        areaid = #{areaid,jdbcType=VARCHAR},
+      </if>
+      book_version_id = #{bookVersionId,jdbcType=INTEGER}
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
   
     <update id="updateUserInfo" parameterType="com.xuanli.oepcms.entity.UserEntity" >
     update xl_user

@@ -156,4 +156,12 @@ public interface UserEntityMapper {
 	 * @return
 	 */
 	UserEntity getEndDateByUserId(Long userId);
+
+	/**Title: updateUserSchoolInfo 
+	 * Description:  
+	 * @date 2018年4月21日 下午3:39:00
+	 * @param userEntity
+	 * @return  
+	 */
+	int updateUserSchoolInfo(UserEntity userEntity);
 }
