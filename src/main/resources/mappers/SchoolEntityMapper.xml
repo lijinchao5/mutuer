@@ -234,7 +234,7 @@
   </update>
   	<select id="getUserSchoolInfo" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.SchoolEntity">
 		SELECT
-			xs.id,
+			xs.id schoolId,
 			xs.school_name,
 			(
 				SELECT
@@ -242,7 +242,7 @@
 						SELECT
 							(
 								SELECT
-									texts
+									id
 								FROM
 									xl_area
 								WHERE
@@ -262,7 +262,7 @@
 				SELECT
 					(
 						SELECT
-							texts
+							id
 						FROM
 							xl_area
 						WHERE
@@ -275,7 +275,7 @@
 			) address_city,
 			(
 				SELECT
-					texts
+					xla.id
 				FROM
 					xl_area xla
 				WHERE
