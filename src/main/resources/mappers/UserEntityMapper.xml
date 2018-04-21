@@ -508,7 +508,7 @@
 		u.name_num,
 		u.mobile,
 		c.clas_id,
-		s.name schoolName,
+		s.school_name schoolName,
 		IFNULL(
 			(
 				SELECT
@@ -523,28 +523,49 @@
 		) bookVersion,
 		(
 			SELECT
-				texts
+				(
+					SELECT
+						(
+							SELECT
+								texts
+							FROM
+								xl_area
+							WHERE
+								id = xlaa.parent_id
+						)
+					FROM
+						xl_area xlaa
+					WHERE
+						xlaa.id = xla.parent_id
+				)
 			FROM
 				xl_area xla
 			WHERE
-				xla.id = s.address_province
-		) address_province,
-		(
-			SELECT
-				texts
-			FROM
-				xl_area xla
-			WHERE
-				xla.id = s.address_city
-		) address_city,
-		(
-			SELECT
-				texts
-			FROM
-				xl_area xla
-			WHERE
-				xla.id = s.address_area
-		) address_area,
+				xla. CODE = s.region
+			) address_province,
+			(
+				SELECT
+					(
+						SELECT
+							texts
+						FROM
+							xl_area
+						WHERE
+							id = xla.parent_id
+					)
+				FROM
+					xl_area xla
+				WHERE
+					xla. CODE = s.region
+			) address_city,
+			(
+				SELECT
+					texts
+				FROM
+					xl_area xla
+				WHERE
+					xla. CODE = s.region
+			) address_area,
 		(
 			SELECT
 				NAME
@@ -559,7 +580,7 @@
 		xl_user u
 	LEFT JOIN xl_user_clas uc ON u.id = uc.user_id
 	LEFT JOIN xl_clas c ON uc.clas_id = c.id
-	LEFT JOIN xl_school s ON c.school_id = s.id
+	LEFT JOIN xl_school_data s ON c.school_id = s.id
 	WHERE
 		u.id = #{id}
   </select>

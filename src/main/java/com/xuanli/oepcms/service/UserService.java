@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xuanli.oepcms.activemq.bean.ActivemqMsgBean;
 import com.xuanli.oepcms.activemq.service.StudentMqService;
 import com.xuanli.oepcms.contents.ExceptionCode;
@@ -95,7 +96,7 @@ public class UserService extends BaseService {
 					String tokenId = RanNumUtil.getRandom();
 					result.setTokenId(tokenId);
 					sessionUtil.setSessionUser(tokenId, result);
-					return JSONObject.toJSONString(result);
+					return JSONObject.toJSONString(result,SerializerFeature.WriteMapNullValue);
 				} else {
 					// 用户名或者密码错误
 					return "2";
@@ -481,7 +482,7 @@ public class UserService extends BaseService {
 			String tokenId = RanNumUtil.getRandom();
 			result.setTokenId(tokenId);
 			sessionUtil.setSessionUser(tokenId, result);
-			return JSONObject.toJSONString(result);
+			return JSONObject.toJSONString(result,SerializerFeature.WriteMapNullValue);
 		}
 		return "用户没有找到";
 	}

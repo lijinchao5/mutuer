@@ -179,8 +179,7 @@ public class UserController extends BaseController {
 			@ApiImplicitParam(name = "schoolId", value = "学校id", required = false, dataType = "String")
 	})
 	@RequestMapping(value = "perfectUserInfo.do", method = RequestMethod.PUT)
-	public RestResult<String> perfectUserInfo(String schoolId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId,
-			@RequestParam(required = true) Integer bookVersionId) {
+	public RestResult<String> perfectUserInfo(String schoolId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(getCurrentUser().getId());
 		userEntity.setName(name);
