@@ -242,7 +242,7 @@
 						SELECT
 							(
 								SELECT
-									id
+									code
 								FROM
 									xl_area
 								WHERE
@@ -262,7 +262,7 @@
 				SELECT
 					(
 						SELECT
-							id
+							code
 						FROM
 							xl_area
 						WHERE
@@ -275,7 +275,7 @@
 			) address_city,
 			(
 				SELECT
-					xla.id
+					code
 				FROM
 					xl_area xla
 				WHERE
