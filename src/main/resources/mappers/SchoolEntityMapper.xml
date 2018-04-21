@@ -234,7 +234,7 @@
   </update>
   	<select id="getUserSchoolInfo" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.SchoolEntity">
 		SELECT
-			xs.id schoolId,
+			xs.id school_id,
 			xs.school_name,
 			(
 				SELECT

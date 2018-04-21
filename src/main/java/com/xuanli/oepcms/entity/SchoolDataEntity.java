@@ -9,7 +9,7 @@ public class SchoolDataEntity {
 
     private String schoolName;
 
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 
