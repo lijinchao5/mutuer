@@ -282,5 +282,11 @@
     </set>
     where cms_id = #{cmsId,jdbcType=BIGINT}
   </update>
-
+<select id="findSubjectDetailBySubjectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from xl_question_subject_detail
+    where subject_id = #{value}
+    order by id
+  </select>
 </mapper>

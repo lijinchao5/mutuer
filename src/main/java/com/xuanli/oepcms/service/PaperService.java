@@ -22,6 +22,8 @@ import com.xuanli.oepcms.entity.PaperEntity;
 import com.xuanli.oepcms.entity.PaperOptionEntity;
 import com.xuanli.oepcms.entity.PaperSubjectDetailEntity;
 import com.xuanli.oepcms.entity.PaperSubjectEntity;
+import com.xuanli.oepcms.entity.QuestionOptionEntity;
+import com.xuanli.oepcms.entity.QuestionSubjectDetailEntity;
 import com.xuanli.oepcms.entity.QuestionSubjectEntity;
 import com.xuanli.oepcms.mapper.PaperEntityMapper;
 import com.xuanli.oepcms.mapper.PaperOptionEntityMapper;
@@ -102,6 +104,7 @@ public class PaperService extends BaseService {
 	 * @CreateName: codelion[QiaoYu]
 	 * @CreateDate: 2018年3月5日 上午11:41:45
 	 */
+	@Transactional
 	public RestResult<String> generatorPaper(Long userId, String name, String notice, Integer totalTime, String paperInfo) {
 		try {
 			PaperEntity paperEntity = new PaperEntity();
@@ -128,8 +131,8 @@ public class PaperService extends BaseService {
 				paperSubjectEntityMapper.insertPaperSubjectEntity(paperSubjectEntity);
 				questionSubjectEntityMapper.updateQuestionSubjectUsedCount(resultQSE.getId());
 				// 获取paperdetailInfo
-				List<PaperSubjectDetailEntity> paperSubjectDetailEntities = paperSubjectDetailEntityMapper.findSubjectDetailBySubjectId(resultQSE.getSubject());
-				for (PaperSubjectDetailEntity resultPSDE : paperSubjectDetailEntities) {
+				List<QuestionSubjectDetailEntity> questionSubjectDetailEntities = questionSubjectDetailEntityMapper.findSubjectDetailBySubjectId(resultQSE.getId().longValue()+"");
+				for (QuestionSubjectDetailEntity resultPSDE : questionSubjectDetailEntities) {
 					String[] score = paperBean.getScore().split(",");
 					PaperSubjectDetailEntity paperSubjectDetailEntity = new PaperSubjectDetailEntity();
 					BeanUtil.copyBean(resultPSDE, paperSubjectDetailEntity);
@@ -160,21 +163,26 @@ public class PaperService extends BaseService {
 					paperSubjectDetailEntity.setCreateDate(new Date());
 					paperSubjectDetailEntity.setCreateId(userId);
 					paperSubjectDetailEntityMapper.insertPaperSubjectDetailEntity(paperSubjectDetailEntity);
-					List<PaperOptionEntity> paperOptionEntities = paperOptionEntityMapper.getSubjectOptionByDetailId(resultPSDE.getId());
-					for (PaperOptionEntity resultPOE : paperOptionEntities) {
+					List<QuestionOptionEntity> questionOptionEntities = questionOptionEntityMapper.getSubjectOptionByDetailId(resultPSDE.getId());
+					for (QuestionOptionEntity resultPOE : questionOptionEntities) {
 						PaperOptionEntity paperOptionEntity = new PaperOptionEntity();
 						BeanUtil.copyBean(resultPOE, paperOptionEntity);
 						paperOptionEntity.setId(null);
 						paperOptionEntity.setCreateDate(new Date());
 						paperOptionEntity.setCreateId(userId);
 						paperOptionEntity.setDetailId(paperSubjectDetailEntity.getId());
+						paperOptionEntity.setEnableFlag("T");
+						paperOptionEntity.setCreateDate(new Date());
+						paperOptionEntity.setCreateId(userId);
+						paperOptionEntityMapper.insertPaperOptionEntity(paperOptionEntity);
 					}
 				}
 				questionNo = 0;
 			}
 			return okNoResult("成功");
 		} catch (Exception e) {
-			return failed(ExceptionCode.UNKNOW_CODE, "出现错误:"+e.getMessage());
+			e.printStackTrace();
+			return failed(ExceptionCode.UNKNOW_CODE, "出现错误===:"+e.getMessage());
 		}
 	}
 

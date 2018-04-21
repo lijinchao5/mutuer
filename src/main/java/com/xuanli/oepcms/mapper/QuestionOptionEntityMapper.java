@@ -1,5 +1,7 @@
 package com.xuanli.oepcms.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.xuanli.oepcms.entity.QuestionOptionEntity;
@@ -52,4 +54,9 @@ public interface QuestionOptionEntityMapper {
 	 * @param questionOptionEntity  
 	 */
 	int updateSyncQuestionOptionEntity(QuestionOptionEntity questionOptionEntity);
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年4月20日 下午5:08:27
+	 */
+	List<QuestionOptionEntity> getSubjectOptionByDetailId(Long id);
 }

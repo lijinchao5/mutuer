@@ -177,5 +177,10 @@
     </set>
     where cms_id = #{cmsId,jdbcType=BIGINT}
   </update>
-
+  <select id="getSubjectOptionByDetailId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_question_option
+    where  detail_id = #{value}
+  </select>
 </mapper>
