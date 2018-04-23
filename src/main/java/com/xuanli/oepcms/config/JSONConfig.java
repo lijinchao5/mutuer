@@ -6,6 +6,8 @@
  */ 
 package com.xuanli.oepcms.config;
 
+import java.util.TimeZone;
+
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +20,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 /** 
  * @author  codelion[QiaoYu]
  */
-//@Configuration
+@Configuration
 public class JSONConfig {
 	@Bean//使用@Bean注入fastJsonHttpMessageConvert
     public HttpMessageConverters fastJsonHttpMessageConverters(){
@@ -28,6 +30,8 @@ public class JSONConfig {
         FastJsonConfig fastJsonConfig=new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
         //3.在convert中添加配置信息
+        fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));  
         fastConverter.setFastJsonConfig(fastJsonConfig);
         HttpMessageConverter<?> converter=fastConverter;
         return new HttpMessageConverters(converter);
