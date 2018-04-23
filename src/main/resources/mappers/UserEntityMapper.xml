@@ -392,15 +392,6 @@
   
   
   
-  <!-- 保存教师和学校的关系 -->
-  <insert id="insertUserSchool" parameterType="com.xuanli.oepcms.entity.UserSchoolEntity">
-	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
-	  select count(*) id from xl_user_school where user_id=#{userId,jdbcType=BIGINT} and school_id=#{schoolId,jdbcType=BIGINT}
-	</selectKey>
-	<if test="allSize==0">
-	  insert into xl_user_school(user_id,school_id) values(#{userId,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT})
-	</if>
-  </insert>
   <!-- 保存学生和班级的关系 -->
   <insert id="inserUserClas" parameterType="com.xuanli.oepcms.entity.UserClasEntity">
 	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
@@ -527,7 +518,7 @@
 					SELECT
 						(
 							SELECT
-								texts
+								code
 							FROM
 								xl_area
 							WHERE
@@ -547,7 +538,7 @@
 				SELECT
 					(
 						SELECT
-							texts
+							code
 						FROM
 							xl_area
 						WHERE
@@ -560,7 +551,7 @@
 			) address_city,
 			(
 				SELECT
-					texts
+					code
 				FROM
 					xl_area xla
 				WHERE
@@ -580,7 +571,7 @@
 		xl_user u
 	LEFT JOIN xl_user_clas uc ON u.id = uc.user_id
 	LEFT JOIN xl_clas c ON uc.clas_id = c.id
-	LEFT JOIN xl_school_data s ON c.school_id = s.id
+	LEFT JOIN xl_school_data s ON u.schoolid = s.id
 	WHERE
 		u.id = #{id}
   </select>
@@ -645,7 +636,7 @@
 		xl_user xu
 	LEFT JOIN xl_user_clas xuc ON xu.id = xuc.user_id
 	LEFT JOIN xl_clas xc ON xc.id = xuc.clas_id
-	LEFT JOIN xl_school xs ON xs.id = xc.school_id
+	LEFT JOIN xl_school_data xs ON xs.id = xu.schoolid
 	WHERE xu.id = #{id,jdbcType=BIGINT}
   </select>
 </mapper>

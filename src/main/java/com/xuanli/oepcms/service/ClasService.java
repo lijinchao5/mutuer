@@ -36,14 +36,10 @@ public class ClasService {
 	 * @CreateDate:  2018年1月16日 下午3:15:02
 	 */
 	public void saveClas(ClasEntity clasEntity, Long userId) {
-		//获取学校id
-		List<UserSchoolEntity> userSchoolEntities = userService.getUserSchool(userId);
-		Integer schoolId = userSchoolEntities.get(0).getSchoolId().intValue();
+		//增加班级
 		clasEntity.setEnableFlag("T");
 		clasEntity.setCreateId(userId.toString());
 		clasEntity.setCreateDate(new Date());
-		clasEntity.setSchoolId(schoolId);
-		//增加班级
 		clasDao.insertClasEntity(clasEntity);
 		//更新班级编号
 		ClasEntity clasEntity2 = new ClasEntity();

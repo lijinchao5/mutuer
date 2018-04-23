@@ -56,13 +56,6 @@ public interface UserEntityMapper {
 	/**
 	 * @Description:  TODO
 	 * @CreateName:  QiaoYu 
-	 * @CreateDate:  2018年1月15日 下午5:11:32
-	 */
-	int insertUserSchool(UserSchoolEntity userSchoolEntity);
-
-	/**
-	 * @Description:  TODO
-	 * @CreateName:  QiaoYu 
 	 * @CreateDate:  2018年1月16日 上午9:42:23
 	 */
 	int inserUserClas(UserClasEntity userClasEntity);

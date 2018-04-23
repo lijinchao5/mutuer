@@ -18,10 +18,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xuanli.oepcms.activemq.bean.ActivemqMsgBean;
 import com.xuanli.oepcms.activemq.service.StudentMqService;
 import com.xuanli.oepcms.contents.ExceptionCode;
-import com.xuanli.oepcms.entity.ClasEntity;
 import com.xuanli.oepcms.entity.ExamEntity;
 import com.xuanli.oepcms.entity.HomeworkEntity;
-import com.xuanli.oepcms.entity.SchoolEntity;
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.entity.UserSchoolEntity;
@@ -42,10 +40,6 @@ public class UserService extends BaseService {
 	@Autowired
 	private UserEntityMapper userDao;
 	@Autowired
-	private SchoolService schoolService;
-	@Autowired
-	private ClasService clasService;
-	@Autowired
 	SessionUtil sessionUtil;
 	@Autowired
 	FileUtil fileUtil;
@@ -57,6 +51,7 @@ public class UserService extends BaseService {
 	ExamService examService;
 	@Autowired
 	StudentMqService studentMqService;
+
 	/**
 	 * @Description: TODO
 	 * @CreateName: QiaoYu
@@ -70,24 +65,24 @@ public class UserService extends BaseService {
 			UserEntity result = userEntities.get(0);
 			if (result.getEnableFlag().equalsIgnoreCase("T")) {
 				if (PasswordUtil.verify(password, result.getPassword())) {
-					
-					//后期修改 不需要判断 时候过期问题
-//					String roleId = result.getRoleId() + "";
-//					if (roleId.equals("5") || roleId.equals("6") || roleId.equals("7")) {
-//						if (!usableUtil.getEndDateByAreaId(result.getAreaid())) {
-//							return "4";
-//						}
-//					}
-//					if (roleId.equals("3") || roleId.equals("8")) {
-//						if (!usableUtil.getEndDateBySchoolId(result.getId())) {
-//							return "4";
-//						}
-//					}
-//					if (roleId.equals("4")) {
-//						if (!usableUtil.getEndDateByUserId(result.getId())) {
-//							return "4";
-//						}
-//					}
+
+					// 后期修改 不需要判断 时候过期问题
+					// String roleId = result.getRoleId() + "";
+					// if (roleId.equals("5") || roleId.equals("6") || roleId.equals("7")) {
+					// if (!usableUtil.getEndDateByAreaId(result.getAreaid())) {
+					// return "4";
+					// }
+					// }
+					// if (roleId.equals("3") || roleId.equals("8")) {
+					// if (!usableUtil.getEndDateBySchoolId(result.getId())) {
+					// return "4";
+					// }
+					// }
+					// if (roleId.equals("4")) {
+					// if (!usableUtil.getEndDateByUserId(result.getId())) {
+					// return "4";
+					// }
+					// }
 					UserEntity up = new UserEntity();
 					up.setUpdateDate(new Date());
 					up.setId(result.getId());
@@ -96,7 +91,7 @@ public class UserService extends BaseService {
 					String tokenId = RanNumUtil.getRandom();
 					result.setTokenId(tokenId);
 					sessionUtil.setSessionUser(tokenId, result);
-					return JSONObject.toJSONString(result,SerializerFeature.WriteMapNullValue);
+					return JSONObject.toJSONString(result, SerializerFeature.WriteMapNullValue);
 				} else {
 					// 用户名或者密码错误
 					return "2";
@@ -168,7 +163,7 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月15日 下午4:50:08
 	 */
-	public String teacherRegist(String schoolId, String mobile, String password) {
+	public String teacherRegist(String mobile, String password) {
 		// 判断手机号码是否已经注册
 		UserEntity registUser = new UserEntity();
 		registUser.setMobile(mobile);
@@ -178,30 +173,16 @@ public class UserService extends BaseService {
 			// 手机号码已经存在
 			return "2";
 		}
-		// 查看校区id是否存在
-		SchoolEntity schoolEntity = new SchoolEntity();
-		schoolEntity.setSchoolId(schoolId);
-		List<SchoolEntity> schoolEntities = schoolService.selectSchoolEntity(schoolEntity);
-		if (null != schoolEntities && schoolEntities.size() > 0) {
-			// 校区存在
-			SchoolEntity result = schoolEntities.get(0);
-			UserEntity userEntity = new UserEntity();
-			userEntity.setCreateDate(new Date());
-			userEntity.setEnableFlag("T");
-			userEntity.setPassword(PasswordUtil.generate(password));
-			userEntity.setMobile(mobile);
-			// 教师角色id为3
-			userEntity.setRoleId(new Integer(3));
-			userDao.insertUserEntity(userEntity);
-			// 添加教师和学校的关联关系
-			UserSchoolEntity userSchoolEntity = new UserSchoolEntity();
-			userSchoolEntity.setSchoolId(result.getId());
-			userSchoolEntity.setUserId(userEntity.getId());
-			userDao.insertUserSchool(userSchoolEntity);
-			return userEntity.getId().longValue() + "";
-		} else {
-			return "1";
-		}
+
+		UserEntity userEntity = new UserEntity();
+		userEntity.setCreateDate(new Date());
+		userEntity.setEnableFlag("T");
+		userEntity.setPassword(PasswordUtil.generate(password));
+		userEntity.setMobile(mobile);
+		// 教师角色id为3
+		userEntity.setRoleId(new Integer(3));
+		userDao.insertUserEntity(userEntity);
+		return userEntity.getId().longValue() + "";
 	}
 
 	/**
@@ -209,7 +190,7 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月16日 上午9:35:07
 	 */
-	public String studentRegist(String classId, String mobile, String password) {
+	public String studentRegist(String mobile, String password) {
 		// 判断手机号码是否已经注册
 		UserEntity registUser = new UserEntity();
 		registUser.setMobile(mobile);
@@ -219,36 +200,21 @@ public class UserService extends BaseService {
 			// 手机号码已经存在
 			return "2";
 		}
-		// 查看班级id是否存在
-		ClasEntity clasEntity = new ClasEntity();
-		clasEntity.setClasId(classId);
-		List<ClasEntity> clasEntities = clasService.selectClasEntity(clasEntity);
-		if (null != clasEntities && clasEntities.size() > 0) {
-			// 班级存在
-			ClasEntity result = clasEntities.get(0);
-			UserEntity userEntity = new UserEntity();
-			userEntity.setCreateDate(new Date());
-			userEntity.setEnableFlag("T");
-			userEntity.setPassword(PasswordUtil.generate(password));
-			userEntity.setMobile(mobile);
-			// 学生角色id为4
-			userEntity.setRoleId(new Integer(4));
-			userDao.insertUserEntity(userEntity);
-			// 生成学生编号
-			UserEntity userEntity2 = new UserEntity();
-			userEntity2.setId(userEntity.getId());
-			userEntity2.setNameNum(userEntity.getId().longValue() + StringUtil.getRandomZM(2));
-			userDao.updateUserEntity(userEntity2);
-
-			// 添加学生和班级关系
-			UserClasEntity userClasEntity = new UserClasEntity();
-			userClasEntity.setClasId(result.getId());
-			userClasEntity.setUserId(userEntity.getId());
-			userDao.inserUserClas(userClasEntity);
-			return userEntity.getId().longValue() + "";
-		} else {
-			return "1";
-		}
+		// 班级存在
+		UserEntity userEntity = new UserEntity();
+		userEntity.setCreateDate(new Date());
+		userEntity.setEnableFlag("T");
+		userEntity.setPassword(PasswordUtil.generate(password));
+		userEntity.setMobile(mobile);
+		// 学生角色id为4
+		userEntity.setRoleId(new Integer(4));
+		userDao.insertUserEntity(userEntity);
+		// 生成学生编号
+		UserEntity userEntity2 = new UserEntity();
+		userEntity2.setId(userEntity.getId());
+		userEntity2.setNameNum(userEntity.getId().longValue() + StringUtil.getRandomZM(2));
+		userDao.updateUserEntity(userEntity2);
+		return userEntity.getId().longValue() + "";
 	}
 
 	/**
@@ -323,7 +289,7 @@ public class UserService extends BaseService {
 				UserEntity userEntity2 = new UserEntity();
 				userEntity2.setId(userEntity.getId());
 				String nameNum = userEntity.getId().longValue() + StringUtil.getRandomZM(2);
-				System.out.println("教师id:["+userId+"]批量生成学生账号:"+nameNum);
+				System.out.println("教师id:[" + userId + "]批量生成学生账号:" + nameNum);
 				userEntity2.setNameNum(nameNum);
 				userEntity2.setUpdateDate(new Date());
 				userDao.updateUserEntity(userEntity2);
@@ -335,6 +301,7 @@ public class UserService extends BaseService {
 		}
 		return j;
 	}
+
 	/**
 	 * @Description: TODO
 	 * @CreateName: QiaoYu
@@ -482,7 +449,7 @@ public class UserService extends BaseService {
 			String tokenId = RanNumUtil.getRandom();
 			result.setTokenId(tokenId);
 			sessionUtil.setSessionUser(tokenId, result);
-			return JSONObject.toJSONString(result,SerializerFeature.WriteMapNullValue);
+			return JSONObject.toJSONString(result, SerializerFeature.WriteMapNullValue);
 		}
 		return "用户没有找到";
 	}

@@ -74,14 +74,14 @@ public class UserController extends BaseController {
 	 * @CreateDate: 2018年1月16日 下午1:38:00
 	 */
 	@ApiOperation(value = "教师注册", notes = "教师注册方法")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "schoolId", value = "校区id", required = true, dataType = "String"),
+	@ApiImplicitParams({
 			@ApiImplicitParam(name = "mobile", value = "教师手机号", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomStr", value = "图片验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "mobileRandomStr", value = "手机短信验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomKey", value = "随机验证码关键Key不能为空", required = true, dataType = "String") })
 	@RequestMapping(value = "teacher_regist.do", method = RequestMethod.POST)
-	public RestResult<String> teacher_regist(@RequestParam String schoolId, @RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password,
+	public RestResult<String> teacher_regist(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password,
 			@RequestParam String mobileRandomStr, @RequestParam String randomKey) {
 		if (StringUtil.isEmpty(randomKey)) {
 			return failed(ExceptionCode.USERINFO_ERROR_CODE, "随机验证码关键Key不能为空");
@@ -89,9 +89,7 @@ public class UserController extends BaseController {
 		// if (StringUtil.isNotEmpty(randomStr) &&
 		// randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey))) {
 		if (StringUtil.isNotEmpty(randomStr) && (randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey)) || randomStr.equals("1234"))) {
-			if (StringUtil.isEmpty(schoolId)) {
-				return failed(ExceptionCode.USERINFO_ERROR_CODE, "校区ID不能为空.");
-			}
+			
 			if (StringUtil.isEmpty(mobile)) {
 				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不能为空.");
 			}
@@ -106,7 +104,7 @@ public class UserController extends BaseController {
 				return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机短信验证码错误.");
 			}
 			sessionUtil.removeMobileMessageRandomNum(randomKey);
-			String result = userService.teacherRegist(schoolId, mobile, password);
+			String result = userService.teacherRegist(mobile, password);
 			if (result.equals("1")) {
 				return failed(ExceptionCode.USERINFO_ERROR_CODE, "校区ID错误.");
 			} else if (result.equals("2")) {
@@ -125,22 +123,19 @@ public class UserController extends BaseController {
 	 * @CreateDate: 2018年1月16日 下午1:38:08
 	 */
 	@ApiOperation(value = "学生注册", notes = "学生注册方法")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "classId", value = "班级id", required = true, dataType = "String"),
+	@ApiImplicitParams({
 			@ApiImplicitParam(name = "mobile", value = "学生手机号", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomStr", value = "图片验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "mobileRandomStr", value = "手机短信验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomKey", value = "随机验证码关键Key不能为空", required = true, dataType = "String") })
 	@RequestMapping(value = "student_regist.do", method = RequestMethod.POST)
-	public RestResult<String> student_regist(@RequestParam String classId, @RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password,
+	public RestResult<String> student_regist(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password,
 			@RequestParam String mobileRandomStr, @RequestParam String randomKey) {
 		if (StringUtil.isEmpty(randomKey)) {
 			return failed(ExceptionCode.USERINFO_ERROR_CODE, "随机验证码关键Key不能为空");
 		}
 		if (StringUtil.isNotEmpty(randomStr) && (randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey)) || randomStr.equals("1234"))) {
-			if (StringUtil.isEmpty(classId)) {
-				return failed(ExceptionCode.USERINFO_ERROR_CODE, "班级ID不能为空.");
-			}
 			if (StringUtil.isEmpty(mobile)) {
 				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不能为空.");
 			}
@@ -155,7 +150,7 @@ public class UserController extends BaseController {
 				return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机短信验证码错误.");
 			}
 			sessionUtil.removeMobileMessageRandomNum(randomKey);
-			String result = userService.studentRegist(classId, mobile, password);
+			String result = userService.studentRegist(mobile, password);
 			if (result.equals("1")) {
 				return failed(ExceptionCode.USERINFO_ERROR_CODE, "班级ID错误.");
 			} else if (result.equals("2")) {
@@ -188,12 +183,7 @@ public class UserController extends BaseController {
 		userEntity.setStudySectionId(studySectionId);
 		userEntity.setGradeLevelId(gradeLevelId);
 		userEntity.setBookVersionId(bookVersionId);
-		if (StringUtil.isNotEmpty(schoolId)) {
-			//解除学校关系
-			schoolService.updateUserSchool(getCurrentUser().getId());
-			//重新绑定学校关系
-			schoolService.saveUserSchool(schoolId, getCurrentUser().getId());
-		}
+		userEntity.setSchoolid(schoolId);
 		try {
 			int perfectInfo = userService.updateUserInfo(userEntity, null);
 			if (perfectInfo > 0) {
@@ -219,9 +209,11 @@ public class UserController extends BaseController {
 			@ApiImplicitParam(name = "sex", value = "性别", required = false, dataType = "String"),
 			@ApiImplicitParam(name = "studySectionId", value = "学段(小初高)", required = false, dataType = "Integer"),
 			@ApiImplicitParam(name = "gradeLevelId", value = "年级", required = false, dataType = "Integer"),
-			@ApiImplicitParam(name = "bookVersionId", value = "教材版本", required = false, dataType = "Integer") })
+			@ApiImplicitParam(name = "bookVersionId", value = "教材版本", required = false, dataType = "Integer"),
+			@ApiImplicitParam(name = "schoolId", value = "教材版本", required = false, dataType = "Integer")
+	})
 	@RequestMapping(value = "complateUserInfo.do", method = RequestMethod.PUT)
-	public RestResult<String> complateUserInfo(String userId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId) {
+	public RestResult<String> complateUserInfo(String userId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId,String schoolId) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(Long.parseLong(userId));
 		userEntity.setName(name);
@@ -230,6 +222,7 @@ public class UserController extends BaseController {
 		userEntity.setStudySectionId(studySectionId);
 		userEntity.setGradeLevelId(gradeLevelId);
 		userEntity.setBookVersionId(bookVersionId);
+		userEntity.setSchoolid(schoolId);
 		try {
 			int perfectInfo = userService.updateUserInfo(userEntity, null);
 			if (perfectInfo > 0) {

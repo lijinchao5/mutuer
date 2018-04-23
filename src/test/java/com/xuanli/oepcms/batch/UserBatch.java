@@ -29,13 +29,12 @@ public class UserBatch extends BaseTest {
 	//批量生成教师和学生
 	//@Test
 	public void addUserBatch() {
-		String schoolId = "DF12667";
 		int teacherNum = 3;
 		int picStudentNum = 10;
 		for (int i = 0; i < teacherNum; i++) {
 			String mobile = "133333333" + (i < 10 ? "0" + i : "" + i);
 			System.out.println("教师账号为:"+mobile);
-			userService.teacherRegist(schoolId, mobile, "888888");
+			userService.teacherRegist(mobile, "888888");
 			String a = userService.loginTest(mobile);
 			UserEntity userEntity = JSONObject.parseObject(a,UserEntity.class);
 			ClasEntity clasEntity = new ClasEntity();

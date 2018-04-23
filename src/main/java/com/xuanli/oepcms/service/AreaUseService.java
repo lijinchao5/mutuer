@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xuanli.oepcms.entity.AreaUseEntity;
-import com.xuanli.oepcms.entity.SchoolEntity;
+import com.xuanli.oepcms.entity.SchoolDataEntity;
 import com.xuanli.oepcms.mapper.AreaUseEntityMapper;
 
 /**
@@ -52,13 +52,13 @@ public class AreaUseService extends BaseService{
 	 * @param SchoolEntities
 	 * @param AreaUseEntitities
 	 */
-	public void updateAreaDate(List<SchoolEntity> SchoolEntities, List<AreaUseEntity> AreaUseEntitities) {
-		for (SchoolEntity schoolEntity : SchoolEntities) {
-			schoolService.updateSchool(schoolEntity);
-		}
-		for (AreaUseEntity areaUseEntity : AreaUseEntitities) {
-			deleteAreaDate(areaUseEntity);
-			saveAreaDate(areaUseEntity);
-		}
-	}
+//	public void updateAreaDate(List<SchoolEntity> SchoolEntities, List<AreaUseEntity> AreaUseEntitities) {
+//		for (SchoolEntity schoolEntity : SchoolEntities) {
+//			schoolService.updateSchool(schoolEntity);
+//		}
+//		for (AreaUseEntity areaUseEntity : AreaUseEntitities) {
+//			deleteAreaDate(areaUseEntity);
+//			saveAreaDate(areaUseEntity);
+//		}
+//	}
 }

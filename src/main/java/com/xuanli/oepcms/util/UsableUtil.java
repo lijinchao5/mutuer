@@ -4,16 +4,13 @@
 package com.xuanli.oepcms.util;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuanli.oepcms.entity.AreaUseEntity;
 import com.xuanli.oepcms.entity.UserEntity;
-import com.xuanli.oepcms.entity.UserSchoolEntity;
 import com.xuanli.oepcms.mapper.AreaUseEntityMapper;
-import com.xuanli.oepcms.mapper.SchoolEntityMapper;
 import com.xuanli.oepcms.mapper.UserEntityMapper;
 
 /**
@@ -24,8 +21,6 @@ import com.xuanli.oepcms.mapper.UserEntityMapper;
 public class UsableUtil {
 	@Autowired
 	AreaUseEntityMapper AreaUseDao;
-	@Autowired
-	SchoolEntityMapper schoolDao;
 	@Autowired
 	UserEntityMapper userDao;
 
@@ -45,27 +40,6 @@ public class UsableUtil {
 		AreaUseEntity areaUseEntity = AreaUseDao.getEndDateByAreaId(areaId);
 		if (null != areaUseEntity) {
 			Date endDate = areaUseEntity.getEnddate();
-			if (null != endDate && endDate.getTime() > now.getTime()) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Title: getEndDateBySchoolId 
-	 * Description:  角色(roleId)为3/8(老师或学校教研员)
-	 * @date 2018年3月26日 下午12:44:27
-	 * @param userId
-	 * @return
-	 */
-	public boolean getEndDateBySchoolId(Long userId) {
-		List<UserSchoolEntity> UserSchoolEntities = schoolDao.getEndDateBySchoolId(userId);
-		if (null != UserSchoolEntities && UserSchoolEntities.size() > 0) {
-			Date endDate = UserSchoolEntities.get(0).getEnddate();
 			if (null != endDate && endDate.getTime() > now.getTime()) {
 				return true;
 			} else {
