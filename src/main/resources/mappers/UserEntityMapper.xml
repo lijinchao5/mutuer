@@ -498,7 +498,6 @@
   	SELECT
 		u.name_num,
 		u.mobile,
-		c.clas_id,
 		s.school_name schoolName,
 		IFNULL(
 			(
@@ -518,7 +517,7 @@
 					SELECT
 						(
 							SELECT
-								code
+								CODE
 							FROM
 								xl_area
 							WHERE
@@ -533,44 +532,33 @@
 				xl_area xla
 			WHERE
 				xla. CODE = s.region
-			) address_province,
-			(
-				SELECT
-					(
-						SELECT
-							code
-						FROM
-							xl_area
-						WHERE
-							id = xla.parent_id
-					)
-				FROM
-					xl_area xla
-				WHERE
-					xla. CODE = s.region
-			) address_city,
-			(
-				SELECT
-					code
-				FROM
-					xl_area xla
-				WHERE
-					xla. CODE = s.region
-			) address_area,
+		) address_province,
 		(
 			SELECT
-				NAME
+				(
+					SELECT
+						CODE
+					FROM
+						xl_area
+					WHERE
+						id = xla.parent_id
+				)
 			FROM
-				xl_dic_detail dd
+				xl_area xla
 			WHERE
-				dd.dic_id = 2
-			AND dd.name_val = c.grade
-		) grade,
-		c.name className
+				xla. CODE = s.region
+		) address_city,
+		(
+			SELECT
+				CODE
+			FROM
+				xl_area xla
+			WHERE
+				xla. CODE = s.region
+		) address_area
 	FROM
 		xl_user u
 	LEFT JOIN xl_user_clas uc ON u.id = uc.user_id
-	LEFT JOIN xl_clas c ON uc.clas_id = c.id
 	LEFT JOIN xl_school_data s ON u.schoolid = s.id
 	WHERE
 		u.id = #{id}
