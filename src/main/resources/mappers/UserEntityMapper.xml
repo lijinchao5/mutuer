@@ -497,14 +497,14 @@
 		IFNULL(
 			(
 				SELECT
-					NAME
+					name_val
 				FROM
 					xl_dic_detail dd
 				WHERE
 					dd.dic_id = 3
-				AND dd.name_val = u.book_version_id
+				AND dd.name_val = u.book_version_id and dd.enable_flag = 'T'
 			),
-			'其他'
+			'0'
 		) bookVersion,
 		(
 			SELECT
