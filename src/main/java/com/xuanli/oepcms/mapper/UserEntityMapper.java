@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
-import com.xuanli.oepcms.entity.UserSchoolEntity;
 
 @Mapper
 public interface UserEntityMapper {
@@ -87,13 +86,6 @@ public interface UserEntityMapper {
 	 * @CreateDate:  2018年1月16日 下午2:56:22
 	 */
 	int getClasStudentsByTeacher(Long teacherId);
-
-	/**
-	 * @Description:  TODO
-	 * @CreateName:  QiaoYu 
-	 * @CreateDate:  2018年1月16日 下午3:26:25
-	 */
-	List<UserSchoolEntity> getUserSchool(Long userId);
 
 	/**
 	 * @Description:  TODO 导出列表信息

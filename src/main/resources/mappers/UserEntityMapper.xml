@@ -403,11 +403,6 @@
   </insert>
   
   
-  <select id="getUserSchool" resultType="com.xuanli.oepcms.entity.UserSchoolEntity" parameterType="java.lang.Long">
-  	select id,user_id userId,school_id schoolid from xl_user_school where user_id=#{value}
-  
-  </select>
-  
   <select id="findStudentByPageTotal" parameterType="com.xuanli.oepcms.entity.UserEntity" resultType="java.lang.Integer">
 	  	select
 			count(*)

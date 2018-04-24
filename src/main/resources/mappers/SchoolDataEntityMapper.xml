@@ -172,9 +172,9 @@
 			) address_area
 		FROM
 			xl_school_data xs
-		LEFT JOIN xl_user_school xus ON xus.school_id = xs.id
+		LEFT JOIN xl_user xus ON xus.schoolid = xs.id
 		WHERE
-			xus.user_id = #{userId}
+			xus.id = #{userId}
 	</select>
   
 </mapper>

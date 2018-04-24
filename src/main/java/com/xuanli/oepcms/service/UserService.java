@@ -253,15 +253,6 @@ public class UserService extends BaseService {
 	/**
 	 * @Description: TODO
 	 * @CreateName: QiaoYu
-	 * @CreateDate: 2018年1月16日 下午3:26:01
-	 */
-	public List<UserSchoolEntity> getUserSchool(Long userId) {
-		return userDao.getUserSchool(userId);
-	}
-
-	/**
-	 * @Description: TODO
-	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月16日 下午4:08:24
 	 */
 	public int addClasStudentBatchTest(int size, Long clasId, Long userId) {
