@@ -59,9 +59,9 @@ spring:
   #Redis配置
   redis:
     timeout: 3000
-    port: 3379
-    password: 1Lu.8x5YRJ
-    host: 39.106.190.46
+    port: 5479
+    password: oep-be-123!@#098)(*
+    host: 39.104.76.67
     database: 5 
     pool:
       max-wait: 1000
