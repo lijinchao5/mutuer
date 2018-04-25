@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xuanli.oepcms.entity.ClasEntity;
-import com.xuanli.oepcms.entity.UserSchoolEntity;
+import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.mapper.ClasEntityMapper;
 import com.xuanli.oepcms.util.PageBean;
 import com.xuanli.oepcms.util.StringUtil;
@@ -91,5 +91,36 @@ public class ClasService {
 	 */
 	public ClasEntity selectByClassId(String clasId) {
 		return clasDao.selectByClassId(clasId);
+	}
+
+	/**
+	 * Title: getStudentClass 
+	 * Description:  
+	 * @date 2018年4月25日 上午10:26:25
+	 * @param studentId
+	 * @return
+	 */
+	public List<ClasEntity> getStudentClass(Long studentId) {
+		return clasDao.selectStudentClassList(studentId);
+	}
+	
+	/**
+	 * Title: deleteStudentClass 
+	 * Description:  
+	 * @date 2018年4月25日 上午10:28:40
+	 * @param userId
+	 * @param studentId
+	 * @return
+	 */
+	public String deleteStudentClass(Long studentId, Long classId) {
+		UserClasEntity userClasEntity = new UserClasEntity();
+		userClasEntity.setUserId(studentId);
+		userClasEntity.setClasId(classId);
+		int result = clasDao.deleteStudentClass(userClasEntity);
+		if(result>0) {
+			return "1";
+		}else {
+			return "0";
+		}
 	}
 }

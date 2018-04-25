@@ -6,7 +6,6 @@
  */
 package com.xuanli.oepcms.batch;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONObject;
@@ -27,14 +26,17 @@ public class UserBatch extends BaseTest {
 	
 	
 	//批量生成教师和学生
-	//@Test
+	// @Test
 	public void addUserBatch() {
-		int teacherNum = 3;
+		int teacherNum = 10;
 		int picStudentNum = 10;
 		for (int i = 0; i < teacherNum; i++) {
-			String mobile = "133333333" + (i < 10 ? "0" + i : "" + i);
+			String mobile = "132333333" + (i < 10 ? "0" + i : "" + i);
 			System.out.println("教师账号为:"+mobile);
-			userService.teacherRegist(mobile, "888888");
+			String teacherRegist = userService.teacherRegist(mobile, "888888");
+			if (teacherRegist.equals("2")) {
+				break;
+			}
 			String a = userService.loginTest(mobile);
 			UserEntity userEntity = JSONObject.parseObject(a,UserEntity.class);
 			ClasEntity clasEntity = new ClasEntity();

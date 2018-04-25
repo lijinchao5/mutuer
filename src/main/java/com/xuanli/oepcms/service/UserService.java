@@ -18,11 +18,11 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xuanli.oepcms.activemq.bean.ActivemqMsgBean;
 import com.xuanli.oepcms.activemq.service.StudentMqService;
 import com.xuanli.oepcms.contents.ExceptionCode;
+import com.xuanli.oepcms.entity.ClasEntity;
 import com.xuanli.oepcms.entity.ExamEntity;
 import com.xuanli.oepcms.entity.HomeworkEntity;
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
-import com.xuanli.oepcms.entity.UserSchoolEntity;
 import com.xuanli.oepcms.mapper.UserEntityMapper;
 import com.xuanli.oepcms.util.FileUtil;
 import com.xuanli.oepcms.util.PageBean;
@@ -51,6 +51,8 @@ public class UserService extends BaseService {
 	ExamService examService;
 	@Autowired
 	StudentMqService studentMqService;
+	@Autowired
+	ClasService clasService;
 
 	/**
 	 * @Description: TODO
@@ -512,6 +514,27 @@ public class UserService extends BaseService {
 			return okNoResult("修改密码成功");
 		} else {
 			return failed(ExceptionCode.UPDATE_PASSWORD_ERROR, "修改密码失败");
+		}
+	}
+
+	/**
+	 * Title: inserUserClas 
+	 * Description:  
+	 * @date 2018年4月25日 上午10:26:58
+	 * @param userId
+	 * @param classId
+	 * @return
+	 */
+	public String inserUserClas(Long userId, String classId) {
+		ClasEntity clasEntity = clasService.selectByClassId(classId);
+		UserClasEntity userClasEntity = new UserClasEntity();
+		userClasEntity.setUserId(userId);
+		userClasEntity.setClasId(clasEntity.getId().longValue());
+		int inserUserClas = userDao.inserUserClas(userClasEntity);
+		if (inserUserClas > 0) {
+			return "1";
+		} else {
+			return "0";
 		}
 	}
 }

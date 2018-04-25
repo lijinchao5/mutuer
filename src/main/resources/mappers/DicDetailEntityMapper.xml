@@ -109,7 +109,8 @@
 	FROM
 		xl_area
 	WHERE
-		level_type = 1
+	enable_flag = 'T'
+	AND	level_type = 1
 	order by code
   </select>
   

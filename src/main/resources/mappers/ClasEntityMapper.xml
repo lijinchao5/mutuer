@@ -272,9 +272,21 @@
 	clas_id = #{clasId,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectStudentClassList" resultType="com.xuanli.oepcms.entity.ClasEntity" parameterType="java.lang.Long">
+	SELECT
+		xc.id,
+		xc.`name`,
+		xc.grade
+	FROM
+		xl_clas xc
+	LEFT JOIN xl_user_clas xuc ON xuc.clas_id = xc.id
+	WHERE
+		xuc.user_id = #{value}
+  </select>
   
-  
-  
+  <delete id="deleteStudentClass" parameterType="com.xuanli.oepcms.entity.UserClasEntity">
+	DELETE FROM xl_user_clas WHERE user_id = #{userId} AND clas_id = #{clasId}
+  </delete>
   
   
   

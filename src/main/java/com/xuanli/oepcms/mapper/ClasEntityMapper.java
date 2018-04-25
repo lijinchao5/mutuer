@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.xuanli.oepcms.entity.ClasEntity;
+import com.xuanli.oepcms.entity.UserClasEntity;
 @Mapper
 public interface ClasEntityMapper {
     int deleteById(Long id);
@@ -61,5 +62,20 @@ public interface ClasEntityMapper {
 	 * @return  
 	 */
 	ClasEntity selectByClassId(String clasId);
+
+	/**Title: selectStudentClassList 
+	 * Description:  
+	 * @date 2018年4月25日 上午9:56:30
+	 * @return  
+	 */
+	List<ClasEntity> selectStudentClassList(Long studentId);
+
+	/**Title: deleteStudentClass 
+	 * Description:  
+	 * @date 2018年4月25日 上午10:29:16
+	 * @param userClasEntity
+	 * @return  
+	 */
+	int deleteStudentClass(UserClasEntity userClasEntity);
 	
 }

@@ -39,6 +39,8 @@ public class ExceptionCode {
 	public static final int PERFECT_USERINFO_ERROR = 1010;
 	/** 修改密码失败 **/
 	public static final int UPDATE_PASSWORD_ERROR = 1011;
+	/** 学生添加班级错误 **/
+	public static final int ADD_STUDENT_CLASS_ERROR = 1012;
 
 	/** 参数验证错误 */
 	public static final int PARAMETER_VALIDATE_ERROR_CODE = 7001;
