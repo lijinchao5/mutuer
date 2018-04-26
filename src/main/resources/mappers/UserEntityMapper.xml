@@ -401,7 +401,7 @@
 	  insert into xl_user_clas(user_id,clas_id) values(#{userId,jdbcType=BIGINT}, #{clasId,jdbcType=BIGINT})
 	</if>
 	<if test="allSize>0">
-	  update xl_user_clas(user_id,clas_id) values(#{userId,jdbcType=BIGINT}, #{clasId,jdbcType=BIGINT})
+	  update xl_user_clas set user_id = #{userId,jdbcType=BIGINT} where user_id = #{userId,jdbcType=BIGINT} and clas_id = #{clasId,jdbcType=BIGINT}
 	</if>
   </insert>
   
