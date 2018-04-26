@@ -40,4 +40,7 @@ public class DicService {
 		return dicDetailEntityMapper.findDicByType(dicEntity);
 	}
 	
+	public List<DicDetailEntity> getBookVersion(String grade) {
+		return dicDetailEntityMapper.getBookVersion(grade);
+	}
 }

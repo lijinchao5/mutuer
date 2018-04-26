@@ -17,5 +17,13 @@ public interface DicDetailEntityMapper {
 	public List<DicDetailEntity> findDicByType(DicEntity dicEntity);
 
 	public List<DicDetailEntity> findDicByType9(DicEntity dicEntity);
+
+	/**Title: getBookVersion 
+	 * Description:  
+	 * @date 2018年4月26日 上午10:35:35
+	 * @param grade
+	 * @return  
+	 */
+	public List<DicDetailEntity> getBookVersion(String grade);
 	
 }

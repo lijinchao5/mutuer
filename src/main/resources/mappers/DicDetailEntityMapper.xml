@@ -113,5 +113,26 @@
 	AND	level_type = 1
 	order by code
   </select>
+  <select id="getBookVersion" parameterType="java.lang.String" resultMap="BaseResultMap">
+	SELECT
+		*
+	FROM
+		xl_dic_detail dd
+	LEFT JOIN (
+		SELECT
+			xbv.version_val,
+			xbv.grade_val
+		FROM
+			xl_dic_detail xdd
+		LEFT JOIN xl_book_version xbv ON xdd.name_val = xbv.grade_val
+		WHERE
+			xdd.enable_flag = 'T'
+		AND xdd.dic_id = 4
+		AND xdd.name_val = #{nameVal}
+	) bv ON dd.name_val = bv.version_val
+	WHERE
+		dd.dic_id = 3
+	AND dd.name_val = bv.version_val
+  </select>
   
 </mapper>
