@@ -4,6 +4,7 @@
 package com.xuanli.oepcms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
-import com.xuanli.oepcms.entity.ClasEntity;
 import com.xuanli.oepcms.service.ClasService;
 import com.xuanli.oepcms.service.UserService;
 import com.xuanli.oepcms.vo.RestResult;
@@ -36,7 +36,7 @@ public class StudentClassController extends BaseController {
 	@ApiOperation(value = "查询学生班级", notes = "查询学生班级")
 	@ApiImplicitParams({})
 	@RequestMapping(value = "getStudentClass.do", method = RequestMethod.GET)
-	public RestResult<List<ClasEntity>> getStudentClass() {
+	public RestResult<List<Map<String, Object>>> getStudentClass() {
 		Long studentId = getCurrentUser().getId();
 		return ok(classService.getStudentClass(studentId));
 	}

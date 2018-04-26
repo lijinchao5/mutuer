@@ -2,6 +2,7 @@ package com.xuanli.oepcms.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,7 +101,7 @@ public class ClasService {
 	 * @param studentId
 	 * @return
 	 */
-	public List<ClasEntity> getStudentClass(Long studentId) {
+	public List<Map<String, Object>> getStudentClass(Long studentId) {
 		return clasDao.selectStudentClassList(studentId);
 	}
 	

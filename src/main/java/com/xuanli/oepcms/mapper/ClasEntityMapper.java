@@ -1,6 +1,7 @@
 package com.xuanli.oepcms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -68,7 +69,7 @@ public interface ClasEntityMapper {
 	 * @date 2018年4月25日 上午9:56:30
 	 * @return  
 	 */
-	List<ClasEntity> selectStudentClassList(Long studentId);
+	List<Map<String, Object>> selectStudentClassList(Long studentId);
 
 	/**Title: deleteStudentClass 
 	 * Description:  

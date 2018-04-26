@@ -272,7 +272,7 @@
 	clas_id = #{clasId,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectStudentClassList" resultType="com.xuanli.oepcms.entity.ClasEntity" parameterType="java.lang.Long">
+  <select id="selectStudentClassList" parameterType="java.lang.Long" resultType="Map">
 	SELECT
 		xc.id,
 		xc.`name`,
