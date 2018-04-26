@@ -494,6 +494,7 @@
 		u.name_num,
 		u.mobile,
 		s.school_name schoolName,
+		s.id schoolId,
 		IFNULL(
 			(
 				SELECT
