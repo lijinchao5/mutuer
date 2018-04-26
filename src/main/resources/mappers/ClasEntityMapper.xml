@@ -276,7 +276,49 @@
 	SELECT
 		xc.id,
 		xc.`name`,
-		xc.grade
+		xc.grade,
+		(
+			SELECT
+				count(*)
+			FROM
+				xl_homework xh
+			WHERE
+				xh.clas_id = xc.id
+		) totalHomework,
+		(
+			SELECT
+				count(*)
+			FROM
+				xl_homework xh
+			LEFT JOIN xl_homework_student xhs ON xh.id = xhs.homework_id
+			WHERE
+				xh.clas_id = xc.id
+			AND xhs.student_id = xuc.user_id
+			AND xhs.work_complate = 'T'
+		) complateHomework,
+		(
+			SELECT
+				count(*)
+			FROM
+				xl_exam xe
+			WHERE
+				xe.class_id = xc.id
+		) totalExam,
+		(
+			SELECT
+				count(*)
+			FROM
+				xl_exam xe
+			LEFT JOIN xl_exam_student xes ON xe.id = xes.exam_id
+			WHERE
+				xe.class_id = xc.id
+			AND xes.student_id = xuc.user_id
+			AND (
+				xes.complate = 'S'
+				OR xes.complate = 'T'
+				OR xes.complate = 'E'
+			)
+		) complateExam
 	FROM
 		xl_clas xc
 	LEFT JOIN xl_user_clas xuc ON xuc.clas_id = xc.id

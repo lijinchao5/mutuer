@@ -36,8 +36,29 @@ public class ClasEntity extends BasePageBean{
     //是否可以批量,0:可以  其他:都不可以
     private int canBatch;
     
+    private int complateExam;
+    private int complateHomework;
     
-    public int getCanBatch() {
+    
+    
+    
+    public int getComplateExam() {
+		return complateExam;
+	}
+
+	public void setComplateExam(int complateExam) {
+		this.complateExam = complateExam;
+	}
+
+	public int getComplateHomework() {
+		return complateHomework;
+	}
+
+	public void setComplateHomework(int complateHomework) {
+		this.complateHomework = complateHomework;
+	}
+
+	public int getCanBatch() {
 		return canBatch;
 	}
 

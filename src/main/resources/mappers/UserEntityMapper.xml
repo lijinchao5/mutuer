@@ -400,6 +400,9 @@
 	<if test="allSize==0">
 	  insert into xl_user_clas(user_id,clas_id) values(#{userId,jdbcType=BIGINT}, #{clasId,jdbcType=BIGINT})
 	</if>
+	<if test="allSize>0">
+	  update xl_user_clas(user_id,clas_id) values(#{userId,jdbcType=BIGINT}, #{clasId,jdbcType=BIGINT})
+	</if>
   </insert>
   
   
