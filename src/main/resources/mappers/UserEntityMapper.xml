@@ -9,7 +9,7 @@
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="birth_date" property="birthDate" jdbcType="DATE" />
     <result column="study_section_id" property="studySectionId" jdbcType="INTEGER" />
-    <result column="grade__level_id" property="gradeLevelId" jdbcType="INTEGER" />
+    <result column="grade_level_id" property="gradeLevelId" jdbcType="INTEGER" />
     <result column="book_version_id" property="bookVersionId" jdbcType="INTEGER" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="name_num" property="nameNum" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     <result column="areaid" property="areaid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, mobile, password, sex, birth_date, study_section_id, grade__level_id, book_version_id, 
+    id, name, mobile, password, sex, birth_date, study_section_id, grade_level_id, book_version_id, 
     role_id, name_num, remark, photo,create_id, create_date, update_id, update_date, enable_flag,cms_id,schoolid,areaid
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -84,7 +84,7 @@
         study_section_id,
       </if>
       <if test="gradeLevelId != null" >
-        grade__level_id,
+        grade_level_id,
       </if>
       <if test="bookVersionId != null" >
         book_version_id,
@@ -220,7 +220,7 @@
         study_section_id = #{studySectionId,jdbcType=INTEGER},
       </if>
       <if test="gradeLevelId != null" >
-        grade__level_id = #{gradeLevelId,jdbcType=INTEGER},
+        grade_level_id = #{gradeLevelId,jdbcType=INTEGER},
       </if>
       <if test="bookVersionId != null" >
         book_version_id = #{bookVersionId,jdbcType=INTEGER},
@@ -286,7 +286,7 @@
         study_section_id = #{studySectionId,jdbcType=INTEGER},
       </if>
       <if test="gradeLevelId != null" >
-        grade__level_id = #{gradeLevelId,jdbcType=INTEGER},
+        grade_level_id = #{gradeLevelId,jdbcType=INTEGER},
       </if>
       <if test="roleId != null" >
         role_id = #{roleId,jdbcType=INTEGER},
@@ -351,7 +351,7 @@
         study_section_id = #{studySectionId,jdbcType=INTEGER},
       </if>
       <if test="gradeLevelId != null" >
-        grade__level_id = #{gradeLevelId,jdbcType=INTEGER},
+        grade_level_id = #{gradeLevelId,jdbcType=INTEGER},
       </if>
       <if test="bookVersionId != null" >
         book_version_id = #{bookVersionId,jdbcType=INTEGER},
@@ -449,7 +449,7 @@
 			xu.sex,
 			xu.birth_date,
 			xu.study_section_id,
-			xu.grade__level_id,
+			xu.grade_level_id,
 			xu.book_version_id,
 			xu.role_id,
 			xu.name_num,
@@ -470,7 +470,7 @@
 	</select>
   <select id="getClasUserStudent" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity">
 		select 
-			xu.id, xu.name, xu.mobile, xu.password, xu.sex, xu.birth_date, xu.study_section_id, xu.grade__level_id, xu.book_version_id,xu.role_id,
+			xu.id, xu.name, xu.mobile, xu.password, xu.sex, xu.birth_date, xu.study_section_id, xu.grade_level_id, xu.book_version_id,xu.role_id,
 			xu.name_num, xu.remark, xu.create_id, xu.create_date, xu.update_id, xu.update_date, xu.enable_flag
 		from 
 			(select * from xl_user_clas where clas_id=#{clasId}) xuc 

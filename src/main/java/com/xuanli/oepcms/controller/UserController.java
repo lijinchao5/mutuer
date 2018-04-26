@@ -42,6 +42,7 @@ public class UserController extends BaseController {
 	SessionUtil sessionUtil;
 	@Autowired
 	SchoolService schoolService;
+
 	@ApiIgnore
 	@RequestMapping(value = "insert.do", method = RequestMethod.POST)
 	public RestResult<String> saveUser(@RequestParam UserEntity user) {
@@ -74,22 +75,21 @@ public class UserController extends BaseController {
 	 * @CreateDate: 2018年1月16日 下午1:38:00
 	 */
 	@ApiOperation(value = "教师注册", notes = "教师注册方法")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "mobile", value = "教师手机号", required = true, dataType = "String"),
+	@ApiImplicitParams({ @ApiImplicitParam(name = "mobile", value = "教师手机号", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomStr", value = "图片验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "mobileRandomStr", value = "手机短信验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomKey", value = "随机验证码关键Key不能为空", required = true, dataType = "String") })
 	@RequestMapping(value = "teacher_regist.do", method = RequestMethod.POST)
-	public RestResult<String> teacher_regist(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password,
-			@RequestParam String mobileRandomStr, @RequestParam String randomKey) {
+	public RestResult<String> teacher_regist(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password, @RequestParam String mobileRandomStr,
+			@RequestParam String randomKey) {
 		if (StringUtil.isEmpty(randomKey)) {
 			return failed(ExceptionCode.USERINFO_ERROR_CODE, "随机验证码关键Key不能为空");
 		}
 		// if (StringUtil.isNotEmpty(randomStr) &&
 		// randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey))) {
 		if (StringUtil.isNotEmpty(randomStr) && (randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey)) || randomStr.equals("1234"))) {
-			
+
 			if (StringUtil.isEmpty(mobile)) {
 				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不能为空.");
 			}
@@ -123,15 +123,14 @@ public class UserController extends BaseController {
 	 * @CreateDate: 2018年1月16日 下午1:38:08
 	 */
 	@ApiOperation(value = "学生注册", notes = "学生注册方法")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "mobile", value = "学生手机号", required = true, dataType = "String"),
+	@ApiImplicitParams({ @ApiImplicitParam(name = "mobile", value = "学生手机号", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomStr", value = "图片验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "mobileRandomStr", value = "手机短信验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomKey", value = "随机验证码关键Key不能为空", required = true, dataType = "String") })
 	@RequestMapping(value = "student_regist.do", method = RequestMethod.POST)
-	public RestResult<String> student_regist(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password,
-			@RequestParam String mobileRandomStr, @RequestParam String randomKey) {
+	public RestResult<String> student_regist(@RequestParam String mobile, @RequestParam String randomStr, @RequestParam String password, @RequestParam String mobileRandomStr,
+			@RequestParam String randomKey) {
 		if (StringUtil.isEmpty(randomKey)) {
 			return failed(ExceptionCode.USERINFO_ERROR_CODE, "随机验证码关键Key不能为空");
 		}
@@ -171,8 +170,7 @@ public class UserController extends BaseController {
 			@ApiImplicitParam(name = "studySectionId", value = "学段(小初高)", required = false, dataType = "Integer"),
 			@ApiImplicitParam(name = "gradeLevelId", value = "年级", required = false, dataType = "Integer"),
 			@ApiImplicitParam(name = "bookVersionId", value = "教材版本", required = false, dataType = "Integer"),
-			@ApiImplicitParam(name = "schoolId", value = "学校id", required = false, dataType = "String")
-	})
+			@ApiImplicitParam(name = "schoolId", value = "学校id", required = false, dataType = "String") })
 	@RequestMapping(value = "perfectUserInfo.do", method = RequestMethod.PUT)
 	public RestResult<String> perfectUserInfo(String schoolId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId) {
 		UserEntity userEntity = new UserEntity();
@@ -210,10 +208,10 @@ public class UserController extends BaseController {
 			@ApiImplicitParam(name = "studySectionId", value = "学段(小初高)", required = false, dataType = "Integer"),
 			@ApiImplicitParam(name = "gradeLevelId", value = "年级", required = false, dataType = "Integer"),
 			@ApiImplicitParam(name = "bookVersionId", value = "教材版本", required = false, dataType = "Integer"),
-			@ApiImplicitParam(name = "schoolId", value = "教材版本", required = false, dataType = "Integer")
-	})
+			@ApiImplicitParam(name = "schoolId", value = "教材版本", required = false, dataType = "Integer") })
 	@RequestMapping(value = "complateUserInfo.do", method = RequestMethod.PUT)
-	public RestResult<String> complateUserInfo(String userId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId,String schoolId) {
+	public RestResult<String> complateUserInfo(String userId, String name, Date birthDate, String sex, Integer studySectionId, Integer gradeLevelId, Integer bookVersionId,
+			String schoolId) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setId(Long.parseLong(userId));
 		userEntity.setName(name);
@@ -411,16 +409,23 @@ public class UserController extends BaseController {
 	@ApiOperation(value = "修改用户个人信息", notes = "修改用户个人信息方法")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "name", value = "真实姓名", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "sex", value = "性别  W:女,M:男", required = true, dataType = "String"),
-			@ApiImplicitParam(name = "birthDate", value = "出生日期 yyyy-MM-dd", required = true, dataType = "String") })
+			@ApiImplicitParam(name = "birthDate", value = "出生日期 yyyy-MM-dd", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "schoolId", value = "学校id", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "Integer"),
+			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = true, dataType = "Integer") })
 	@RequestMapping(value = "updatePersionalInfo.do", method = RequestMethod.POST)
 	public RestResult<String> updatePersionalInfo(@RequestParam(required = false) String name, @RequestParam(required = false) String sex,
-			@RequestParam(required = false) Date birthDate, @RequestParam(required = false, value = "picfile") String picfile) {
+			@RequestParam(required = false) Date birthDate, @RequestParam(required = false, value = "picfile") String picfile, @RequestParam(required = false) String schoolId,
+			@RequestParam(required = false) Integer grade, @RequestParam(required = false) Integer bookVersion) {
 		try {
 			UserEntity userEntity = new UserEntity();
 			userEntity.setId(getCurrentUser().getId());
 			userEntity.setName(name);
 			userEntity.setSex(sex);
 			userEntity.setBirthDate(birthDate);
+			userEntity.setSchoolid(schoolId);
+			userEntity.setGradeLevelId(grade);
+			userEntity.setBookVersionId(bookVersion);
 			userService.updateUserInfo(userEntity, StringUtil.isEmpty(picfile) ? null : ImageUtil.decodeToBytes(picfile));
 			return okNoResult("操作成功");
 		} catch (Exception e) {
