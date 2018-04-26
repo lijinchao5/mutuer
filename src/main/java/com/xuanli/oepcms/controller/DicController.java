@@ -43,7 +43,7 @@ public class DicController extends BaseController{
 	@ApiOperation(value = "年级对应教材版本", notes = "年级对应教材版本")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "String") })
 	@RequestMapping(value = "getBookVersion.do", method = RequestMethod.GET)
-	public List<DicDetailEntity> getBookVersion(String grade) {
-		return dicService.getBookVersion(grade);
+	public  RestResult<List<DicDetailEntity>> getBookVersion(String grade) {
+		return ok(dicService.getBookVersion(grade));
 	}
 }

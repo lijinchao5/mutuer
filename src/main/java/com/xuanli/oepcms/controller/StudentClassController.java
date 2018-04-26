@@ -49,7 +49,7 @@ public class StudentClassController extends BaseController {
 	 * @return
 	 */
 	@ApiOperation(value = "增加学生班级", notes = "增加学生班级")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "classId", value = "班级id", required = true, dataType = "Long") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "classId", value = "班级id", required = true, dataType = "String") })
 	@RequestMapping(value = "addStudentClass.do", method = RequestMethod.POST)
 	public RestResult<String> addStudentClass(String classId) {
 		String result = userService.inserUserClas(getCurrentUser().getId(), classId);
