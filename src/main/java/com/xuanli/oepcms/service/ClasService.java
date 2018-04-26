@@ -102,6 +102,7 @@ public class ClasService {
 	 * @return
 	 */
 	public List<Map<String, Object>> getStudentClass(Long studentId) {
+
 		return clasDao.selectStudentClassList(studentId);
 	}
 	

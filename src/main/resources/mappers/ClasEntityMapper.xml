@@ -279,6 +279,16 @@
 		xc.grade,
 		(
 			SELECT
+				count(xu.id)
+			FROM
+				xl_user xu
+			LEFT JOIN xl_user_clas xuc ON xu.id = xuc.user_id
+			WHERE
+				xuc.clas_id = xc.id
+			AND xu.update_date IS NOT NULL
+		) totalStudent,
+		(
+			SELECT
 				count(*)
 			FROM
 				xl_homework xh
