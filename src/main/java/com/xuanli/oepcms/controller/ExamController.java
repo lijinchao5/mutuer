@@ -141,11 +141,11 @@ public class ExamController extends BaseController {
 	// 学生模拟考试列表
 	@ApiIgnore
 	@RequestMapping(value = "findStudentExamByPage.do", method = RequestMethod.GET)
-	public RestResult<PageBean> findStudentExamByPage(Integer rows, Integer page, String state) {
+	public RestResult<PageBean> findStudentExamByPage(Integer rows, Integer page, String state, Long classId) {
 		PageBean pageBean = initPageBean(page, rows);
 		// 保证这个班是这个老师创建的
 		Long userId = getCurrentUser().getId();
-		examService.findStudentExamByPage(userId, pageBean, state);
+		examService.findStudentExamByPage(userId, pageBean, state, classId);
 		return ok(pageBean);
 	}
 

@@ -234,6 +234,9 @@
 				and NOW() > xh.end_time
 			</if>
 		</if>
+		<if test="clasId != null">
+			and clas_id = #{clasId}
+		</if>
 	</select>
 	<select id="findStudentHomeworkByPage" resultType="java.util.Map" parameterType="java.util.Map">
 		SELECT
@@ -276,6 +279,9 @@
 			<if test='over == "T"'>
 				and NOW() > xh.end_time
 			</if>
+		</if>
+		<if test="clasId != null">
+			and clas_id = #{clasId}
 		</if>
 		order by xh.create_date desc
 		limit #{start},#{end}

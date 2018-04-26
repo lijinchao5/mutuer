@@ -196,13 +196,14 @@ public class HomeworkController extends BaseController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "rows", value = "每页显示条数", required = true, dataType = "Integer"),
 			@ApiImplicitParam(name = "page", value = "页数", required = true, dataType = "Integer") })
 	@RequestMapping(value = "getStudentHomeWorkList.do", method = RequestMethod.GET)
-	public RestResult<PageBean> getStudentHomeWorkList(Integer rows, Integer page, Long homeworkId, String over) {
+	public RestResult<PageBean> getStudentHomeWorkList(Integer rows, Integer page, Long homeworkId, String over, Long classId) {
 		PageBean pageBean = initPageBean(page, rows);
 		Map<String, Object> requestMap = new HashMap<String, Object>();
 		Map<String, String[]> requestMap1 = request.getParameterMap();
 		requestMap = requestParamToMap(requestMap1);
 		requestMap.put("studentId", getCurrentUser().getId());
 		requestMap.put("over", over);
+		requestMap.put("clasId", classId);
 		homeworkService.getStudentHomeWorkList(requestMap, pageBean);
 		return ok(pageBean);
 	}

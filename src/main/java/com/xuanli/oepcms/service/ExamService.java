@@ -477,10 +477,11 @@ public class ExamService extends BaseService {
 	 * @CreateName: codelion[QiaoYu]
 	 * @CreateDate: 2018年3月7日 下午3:38:05
 	 */
-	public void findStudentExamByPage(Long studentId, PageBean pageBean, String state) {
+	public void findStudentExamByPage(Long studentId, PageBean pageBean, String state, Long classId) {
 		Map<String, Object> requiredMap = new HashMap<String, Object>();
 		requiredMap.put("studentId", studentId);
 		requiredMap.put("state", state);
+		requiredMap.put("clasId", classId);
 		int total = examEntityMapper.findStudentExamByPageTotal(requiredMap);
 		pageBean.setTotal(total);
 		requiredMap.put("start", pageBean.getRowFrom());

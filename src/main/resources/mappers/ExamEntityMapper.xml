@@ -322,6 +322,9 @@
 				AND NOW() > h.end_time
 			</if>
 		</if>
+		<if test="clasId != null">
+			AND clas_id = #{clasId}
+		</if>
   </select>
   <select id="findStudentExamByPage" parameterType="map" resultType="map">
   		SELECT
@@ -380,6 +383,9 @@
 			<if test="state == 2">
 				AND NOW() > h.end_time
 			</if>
+		</if>
+		<if test="clasId != null">
+			AND clas_id = #{clasId}
 		</if>
 		order by h.create_date desc
 		limit #{start},#{end}
