@@ -10,7 +10,6 @@ import com.xuanli.oepcms.config.CustomBeanNameGenerator;
 
 @SpringBootApplication
 @ComponentScan(nameGenerator=CustomBeanNameGenerator.class)
-@ImportResource(locations = { "classpath:kaptcha.xml" })
 @ServletComponentScan
 public class OepCmsApplication {
 	public static void main(String[] args) {
