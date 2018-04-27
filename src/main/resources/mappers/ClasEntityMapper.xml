@@ -330,7 +330,7 @@
 			)
 		) complateExam,
 		xc.create_id diss,
-		xu.name name
+		xu.name teacherName
 	FROM
 		xl_clas xc
 	LEFT JOIN xl_user_clas xuc ON xuc.clas_id = xc.id
