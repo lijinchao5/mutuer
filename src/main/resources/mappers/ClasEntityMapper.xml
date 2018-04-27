@@ -263,9 +263,17 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="selectByClassId" resultType="com.xuanli.oepcms.entity.ClasEntity" parameterType="java.lang.String" >
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.String" >
 	SELECT
 	<include refid="Base_Column_List" />
+	FROM
+	xl_clas
+	WHERE
+	clas_id = #{clasId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByClassId2" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	SELECT
+		<include refid="Base_Column_List" />
 	FROM
 	xl_clas
 	WHERE

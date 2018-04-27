@@ -38,149 +38,107 @@ public class ClasEntity extends BasePageBean{
     
     private int complateExam;
     private int complateHomework;
-    
-    
-    
-    
-    public int getComplateExam() {
-		return complateExam;
+	public Long getId() {
+		return id;
 	}
-
-	public void setComplateExam(int complateExam) {
-		this.complateExam = complateExam;
+	public void setId(Long id) {
+		this.id = id;
 	}
-
-	public int getComplateHomework() {
-		return complateHomework;
+	public String getClasId() {
+		return clasId;
 	}
-
-	public void setComplateHomework(int complateHomework) {
-		this.complateHomework = complateHomework;
+	public void setClasId(String clasId) {
+		this.clasId = clasId;
 	}
-
-	public int getCanBatch() {
-		return canBatch;
+	public String getName() {
+		return name;
 	}
-
-	public void setCanBatch(int canBatch) {
-		this.canBatch = canBatch;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public int getTotalHomework() {
-		return totalHomework;
+	public Integer getSchoolId() {
+		return schoolId;
 	}
-
-	public void setTotalHomework(int totalHomework) {
-		this.totalHomework = totalHomework;
+	public void setSchoolId(Integer schoolId) {
+		this.schoolId = schoolId;
 	}
-
-	public int getTotalVExam() {
-		return totalVExam;
+	public String getCreateId() {
+		return createId;
 	}
-
-	public void setTotalVExam(int totalVExam) {
-		this.totalVExam = totalVExam;
+	public void setCreateId(String createId) {
+		this.createId = createId;
 	}
-
-	public int getTotalStudent() {
-		return totalStudent;
+	public Date getCreateDate() {
+		return createDate;
 	}
-
-	public void setTotalStudent(int totalStudent) {
-		this.totalStudent = totalStudent;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
-
-	public int getTotalExam() {
-		return totalExam;
+	public String getUpdateId() {
+		return updateId;
 	}
-
-	public void setTotalExam(int totalExam) {
-		this.totalExam = totalExam;
+	public void setUpdateId(String updateId) {
+		this.updateId = updateId;
 	}
-
-	/** 
-	 * @return 返回 grade 
-	 */
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+	public String getEnableFlag() {
+		return enableFlag;
+	}
+	public void setEnableFlag(String enableFlag) {
+		this.enableFlag = enableFlag;
+	}
 	public String getGrade() {
 		return grade;
 	}
-
-	/** 
-	 * @setParam 设置grade
-	 */
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-
-	public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getClasId() {
-        return clasId;
-    }
-
-    public void setClasId(String clasId) {
-        this.clasId = clasId == null ? null : clasId.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(Integer schoolId) {
-        this.schoolId = schoolId;
-    }
-
-    public String getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(String createId) {
-        this.createId = createId == null ? null : createId.trim();
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(String updateId) {
-        this.updateId = updateId == null ? null : updateId.trim();
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getEnableFlag() {
-        return enableFlag;
-    }
-
-    public void setEnableFlag(String enableFlag) {
-        this.enableFlag = enableFlag == null ? null : enableFlag.trim();
-    }
+	public int getTotalStudent() {
+		return totalStudent;
+	}
+	public void setTotalStudent(int totalStudent) {
+		this.totalStudent = totalStudent;
+	}
+	public int getTotalExam() {
+		return totalExam;
+	}
+	public void setTotalExam(int totalExam) {
+		this.totalExam = totalExam;
+	}
+	public int getTotalHomework() {
+		return totalHomework;
+	}
+	public void setTotalHomework(int totalHomework) {
+		this.totalHomework = totalHomework;
+	}
+	public int getTotalVExam() {
+		return totalVExam;
+	}
+	public void setTotalVExam(int totalVExam) {
+		this.totalVExam = totalVExam;
+	}
+	public int getCanBatch() {
+		return canBatch;
+	}
+	public void setCanBatch(int canBatch) {
+		this.canBatch = canBatch;
+	}
+	public int getComplateExam() {
+		return complateExam;
+	}
+	public void setComplateExam(int complateExam) {
+		this.complateExam = complateExam;
+	}
+	public int getComplateHomework() {
+		return complateHomework;
+	}
+	public void setComplateHomework(int complateHomework) {
+		this.complateHomework = complateHomework;
+	}
+    
 }

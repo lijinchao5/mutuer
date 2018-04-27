@@ -29,7 +29,6 @@ import io.swagger.annotations.ApiOperation;
 public class StudentClassController extends BaseController {
 	@Autowired
 	ClasService classService;
-
 	@Autowired
 	UserService userService;
 
