@@ -328,10 +328,13 @@
 				OR xes.complate = 'T'
 				OR xes.complate = 'E'
 			)
-		) complateExam
+		) complateExam,
+		xc.create_id diss,
+		xu.name name
 	FROM
 		xl_clas xc
 	LEFT JOIN xl_user_clas xuc ON xuc.clas_id = xc.id
+	LEFT JOIN xl_user xu ON xu.id = xc.create_id
 	WHERE
 		xuc.user_id = #{value}
   </select>
