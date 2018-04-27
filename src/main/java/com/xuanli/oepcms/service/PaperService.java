@@ -124,6 +124,7 @@ public class PaperService extends BaseService {
 				PaperSubjectEntity paperSubjectEntity = new PaperSubjectEntity();
 				BeanUtil.copyBean(resultQSE, paperSubjectEntity);
 				paperSubjectEntity.setId(null);
+				paperSubjectEntity.setCmsId(null);
 				paperSubjectEntity.setCreateDate(new Date());
 				paperSubjectEntity.setCreateId(userId);
 				paperSubjectEntity.setPaperId(paperEntity.getId());
@@ -158,6 +159,7 @@ public class PaperService extends BaseService {
 						paperSubjectDetailEntity.setQuestionNo(questionNo);
 					}
 					paperSubjectDetailEntity.setId(null);
+					paperSubjectDetailEntity.setCmsId(null);
 					paperSubjectDetailEntity.setSubjectId(paperSubjectEntity.getId());
 					paperSubjectDetailEntity.setEnableFlag("T");
 					paperSubjectDetailEntity.setCreateDate(new Date());
@@ -168,6 +170,7 @@ public class PaperService extends BaseService {
 						PaperOptionEntity paperOptionEntity = new PaperOptionEntity();
 						BeanUtil.copyBean(resultPOE, paperOptionEntity);
 						paperOptionEntity.setId(null);
+						paperOptionEntity.setCmsId(null);
 						paperOptionEntity.setCreateDate(new Date());
 						paperOptionEntity.setCreateId(userId);
 						paperOptionEntity.setDetailId(paperSubjectDetailEntity.getId());

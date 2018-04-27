@@ -238,4 +238,14 @@
 		enable_flag = 'T'
 	AND id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getBookVolume" parameterType="java.lang.Integer" resultType="java.lang.String">
+	SELECT
+		book_volume bookVolume
+	FROM
+		xl_book b
+	WHERE
+		grade = #{grade}
+	GROUP BY
+		book_volume
+  </select>
 </mapper>

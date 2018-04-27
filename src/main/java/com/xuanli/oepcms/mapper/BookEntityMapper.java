@@ -48,4 +48,10 @@ public interface BookEntityMapper {
 	 * @return  
 	 */
 	BookEntity getBookById(Long bookId);
+
+	/**Title: getbookVolume 
+	 * Description:  
+	 * @date 2018年4月27日 下午12:34:32  
+	 */
+	List<String> getBookVolume(Integer grade);
 }

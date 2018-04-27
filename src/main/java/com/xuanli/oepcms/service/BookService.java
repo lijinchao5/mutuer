@@ -48,4 +48,13 @@ public class BookService {
 	public BookEntity getBookById(Long bookId) {
 		return bookDao.getBookById(bookId);
 	}
+
+	/**Title: getbookVolume 
+	 * Description:  
+	 * @date 2018年4月27日 下午12:32:57
+	 * @return  
+	 */
+	public List<String> getBookVolume(Integer grade) {
+		return bookDao.getBookVolume(grade);
+	}
 }
