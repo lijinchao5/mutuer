@@ -57,6 +57,8 @@ public class StudentClassController extends BaseController {
 			return ok("添加班级成功");
 		} else if (result.equals("0")) {
 			return failed(ExceptionCode.ADD_STUDENT_CLASS_ERROR, "添加班级出现错误");
+		} else if (result.equals("2")) {
+			return failed(ExceptionCode.ADD_STUDENT_CLASS_ERROR, "该班级已经解散");
 		} else {
 			return failed(ExceptionCode.UNKNOW_CODE, "未知错误，请联系管理员");
 		}
