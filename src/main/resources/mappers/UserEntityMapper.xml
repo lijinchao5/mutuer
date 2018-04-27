@@ -626,4 +626,19 @@
 	LEFT JOIN xl_school_data xs ON xs.id = xu.schoolid
 	WHERE xu.id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getClassmate" parameterType="java.lang.Long" resultType="map">
+		SELECT
+			u.id,
+			u. NAME NAME,
+			u.name_num nameNum,
+			u.photo,
+			IF (u.update_date IS NULL, 0, 1) used
+		FROM
+			xl_user u
+		LEFT JOIN xl_user_clas uc ON u.id = uc.user_id
+		WHERE
+			uc.clas_id = #{clasId}
+			AND u.enable_Flag = 'T'
+      		AND u.update_date is not null
+  </select>
 </mapper>

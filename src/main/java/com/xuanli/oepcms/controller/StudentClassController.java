@@ -82,4 +82,13 @@ public class StudentClassController extends BaseController {
 			return failed(ExceptionCode.UNKNOW_CODE, "未知错误，请联系管理员");
 		}
 	}
+
+	/**
+	 */
+	@ApiOperation(value = "获取同班同学", notes = "获取同班同学")
+	@ApiImplicitParams({})
+	@RequestMapping(value = "getClassmate.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getClassmate(Long classId) {
+		return ok(userService.getClassmate(classId));
+	}
 }

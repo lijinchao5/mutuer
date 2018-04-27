@@ -140,7 +140,8 @@ public class SyncPaperService {
 										if (StringUtil.compareStr(subjectDetailBean.getQuestionAudio(), paperSubjectDetailEntity.getQuestionAudio())) {
 											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestionAudio());
 										}
-										if (StringUtil.compareStr(subjectDetailBean.getQuestion(), paperSubjectDetailEntity.getQuestion())
+										if (null != subjectDetailBean.getQuestion()
+												&& StringUtil.compareStr(subjectDetailBean.getQuestion(), paperSubjectDetailEntity.getQuestion())
 												&& subjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
 											thirdAliOSSUtil.converterFile(subjectDetailBean.getQuestion());
 										}

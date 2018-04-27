@@ -537,4 +537,8 @@ public class UserService extends BaseService {
 			return "0";
 		}
 	}
+
+	public List<Map<String, Object>> getClassmate(Long classId) {
+		return userDao.getClassmate(classId);
+	}
 }

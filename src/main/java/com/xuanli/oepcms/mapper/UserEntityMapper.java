@@ -149,4 +149,11 @@ public interface UserEntityMapper {
 	 * @return  
 	 */
 	int updateUserSchoolInfo(UserEntity userEntity);
+
+	/**Title: getClassmate 
+	 * Description:  
+	 * @date 2018年4月26日 下午5:35:06
+	 * @return  
+	 */
+	List<Map<String, Object>> getClassmate(Long classId);
 }

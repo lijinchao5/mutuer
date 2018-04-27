@@ -105,7 +105,7 @@ public class SyncQuestionService {
 							if (StringUtil.compareStr(questionSubjectDetailBean.getQuestionAudio(), subjectDetailEntity.getQuestionAudio())) {
 								thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getQuestionAudio());
 							}
-							if (StringUtil.compareStr(questionSubjectDetailBean.getQuestion(), subjectDetailEntity.getQuestion())
+							if (null != questionSubjectDetailBean.getQuestion() && StringUtil.compareStr(questionSubjectDetailBean.getQuestion(), subjectDetailEntity.getQuestion())
 									&& questionSubjectDetailBean.getQuestion().indexOf(".jpg") > 0) {
 								thirdAliOSSUtil.converterFile(questionSubjectDetailBean.getQuestion());
 							}
