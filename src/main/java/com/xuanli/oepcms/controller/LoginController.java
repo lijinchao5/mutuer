@@ -1,6 +1,5 @@
 package com.xuanli.oepcms.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -90,7 +89,6 @@ public class LoginController extends BaseController {
 		response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 		response.addHeader("Cache-Control", "post-check=0, pre-check=0");
 		response.setHeader("Pragma", "no-cache");
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		try {
 			if (StringUtil.isEmpty(randomKey)) {
 			}
