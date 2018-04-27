@@ -557,7 +557,6 @@
 		) address_area
 	FROM
 		xl_user u
-	LEFT JOIN xl_user_clas uc ON u.id = uc.user_id
 	LEFT JOIN xl_school_data s ON u.schoolid = s.id
 	WHERE
 		u.id = #{id}

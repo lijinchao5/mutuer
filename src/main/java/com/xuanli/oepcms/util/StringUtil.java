@@ -59,6 +59,22 @@ public class StringUtil {
 		Matcher m = p.matcher(email);
 		return m.matches();
 	}
+	
+	/**
+	 * @Description:  TODO
+	 * @CreateName:  QiaoYu 
+	 * @CreateDate:  2018年1月16日 下午3:20:41
+	 */
+	public static String getRandomAll(int num) {
+		String str = "zxcvbnmasdfghjklqwertyuiop1234567890";
+		StringBuilder code = new StringBuilder();  
+		Random random = new Random();  
+		for (int i = 0; i < num; i++) { 
+			int index = random.nextInt(str.length());
+			code.append(str.substring(index,index+1));  
+		}  
+		return code.toString();
+	}
 
 	/**
 	 * @Description:  TODO

@@ -78,5 +78,11 @@ public interface ClasEntityMapper {
 	 * @return  
 	 */
 	int deleteStudentClass(UserClasEntity userClasEntity);
+
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年4月27日 下午3:47:25
+	 */
+	ClasEntity selectByClassId2(String classId);
 	
 }

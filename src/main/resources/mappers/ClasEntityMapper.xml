@@ -263,9 +263,17 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="selectByClassId" resultType="com.xuanli.oepcms.entity.ClasEntity" parameterType="java.lang.String" >
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.String" >
 	SELECT
 	<include refid="Base_Column_List" />
+	FROM
+	xl_clas
+	WHERE
+	clas_id = #{clasId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByClassId2" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	SELECT
+		<include refid="Base_Column_List" />
 	FROM
 	xl_clas
 	WHERE
@@ -330,7 +338,8 @@
 			)
 		) complateExam,
 		xc.create_id diss,
-		xu.name teacherName
+		xu.name teacherName,
+		xc.clas_id classId
 	FROM
 		xl_clas xc
 	LEFT JOIN xl_user_clas xuc ON xuc.clas_id = xc.id

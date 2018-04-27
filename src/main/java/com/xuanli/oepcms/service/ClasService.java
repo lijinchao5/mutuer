@@ -124,4 +124,11 @@ public class ClasService {
 			return "0";
 		}
 	}
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年4月27日 下午3:47:05
+	 */
+	public ClasEntity selectByClassId2(String classId) {
+		return clasDao.selectByClassId2(classId);
+	}
 }
