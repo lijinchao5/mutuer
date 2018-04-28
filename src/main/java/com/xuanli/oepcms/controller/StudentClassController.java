@@ -72,7 +72,7 @@ public class StudentClassController extends BaseController {
 	 */
 	@ApiOperation(value = "删除学生班级", notes = "删除学生班级")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "classId", value = "班级id", required = true, dataType = "Long") })
-	@RequestMapping(value = "deleteStudentClass.do", method = RequestMethod.DELETE)
+	@RequestMapping(value = "deleteStudentClass.do", method = RequestMethod.POST)
 	public RestResult<String> deleteStudentClass(Long classId) {
 		String result = classService.deleteStudentClass(getCurrentUser().getId(), classId);
 		if (result.equals("1")) {

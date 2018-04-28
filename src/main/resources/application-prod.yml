@@ -141,9 +141,8 @@ systemconfig:
 # 日志输出
 logging:
   level: 
-    root: INFO
-    org.apache: INFO
-    com.ibatis: INFO
+    root: ERROR
+    org.apache: ERROR
+    com.ibatis: ERROR
     com.xuanli.oepcms.mapper: DEBUG
     com.xuanli.oepcms: DEBUG
- 
