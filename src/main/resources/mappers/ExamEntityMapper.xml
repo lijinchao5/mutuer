@@ -323,7 +323,7 @@
 			</if>
 		</if>
 		<if test="clasId != null">
-			AND clas_id = #{clasId}
+			AND class_id = #{clasId}
 		</if>
   </select>
   <select id="findStudentExamByPage" parameterType="map" resultType="map">
@@ -385,7 +385,7 @@
 			</if>
 		</if>
 		<if test="clasId != null">
-			AND clas_id = #{clasId}
+			AND class_id = #{clasId}
 		</if>
 		order by h.create_date desc
 		limit #{start},#{end}
