@@ -346,7 +346,7 @@
 	LEFT JOIN xl_user xu ON xu.id = xc.create_id
 	WHERE
 		xuc.user_id = #{value}
-	order by xc.create_id
+	order by xc.create_id desc
   </select>
   
   <delete id="deleteStudentClass" parameterType="com.xuanli.oepcms.entity.UserClasEntity">
