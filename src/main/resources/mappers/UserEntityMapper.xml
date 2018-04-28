@@ -324,7 +324,9 @@
       <if test="areaid != null" >
         areaid = #{areaid,jdbcType=VARCHAR},
       </if>
-      book_version_id = #{bookVersionId,jdbcType=INTEGER}
+      <if test="bookVersionId != null" >
+         book_version_id = #{bookVersionId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
