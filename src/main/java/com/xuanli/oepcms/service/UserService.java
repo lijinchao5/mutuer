@@ -528,8 +528,11 @@ public class UserService extends BaseService {
 	public String inserUserClas(Long userId, String classId) {
 		ClasEntity clasEntity = clasService.selectByClassId2(classId);
 		if (null == clasEntity) {
-			//该班级已经解散
+			// 该班级不存在
 			return "2";
+		} else if (StringUtil.isEmpty(clasEntity.getCreateId())) {
+			// 班级已经解散
+			return "3";
 		}
 		UserClasEntity userClasEntity = new UserClasEntity();
 		userClasEntity.setUserId(userId);
