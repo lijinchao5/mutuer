@@ -7,6 +7,7 @@
 package com.xuanli.oepcms.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -156,7 +157,7 @@ public class BookController extends BaseController {
 	@ApiOperation(value = "根据年级查询册别信息", notes = "根据年级查询册别信息")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级id", required = true, dataType = "Integer") })
 	@RequestMapping(value = "getBookVolume.do", method = RequestMethod.GET)
-	public RestResult<List<String>> getBookVolume(Integer grade) {
+	public RestResult<List<Map<String, Object>>> getBookVolume(Integer grade) {
 		return ok(bookService.getBookVolume(grade));
 	}
 

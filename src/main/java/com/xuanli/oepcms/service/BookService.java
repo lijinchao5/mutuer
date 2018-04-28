@@ -7,6 +7,7 @@
 package com.xuanli.oepcms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,7 @@ public class BookService {
 	 * @date 2018年4月27日 下午12:32:57
 	 * @return  
 	 */
-	public List<String> getBookVolume(Integer grade) {
+	public List<Map<String, Object>> getBookVolume(Integer grade) {
 		return bookDao.getBookVolume(grade);
 	}
 }

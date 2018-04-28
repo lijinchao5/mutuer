@@ -1,6 +1,7 @@
 package com.xuanli.oepcms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -53,5 +54,5 @@ public interface BookEntityMapper {
 	 * Description:  
 	 * @date 2018年4月27日 下午12:34:32  
 	 */
-	List<String> getBookVolume(Integer grade);
+	List<Map<String, Object>> getBookVolume(Integer grade);
 }

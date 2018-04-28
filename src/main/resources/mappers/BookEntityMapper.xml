@@ -238,14 +238,18 @@
 		enable_flag = 'T'
 	AND id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="getBookVolume" parameterType="java.lang.Integer" resultType="java.lang.String">
+  <select id="getBookVolume" parameterType="java.lang.Integer" resultType="java.util.Map">
 	SELECT
-		book_volume bookVolume
+		b.book_volume bookVolume,
+		xdd.`name` volumeName
 	FROM
 		xl_book b
+	LEFT JOIN xl_dic_detail xdd ON xdd.name_val = b.book_volume
 	WHERE
-		grade = #{grade}
+		xdd.dic_id = 5
+	AND grade = #{grade}
 	GROUP BY
-		book_volume
+		b.book_volume,
+		xdd.NAME
   </select>
 </mapper>
