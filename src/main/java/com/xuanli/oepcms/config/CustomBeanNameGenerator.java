@@ -8,7 +8,6 @@ public class CustomBeanNameGenerator extends AnnotationBeanNameGenerator {
 	@Override
 	protected String buildDefaultBeanName(BeanDefinition definition) {
 		// TODO Auto-generated method stub
-//		System.out.println(definition.getBeanClassName());
 		return definition.getBeanClassName();
 	}
 	

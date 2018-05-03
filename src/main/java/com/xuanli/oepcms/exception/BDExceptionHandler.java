@@ -32,7 +32,6 @@ public class BDExceptionHandler {
 	@ExceptionHandler(RuntimeException.class)
 	public ModelAndView  handleRuntimeException(RuntimeException e) {
 		e.printStackTrace();
-		System.out.println("handleRuntimeException");
 		ModelAndView mv=new ModelAndView("error");
 		mv.addObject("exp", e.getMessage());
 		return mv;

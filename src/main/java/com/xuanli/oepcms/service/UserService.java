@@ -282,7 +282,7 @@ public class UserService extends BaseService {
 				UserEntity userEntity2 = new UserEntity();
 				userEntity2.setId(userEntity.getId());
 				String nameNum = userEntity.getId().longValue() + StringUtil.getRandomZM(2);
-				System.out.println("教师id:[" + userId + "]批量生成学生账号:" + nameNum);
+				logger.info("教师id:[" + userId + "]批量生成学生账号:" + nameNum);
 				userEntity2.setNameNum(nameNum);
 				userEntity2.setUpdateDate(new Date());
 				userDao.updateUserEntity(userEntity2);

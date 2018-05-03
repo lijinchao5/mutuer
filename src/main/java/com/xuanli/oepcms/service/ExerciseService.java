@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,7 @@ import com.xuanli.oepcms.vo.RestResult;
  */
 @Service
 public class ExerciseService extends BaseService {
+	public final Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
 	ExerciseEntityMapper exerciseDao;
 	@Autowired
@@ -137,12 +139,11 @@ public class ExerciseService extends BaseService {
 		ReadSentenceEntity readSentenceEntity = readSentenceDao.selectById(sentenceId);
 		String text = readSentenceEntity.getSentenceCont();
 		String json = yunZhiSDK.generatorExerciseScore(text, file);
-		System.out.println(json);
 		if (null == json || json.trim().equals("")) {
-			System.out.println(readSentenceEntity.getId() + "---出现问题,不能计算");
+			logger.error(readSentenceEntity.getId() + "---出现问题,不能计算");
 		} else {
 			YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
-			System.out.println(JSON.toJSONString(yunZhiBean));
+			logger.error(JSON.toJSONString(yunZhiBean));
 			// 开始分析作业分数并且更新到数据库中
 			// 设置分数
 			exerciseDetailEntity.setScore(yunZhiBean.getScore());

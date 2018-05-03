@@ -60,7 +60,6 @@ public class QuartzUtil {
 		int minute = calendar.get(Calendar.MINUTE);
 		int second = calendar.get(Calendar.SECOND);
 		String cron = second + " " + minute + " " + hour + " " + day + " " + month + " ? " + year + "-" + year + " ";
-		System.out.println(cron);
 		return cron;
 	}
 }

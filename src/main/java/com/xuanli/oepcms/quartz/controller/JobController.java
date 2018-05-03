@@ -56,7 +56,6 @@ public class JobController {
 			// 启动调度器
 			scheduler.start();
 		} catch (SchedulerException e) {
-			System.out.println("创建定时任务失败" + e);
 			throw new Exception("创建定时任务失败");
 		}
 	}
@@ -99,7 +98,6 @@ public class JobController {
 			// 按新的trigger重新设置job执行
 			scheduler.rescheduleJob(triggerKey, trigger);
 		} catch (SchedulerException e) {
-			System.out.println("更新定时任务失败" + e);
 			throw new Exception("更新定时任务失败");
 		}
 	}

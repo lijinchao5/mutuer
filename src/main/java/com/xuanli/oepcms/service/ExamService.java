@@ -127,7 +127,7 @@ public class ExamService extends BaseService {
 					String pointResult = paperOptionEntity.getPointResult();
 					String json = yunZhiSDK.generatorStudentExamScoreJSGF(fileId, pointResult, correnctResult, "A");
 					if (null == json || json.trim().equals("")) {
-						System.out.println(paperOptionEntity.getId() + "---出现问题,不能计算");
+						logger.error(paperOptionEntity.getId() + "---出现问题,不能计算");
 					} else {
 						YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
 						score = yunZhiBean.getScore();
@@ -200,7 +200,7 @@ public class ExamService extends BaseService {
 					String json = yunZhiSDK.generatorStudentExamScoreJSGF(fileId, pointResult, correnctResult, "A");
 					;
 					if (null == json || json.trim().equals("")) {
-						System.out.println(paperOptionEntity.getId() + "---出现问题,不能计算");
+						logger.error(paperOptionEntity.getId() + "---出现问题,不能计算");
 					} else {
 						YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
 						score = yunZhiBean.getScore();
@@ -226,7 +226,7 @@ public class ExamService extends BaseService {
 					// 阅读 直接把问题text传入即可
 					String json = yunZhiSDK.generatorStudentExamScore(fileId, paperSubjectDetailEntity.getQuestion(), "E");
 					if (null == json || json.trim().equals("")) {
-						System.out.println(paperSubjectDetailEntity.getId() + "---出现问题,不能计算");
+						logger.error(paperSubjectDetailEntity.getId() + "---出现问题,不能计算");
 					} else {
 						YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
 						score = yunZhiBean.getScore();

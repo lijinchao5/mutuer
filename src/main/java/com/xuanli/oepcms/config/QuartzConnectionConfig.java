@@ -78,7 +78,6 @@ public class QuartzConnectionConfig implements ConnectionProvider {
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
-		System.out.println(dataSource);
 		logger.info("quartz初始化中.........");
 	}
 

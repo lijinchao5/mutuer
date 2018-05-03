@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.controller.bean.HomeworkBean;
@@ -232,7 +231,7 @@ public class HomeworkService extends BaseService {
 			} else {
 				String json = yunZhiSDK.generatorStudentScore(result);
 				if (null == json || json.trim().equals("")) {
-					System.out.println(result.getId() + "---出现问题,不能计算");
+					logger.error(result.getId() + "---出现问题,不能计算");
 				} else {
 					YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
 					audioCheckList = yunZhiSDK.checkAudio(yunZhiBean.getAudioCheck());
@@ -357,10 +356,9 @@ public class HomeworkService extends BaseService {
 			} else {
 				String json = yunZhiSDK.generatorStudentScore(result);
 				if (null == json || json.trim().equals("")) {
-					System.out.println(result.getId() + "---出现问题,不能计算");
+					logger.error(result.getId() + "---出现问题,不能计算");
 				} else {
 					YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
-					System.out.println(JSON.toJSONString(yunZhiBean));
 					// 开始分析作业分数并且更新到数据库中
 					// 设置分数
 					homeworkStudentScoreEntity.setScore(yunZhiBean.getScore());
