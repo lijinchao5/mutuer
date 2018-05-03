@@ -307,7 +307,7 @@
 	  and ps.type = #{type,jdbcType=INTEGER}
 	</if>
   	<choose>  
-        <when test="quesType == 0 ">and (ps.create_id=1 or ps.create_id is null)</when>  
+        <when test="quesType == 0 ">and (ps.create_id=0 or ps.create_id=1 or ps.create_id is null)</when>  
         <when test="quesType != 0">and ps.create_id=#{quesType}</when>  
     </choose>
 	ORDER BY
