@@ -2,8 +2,10 @@ package com.xuanli.oepcms.mapper;
 
 import java.util.List;
 
-import com.xuanli.oepcms.entity.UserMobileEntity;
+import org.apache.ibatis.annotations.Mapper;
 
+import com.xuanli.oepcms.entity.UserMobileEntity;
+@Mapper
 public interface UserMobileEntityMapper {
 	/**
 	 * Title: deleteUserMobileEntity 
@@ -48,5 +50,11 @@ public interface UserMobileEntityMapper {
 	 * @param appId
 	 * @return
 	 */
-	List<UserMobileEntity> mobileLogin(String appId);
+	List<UserMobileEntity> mobileLogin(UserMobileEntity userMobileEntity);
+
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年5月4日 上午11:08:59
+	 */
+	void updateUserMobileEntityByLogin(UserMobileEntity ume);
 }

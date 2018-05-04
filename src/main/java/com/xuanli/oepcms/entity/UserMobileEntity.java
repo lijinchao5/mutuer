@@ -13,7 +13,19 @@ public class UserMobileEntity extends UserEntity {
 
     private String by3;
 
-    public Long getUserId() {
+    
+    private Integer size1;
+    
+    
+    public Integer getSize1() {
+		return size1;
+	}
+
+	public void setSize1(Integer size1) {
+		this.size1 = size1;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 
@@ -60,4 +72,11 @@ public class UserMobileEntity extends UserEntity {
     public void setBy3(String by3) {
         this.by3 = by3;
     }
+
+	@Override
+	public String toString() {
+		return "UserMobileEntity [userId=" + userId + ", appId=" + appId + ", appTokenId=" + appTokenId + ", by1=" + by1 + ", by2=" + by2 + ", by3=" + by3 + ", size1=" + size1
+				+ "]";
+	}
+    
 }

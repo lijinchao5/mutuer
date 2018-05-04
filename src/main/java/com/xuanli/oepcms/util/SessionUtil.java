@@ -15,6 +15,7 @@ import com.xuanli.oepcms.cache.MobileRedisCache;
 import com.xuanli.oepcms.cache.MyRedisCache;
 import com.xuanli.oepcms.contents.SystemContents;
 import com.xuanli.oepcms.entity.UserEntity;
+import com.xuanli.oepcms.entity.UserMobileEntity;
 
 /**
  * @author QiaoYu
@@ -30,8 +31,12 @@ public class SessionUtil {
 
 	public UserEntity getSessionUser(String key) {
 		String user = myRedisCache.get(key);
-		UserEntity userEntity = JSONObject.parseObject(user, UserEntity.class);
-		return userEntity;
+		if (StringUtil.isEmpty(user)) {
+			return null;
+		} else {
+			UserEntity userEntity = JSONObject.parseObject(user, UserEntity.class);
+			return userEntity;
+		}
 	}
 
 	public void setSessionUser(String key, UserEntity userEntity) {
@@ -78,13 +83,18 @@ public class SessionUtil {
 		myRedisCache.remove(key + "_" + SystemContents.MOBILE_MESSAGE_RANDOM_NUM);
 	}
 
-	public String getMobileRandomTokenId(String key) {
+	public UserMobileEntity getMobileRandomTokenId(String key) {
 		String value = mobileRedisCache.get(key + "_" + SystemContents.MOBILE_RANDOM_TOKEN_ID);
-		return value;
+		if (StringUtil.isEmpty(value)) {
+			return null;
+		} else {
+			UserMobileEntity userEntity = JSONObject.parseObject(value, UserMobileEntity.class);
+			return userEntity;
+		}
 	}
 
 	public void setMobileRandomTokenId(String key, String num) {
-		mobileRedisCache.put(key + "_" + SystemContents.MOBILE_RANDOM_TOKEN_ID, num, 5);
+		mobileRedisCache.put(key + "_" + SystemContents.MOBILE_RANDOM_TOKEN_ID, num);
 	}
 
 	public void removeMobileRandomTokenId(String key) {

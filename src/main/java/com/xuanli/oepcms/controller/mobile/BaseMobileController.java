@@ -6,9 +6,18 @@
  */ 
 package com.xuanli.oepcms.controller.mobile;
 
-import org.apache.log4j.Logger;
+import java.util.Enumeration;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.xuanli.oepcms.entity.UserEntity;
+import com.xuanli.oepcms.entity.UserMobileEntity;
 import com.xuanli.oepcms.util.PageBean;
+import com.xuanli.oepcms.util.SessionUtil;
 import com.xuanli.oepcms.vo.RestResult;
 
 /** 
@@ -17,7 +26,12 @@ import com.xuanli.oepcms.vo.RestResult;
 
 public class BaseMobileController {
 	public final Logger logger = Logger.getLogger(this.getClass());
-	
+	@Autowired
+	protected HttpServletResponse response;
+	@Autowired
+	protected HttpServletRequest request;
+	@Autowired
+	protected SessionUtil sessionUtil;
 	public RestResult<String> okNoResult(String message) {
 		return RestResult.okNoResult(message);
 	}
@@ -41,5 +55,17 @@ public class BaseMobileController {
 		}
 		PageBean pageBean = new PageBean(page, rows);
 		return pageBean;
+	}
+	
+	
+	public UserMobileEntity getCurrentUser() {
+		Enumeration<String> enumeration = request.getHeaders("X-AUTH-MOBILE-TOKEN");
+		if (enumeration.hasMoreElements()) {
+			String tokenId = (String) enumeration.nextElement();
+			UserMobileEntity user = sessionUtil.getMobileRandomTokenId(tokenId);
+			return user;
+		} else {
+			return null;
+		}
 	}
 }

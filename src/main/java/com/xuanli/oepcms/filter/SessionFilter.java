@@ -29,6 +29,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.xuanli.oepcms.entity.UserEntity;
+import com.xuanli.oepcms.entity.UserMobileEntity;
 import com.xuanli.oepcms.util.SessionUtil;
 import com.xuanli.oepcms.vo.RestResult;
 
@@ -56,78 +57,136 @@ public class SessionFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// 不过滤的uri
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
-		// String[] notFilter = new String[] { };
-
-		List<String> notFilter = new ArrayList<String>();
-		notFilter.add("index.do");
-		notFilter.add("login.do");
-		notFilter.add("logout.do");
-		notFilter.add("teacher_regist.do");
-		notFilter.add("student_regist.do");
-		notFilter.add("/picture");
-		notFilter.add("/mobileMessage");
-		notFilter.add("/dic");
-		notFilter.add("/file");
-		notFilter.add("/syncUser");
-		notFilter.add("/test");
-		notFilter.add("/paper");
-		notFilter.add("/resourceSync");
-		notFilter.add("/job");
-		notFilter.add("/studentWebSocketServer");
-		notFilter.add("/studentWebSocket");
-		notFilter.add("/otherLink");
-		notFilter.add("forgetPwd.do");
 		String uri = request.getRequestURI();
-		boolean doFilter = true;
-		if (uri.indexOf(".do") != -1) {
-			logger.info("SessionFilter拦截器[URI=" + uri + "]");
-			for (String s : notFilter) {
-				if (uri.indexOf(s) != -1) {
-					doFilter = false;
-					break;
+		if (uri.indexOf("/mobile/") >= 0) {
+			// 手机端请求
+			List<String> notFilter = new ArrayList<String>();
+			notFilter.add("/mobile/login.do");
+			notFilter.add("/mobile/logout.do");
+			notFilter.add("/mobile/test/");
+			boolean doFilter = true;
+			if (uri.indexOf(".do") != -1) {
+				logger.info("SessionFilter拦截器[URI=" + uri + "]");
+				for (String s : notFilter) {
+					if (uri.indexOf(s) != -1) {
+						doFilter = false;
+						break;
+					}
 				}
-			}
-			if (doFilter) {
-				ServletContext context = request.getServletContext();
-				ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
-				SessionUtil sessionUtil = ctx.getBean(SessionUtil.class);
-				Enumeration<String> enumeration = request.getHeaders("X-AUTH-TOKEN");
-				if (enumeration.hasMoreElements()) {
-					String tokenId = (String) enumeration.nextElement();
-					UserEntity user = sessionUtil.getSessionUser(tokenId);
-					if (null != user) {
-						logger.info("开始进入Controller[Session=" + user + "]");
-						chain.doFilter(request, response);
+				if (doFilter) {
+					ServletContext context = request.getServletContext();
+					ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
+					SessionUtil sessionUtil = ctx.getBean(SessionUtil.class);
+					Enumeration<String> enumeration = request.getHeaders("X-AUTH-MOBILE-TOKEN");
+					if (enumeration.hasMoreElements()) {
+						String tokenId = (String) enumeration.nextElement();
+						UserMobileEntity user= sessionUtil.getMobileRandomTokenId(tokenId);
+						if (null != user) {
+							logger.info("开始进入Controller[Session=" + user + "]");
+							chain.doFilter(request, response);
+						} else {
+							logger.info("进入SessionFilter拦截器[Session是空的请求!]");
+							response.setContentType("text/json; charset=utf-8");
+							PrintWriter printWriter = response.getWriter();
+							RestResult<String> restResult = new RestResult<String>();
+							restResult.setCode(99998);
+							restResult.setResult("登陆超时");
+							restResult.setMessage("登陆超时");
+							printWriter.print(JSON.toJSONString(restResult));
+							printWriter.flush();
+							printWriter.close();
+						}
 					} else {
 						logger.info("进入SessionFilter拦截器[Session是空的请求!]");
-						response.setContentType("text/json; charset=utf-8");
 						PrintWriter printWriter = response.getWriter();
 						RestResult<String> restResult = new RestResult<String>();
 						restResult.setCode(99998);
-						restResult.setResult("登陆超时");
-						restResult.setMessage("登陆超时");
+						restResult.setResult("用户未登陆");
+						restResult.setMessage("用户未登陆");
 						printWriter.print(JSON.toJSONString(restResult));
 						printWriter.flush();
 						printWriter.close();
 					}
+					
+					
+					
 				} else {
-					logger.info("进入SessionFilter拦截器[Session是空的请求!]");
-					PrintWriter printWriter = response.getWriter();
-					RestResult<String> restResult = new RestResult<String>();
-					restResult.setCode(99998);
-					restResult.setResult("用户未登陆");
-					restResult.setMessage("用户未登陆");
-					printWriter.print(JSON.toJSONString(restResult));
-					printWriter.flush();
-					printWriter.close();
+					chain.doFilter(request, response);
 				}
 			} else {
 				chain.doFilter(request, response);
 			}
 		} else {
-			chain.doFilter(request, response);
+			// 页面请求
+			List<String> notFilter = new ArrayList<String>();
+			notFilter.add("index.do");
+			notFilter.add("login.do");
+			notFilter.add("logout.do");
+			notFilter.add("teacher_regist.do");
+			notFilter.add("student_regist.do");
+			notFilter.add("/picture");
+			notFilter.add("/mobileMessage");
+			notFilter.add("/dic");
+			notFilter.add("/file");
+			notFilter.add("/syncUser");
+			notFilter.add("/test");
+			notFilter.add("/paper");
+			notFilter.add("/resourceSync");
+			notFilter.add("/job");
+			notFilter.add("/studentWebSocketServer");
+			notFilter.add("/studentWebSocket");
+			notFilter.add("/otherLink");
+			notFilter.add("forgetPwd.do");
+			boolean doFilter = true;
+			if (uri.indexOf(".do") != -1) {
+				logger.info("SessionFilter拦截器[URI=" + uri + "]");
+				for (String s : notFilter) {
+					if (uri.indexOf(s) != -1) {
+						doFilter = false;
+						break;
+					}
+				}
+				if (doFilter) {
+					ServletContext context = request.getServletContext();
+					ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
+					SessionUtil sessionUtil = ctx.getBean(SessionUtil.class);
+					Enumeration<String> enumeration = request.getHeaders("X-AUTH-TOKEN");
+					if (enumeration.hasMoreElements()) {
+						String tokenId = (String) enumeration.nextElement();
+						UserEntity user = sessionUtil.getSessionUser(tokenId);
+						if (null != user) {
+							logger.info("开始进入Controller[Session=" + user + "]");
+							chain.doFilter(request, response);
+						} else {
+							logger.info("进入SessionFilter拦截器[Session是空的请求!]");
+							response.setContentType("text/json; charset=utf-8");
+							PrintWriter printWriter = response.getWriter();
+							RestResult<String> restResult = new RestResult<String>();
+							restResult.setCode(99998);
+							restResult.setResult("登陆超时");
+							restResult.setMessage("登陆超时");
+							printWriter.print(JSON.toJSONString(restResult));
+							printWriter.flush();
+							printWriter.close();
+						}
+					} else {
+						logger.info("进入SessionFilter拦截器[Session是空的请求!]");
+						PrintWriter printWriter = response.getWriter();
+						RestResult<String> restResult = new RestResult<String>();
+						restResult.setCode(99998);
+						restResult.setResult("用户未登陆");
+						restResult.setMessage("用户未登陆");
+						printWriter.print(JSON.toJSONString(restResult));
+						printWriter.flush();
+						printWriter.close();
+					}
+				} else {
+					chain.doFilter(request, response);
+				}
+			} else {
+				chain.doFilter(request, response);
+			}
 		}
 	}
 
@@ -135,7 +194,6 @@ public class SessionFilter implements Filter {
 	 * @CreateUser:QiaoYu
 	 * @CreateDate:2018年1月17日 上午10:06:44
 	 */
-
 	@Override
 	public void destroy() {
 	}

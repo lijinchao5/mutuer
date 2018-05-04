@@ -29,26 +29,20 @@ public class MobileLoginController extends BaseMobileController {
 	private MobileUserService mobileUserService;
 
 	@ApiOperation(value = "登陆方法", notes = "登陆方法")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String"),
+	@ApiImplicitParams({ @ApiImplicitParam(name = "userName", value = "用户名", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "appId", value = "设备唯一标识", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "appTokenId", value = "随机验证码关键Key", required = true, dataType = "String") })
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public RestResult<String> mobileLogin(String username, String password, String appId, String appTokenId) {
+	public RestResult<String> mobileLogin(String userName, String password, String appId, String appTokenId) {
 		try {
-			if (StringUtil.isEmpty(username)) {
-				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "用户名不能为空");
-			}
-			if (StringUtil.isEmpty(password)) {
-				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "密码不能为空");
+			if (StringUtil.isEmpty(userName) && StringUtil.isEmpty(password) && StringUtil.isEmpty(appTokenId)) {
+				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "登陆信息不完整");
 			}
 			if (StringUtil.isEmpty(appId)) {
 				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "appId不能为空");
 			}
-			if (StringUtil.isEmpty(appTokenId)) {
-				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "随机验证码关键Key不能为空");
-			}
-			String result = mobileUserService.mobileLogin(username, password, appId, appTokenId);
+			String result = mobileUserService.mobileLogin(userName, password, appId, appTokenId);
 			if (StringUtil.isEmpty(result)) {
 				return failed(ExceptionCode.UNKNOW_CODE, "未知错误,请联系管理员.");
 			} else {
