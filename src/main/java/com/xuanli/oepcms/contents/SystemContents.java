@@ -18,4 +18,6 @@ public class SystemContents {
 	public static final String MOBILE_RANDOM_NUM = "mobile_random_num";
 	//手机短信验证码
 	public static final String MOBILE_MESSAGE_RANDOM_NUM = "mobile_message_random_num";
+	// app随机key
+	public static final String MOBILE_RANDOM_TOKEN_ID = "mobile_random_token_id";
 }

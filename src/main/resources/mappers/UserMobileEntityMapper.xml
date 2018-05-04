@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.UserMobileEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.UserMobileEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="app_token_id" jdbcType="VARCHAR" property="appTokenId" />
+    <result column="by1" jdbcType="INTEGER" property="by1" />
+    <result column="by2" jdbcType="VARCHAR" property="by2" />
+    <result column="by3" jdbcType="VARCHAR" property="by3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, app_id, app_token_id, by1, by2, by3
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_user_mobile
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteUserMobileEntity" parameterType="java.lang.Long">
+    delete from xl_user_mobile
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertUserMobileEntity" parameterType="com.xuanli.oepcms.entity.UserMobileEntity">
+    insert into xl_user_mobile
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="appTokenId != null">
+        app_token_id,
+      </if>
+      <if test="by1 != null">
+        by1,
+      </if>
+      <if test="by2 != null">
+        by2,
+      </if>
+      <if test="by3 != null">
+        by3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appTokenId != null">
+        #{appTokenId,jdbcType=VARCHAR},
+      </if>
+      <if test="by1 != null">
+        #{by1,jdbcType=INTEGER},
+      </if>
+      <if test="by2 != null">
+        #{by2,jdbcType=VARCHAR},
+      </if>
+      <if test="by3 != null">
+        #{by3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateUserMobileEntity" parameterType="com.xuanli.oepcms.entity.UserMobileEntity">
+    update xl_user_mobile
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appTokenId != null">
+        app_token_id = #{appTokenId,jdbcType=VARCHAR},
+      </if>
+      <if test="by1 != null">
+        by1 = #{by1,jdbcType=INTEGER},
+      </if>
+      <if test="by2 != null">
+        by2 = #{by2,jdbcType=VARCHAR},
+      </if>
+      <if test="by3 != null">
+        by3 = #{by3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="mobileLogin" parameterType="com.xuanli.oepcms.entity.UserMobileEntity" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	FROM xl_user_mobile WHERE app_id = #{#appId}
+  </select>
+</mapper>

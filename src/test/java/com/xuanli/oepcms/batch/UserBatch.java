@@ -29,12 +29,13 @@ public class UserBatch extends BaseTest {
 	// @Test
 	public void addUserBatch() {
 		int teacherNum = 10;
-		int picStudentNum = 10;
+		int picStudentNum = 3;
 		for (int i = 0; i < teacherNum; i++) {
-			String mobile = "132333333" + (i < 10 ? "0" + i : "" + i);
+			String mobile = "131333333" + (i < 10 ? "0" + i : "" + i);
 			System.out.println("教师账号为:"+mobile);
 			String teacherRegist = userService.teacherRegist(mobile, "888888");
 			if (teacherRegist.equals("2")) {
+				System.out.println("生成老师账号失败!");
 				break;
 			}
 			String a = userService.loginTest(mobile);

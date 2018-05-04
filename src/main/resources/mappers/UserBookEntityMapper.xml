@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.UserBookEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.UserBookEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="book_id" jdbcType="BIGINT" property="bookId" />
+    <result column="book_use" jdbcType="INTEGER" property="bookUse" />
+    <result column="by1" jdbcType="INTEGER" property="by1" />
+    <result column="by2" jdbcType="VARCHAR" property="by2" />
+    <result column="by3" jdbcType="VARCHAR" property="by3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, book_id, book_use, by1, by2, by3
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_user_book
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteUserBookEntity" parameterType="java.lang.Long">
+    delete from xl_user_book
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertUserBookEntity" parameterType="com.xuanli.oepcms.entity.UserBookEntity">
+    insert into xl_user_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="bookUse != null">
+        book_use,
+      </if>
+      <if test="by1 != null">
+        by1,
+      </if>
+      <if test="by2 != null">
+        by2,
+      </if>
+      <if test="by3 != null">
+        by3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="bookUse != null">
+        #{bookUse,jdbcType=INTEGER},
+      </if>
+      <if test="by1 != null">
+        #{by1,jdbcType=INTEGER},
+      </if>
+      <if test="by2 != null">
+        #{by2,jdbcType=VARCHAR},
+      </if>
+      <if test="by3 != null">
+        #{by3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateUserBookEntity" parameterType="com.xuanli.oepcms.entity.UserBookEntity">
+    update xl_user_book
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="bookUse != null">
+        book_use = #{bookUse,jdbcType=INTEGER},
+      </if>
+      <if test="by1 != null">
+        by1 = #{by1,jdbcType=INTEGER},
+      </if>
+      <if test="by2 != null">
+        by2 = #{by2,jdbcType=VARCHAR},
+      </if>
+      <if test="by3 != null">
+        by3 = #{by3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

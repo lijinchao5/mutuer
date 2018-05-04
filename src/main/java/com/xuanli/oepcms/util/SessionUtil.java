@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xuanli.oepcms.cache.MobileRedisCache;
 import com.xuanli.oepcms.cache.MyRedisCache;
 import com.xuanli.oepcms.contents.SystemContents;
 import com.xuanli.oepcms.entity.UserEntity;
@@ -22,6 +23,9 @@ import com.xuanli.oepcms.entity.UserEntity;
 public class SessionUtil {
 	@Autowired
 	private MyRedisCache myRedisCache;
+	@Autowired
+	private MobileRedisCache mobileRedisCache;
+
 	public Logger logger = Logger.getLogger(SessionUtil.class);
 
 	public UserEntity getSessionUser(String key) {
@@ -72,5 +76,18 @@ public class SessionUtil {
 
 	public void removeMobileMessageRandomNum(String key) {
 		myRedisCache.remove(key + "_" + SystemContents.MOBILE_MESSAGE_RANDOM_NUM);
+	}
+
+	public String getMobileRandomTokenId(String key) {
+		String value = mobileRedisCache.get(key + "_" + SystemContents.MOBILE_RANDOM_TOKEN_ID);
+		return value;
+	}
+
+	public void setMobileRandomTokenId(String key, String num) {
+		mobileRedisCache.put(key + "_" + SystemContents.MOBILE_RANDOM_TOKEN_ID, num, 5);
+	}
+
+	public void removeMobileRandomTokenId(String key) {
+		mobileRedisCache.remove(key + "_" + SystemContents.MOBILE_RANDOM_TOKEN_ID);
 	}
 }
