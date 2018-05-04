@@ -117,12 +117,37 @@
 	  update xl_user_mobile set app_token_id = #{appTokenId,jdbcType=VARCHAR} where user_id = #{userId,jdbcType=BIGINT} and app_id = #{appId,jdbcType=VARCHAR}
 	</if>
   </insert>
-  
-  
-  
   <select id="mobileLogin" parameterType="com.xuanli.oepcms.entity.UserMobileEntity" resultMap="BaseResultMap">
   	select
   	<include refid="Base_Column_List" />
   	FROM xl_user_mobile WHERE app_id = #{#appId} and app_token_id = #{appTokenId}
+  </select>
+  <select id="getUserMessage" parameterType="com.xuanli.oepcms.entity.UserMobileEntity" resultMap="map">
+	 SELECT
+		u.id id,
+		u. NAME NAME,
+		u.mobile mobile,
+		u.sex sex,
+		u.birth_date birthDate,
+		u.study_section_id studySectionId,
+		u.grade_level_id gradeLevelId,
+		u.book_version_id bookVersionId,
+		u.name_num nameNum,
+		u.create_id createId,
+		u.create_id createId,
+		u.create_date createDate,
+		u.enable_flag enableFlag,
+		u.photo photo,
+		u.schoolid schoolid,
+		um.id userMobileId,
+		um.user_id userId,
+		um.app_id appId,
+		um.app_token_id appTokenId
+	FROM
+		xl_user u
+	LEFT JOIN xl_user_mobile um ON u.id = um.user_id
+	WHERE
+		u.id = #{userId}
+	AND um.app_id = #{appId}
   </select>
 </mapper>

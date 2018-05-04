@@ -4,12 +4,14 @@
 package com.xuanli.oepcms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.entity.UserMobileEntity;
 import com.xuanli.oepcms.mapper.UserEntityMapper;
@@ -34,27 +36,27 @@ public class MobileUserService {
 	SessionUtil sessionUtil;
 
 	public String mobileLogin(String username, String password, String appId, String appTokenId) {
-		// 如果用户名密码为空，自动登陆时
+		// 如果用户名密码为空,appTokenId不为空,自动登陆
 		if (StringUtil.isNotEmpty(appTokenId)) {
 			UserMobileEntity userMobileEntity = new UserMobileEntity();
 			userMobileEntity.setAppId(appId);
 			userMobileEntity.setAppTokenId(appTokenId);
 			List<UserMobileEntity> UserMobileEntities = userMobileDao.mobileLogin(userMobileEntity);
 			if (null != UserMobileEntities && UserMobileEntities.size() > 0) {
-				// 返回用户信息
 				UserMobileEntity umEntity =  sessionUtil.getMobileRandomTokenId(appTokenId);
 				if (null == umEntity) {
 					//超时
-					return "0";
+					return "2";
 				}else {
-					umEntity.getUserId();
-					umEntity.getAppId();
+					// umEntity.getUserId();
+					// umEntity.getAppId();
 					//返回用户信息
-					return "";
+					Map<String, Object> resultMap = userMobileDao.getUserMessage(umEntity);
+					return JSONObject.toJSONString(resultMap, SerializerFeature.WriteMapNullValue);
 				}
 			} else {
 				// 登陆超时
-				return "0";
+				return "2";
 			}
 		} else {
 			// 手动登陆
@@ -72,10 +74,8 @@ public class MobileUserService {
 					userMobileDao.updateUserMobileEntityByLogin(ume);
 					sessionUtil.setMobileRandomTokenId(tokenId,JSONObject.toJSONString(ume));
 					// 返回用户信息
-					
-					
-					
-					return "";
+					Map<String, Object> resultMap = userMobileDao.getUserMessage(ume);
+					return JSONObject.toJSONString(resultMap, SerializerFeature.WriteMapNullValue);
 				} else {
 					// 用户名或密码错误
 					return "0";

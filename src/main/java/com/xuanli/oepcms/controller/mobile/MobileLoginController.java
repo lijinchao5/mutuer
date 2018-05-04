@@ -49,10 +49,10 @@ public class MobileLoginController extends BaseMobileController {
 				if (result.equals("0")) {
 					// 用户名//或者密码错误
 					return failed(ExceptionCode.USERINFO_ERROR_CODE, "用户名或者密码错误.");
-				} else if (result.equals("1")) {
-					return ok(result);
+				} else if (result.equals("2")) {
+					return failed(ExceptionCode.UNKNOW_CODE, "登陆超时!");
 				} else {
-					return failed(ExceptionCode.UNKNOW_CODE, "未知错误，请联系管理员!");
+					return ok(result);
 				}
 			}
 		} catch (Exception e) {

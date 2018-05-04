@@ -1,6 +1,7 @@
 package com.xuanli.oepcms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -57,4 +58,12 @@ public interface UserMobileEntityMapper {
 	 * @CreateDate:  2018年5月4日 上午11:08:59
 	 */
 	void updateUserMobileEntityByLogin(UserMobileEntity ume);
+
+	/**Title: getUserMessage 
+	 * Description:  
+	 * @param ume 
+	 * @date 2018年5月4日 下午12:32:01
+	 * @return  
+	 */
+	Map<String, Object> getUserMessage(UserMobileEntity ume);
 }
