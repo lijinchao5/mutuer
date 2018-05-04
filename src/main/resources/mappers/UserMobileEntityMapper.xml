@@ -108,7 +108,7 @@
 			xl_user_mobile um
 		WHERE
 			um.user_id = #{userId}
-		AND app_id = #{appId}
+		AND um.app_id = #{appId}
 	</selectKey>
 	<if test="size1==0">
 	  insert into xl_user_mobile(user_id,app_id,app_token_id) values(#{userId},#{appId},#{appTokenId})
@@ -120,7 +120,7 @@
   <select id="mobileLogin" parameterType="com.xuanli.oepcms.entity.UserMobileEntity" resultMap="BaseResultMap">
   	select
   	<include refid="Base_Column_List" />
-  	FROM xl_user_mobile WHERE app_id = #{#appId} and app_token_id = #{appTokenId}
+  	FROM xl_user_mobile WHERE app_id = #{appId} and app_token_id = #{appTokenId}
   </select>
   <select id="getUserMessage" parameterType="com.xuanli.oepcms.entity.UserMobileEntity" resultType="map">
 	 SELECT
