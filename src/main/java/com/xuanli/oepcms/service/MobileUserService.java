@@ -35,7 +35,7 @@ public class MobileUserService {
 	@Autowired
 	SessionUtil sessionUtil;
 
-	public String mobileLogin(String username, String password, String appId, String appTokenId) {
+	public String mobileLogin(String userName, String password, String appId, String appTokenId) {
 		// 如果用户名密码为空,appTokenId不为空,自动登陆
 		if (StringUtil.isNotEmpty(appTokenId)) {
 			UserMobileEntity userMobileEntity = new UserMobileEntity();
@@ -61,7 +61,9 @@ public class MobileUserService {
 		} else {
 			// 手动登陆
 			UserEntity userEntity = new UserEntity();
-			userEntity.setMobile(username);
+			userEntity.setMobile(userName);
+			System.out.println(JSONObject.toJSONString(userEntity));
+			System.out.println(userEntity);
 			List<UserEntity> userEntities = userDao.login(userEntity);
 			if (null != userEntities && userEntities.size() > 0) {
 				UserEntity result = userEntities.get(0);
