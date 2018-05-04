@@ -253,8 +253,6 @@
 			count(ps.id)
 		FROM
 			xl_question_subject ps
-		LEFT JOIN xl_question_subject_detail psd ON ps.id = psd.subject_id
-		LEFT JOIN xl_question_option po ON psd.id = po.detail_id
 		WHERE
 			ps.enable_flag = 'T'
 		<if test="gradeLevelId != null">
@@ -277,24 +275,11 @@
 		ps.type,
 		ps.question_score questionScore,
 		ps.audio subjectAudio,
-		psd.guide guide,
-		psd.question,
-		psd.guide_audio guideAudio,
-		psd.type detailType,
-		psd.read_time readTime,
-		psd.write_time writeTime,
-		psd.original_text,
-		psd.repeat_count repeatCount,
-		psd.question_no questionNo,
-		po.result,
-		po.point_result pointResult,
-		po.correct_result correntResult,
+		ps.subject subject,
 		ps.used_count useTotal,
 		ps.create_date createDate
 	FROM
 		xl_question_subject ps
-	LEFT JOIN xl_question_subject_detail psd ON ps.id = psd.subject_id
-	LEFT JOIN xl_question_option po ON psd.id = po.detail_id
 	WHERE
 		ps.enable_flag = 'T'
 	<if test="gradeLevelId != null">
@@ -328,8 +313,7 @@
 	      	</if>
 	      	,
       	</if>
-		ps.id,
-		psd.id
+		ps.id
       limit #{start},#{end}
   </select>
 

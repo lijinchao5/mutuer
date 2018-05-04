@@ -289,4 +289,32 @@
     where subject_id = #{value}
     order by id
   </select>
+  
+  <select id="getSubjectDetailBySubjectId" resultType="map">
+  	SELECT
+		psd.id id,
+		psd.guide guide,
+		psd.subject_id subjectId,
+		psd.question,
+		psd.guide_audio guideAudio,
+		psd.type detailType,
+		psd.read_time readTime,
+		psd.write_time writeTime,
+		psd.original_text,
+		psd.repeat_count repeatCount,
+		psd.question_no questionNo,
+		po.result,
+		po.point_result pointResult,
+		po.correct_result correntResult
+	FROM
+		xl_question_subject_detail psd
+	LEFT JOIN xl_question_option po ON psd.id = po.detail_id
+	WHERE
+		psd.subject_id IN  
+    <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">  
+        #{item}  
+    </foreach>
+    order by psd.id
+  </select>
+  
 </mapper>

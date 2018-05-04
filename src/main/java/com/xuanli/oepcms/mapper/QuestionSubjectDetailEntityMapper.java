@@ -1,8 +1,10 @@
 package com.xuanli.oepcms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.xuanli.oepcms.entity.QuestionSubjectDetailEntity;
 @Mapper
@@ -58,4 +60,9 @@ public interface QuestionSubjectDetailEntityMapper {
 	 * @CreateDate:  2018年4月20日 下午5:06:34
 	 */
 	List<QuestionSubjectDetailEntity> findSubjectDetailBySubjectId(String subject);
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年5月4日 下午12:01:02
+	 */
+	List<Map<String, Object>> getSubjectDetailBySubjectId(@Param("ids")List<Long> ids);
 }

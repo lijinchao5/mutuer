@@ -6,6 +6,7 @@
  */ 
 package com.xuanli.oepcms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,26 @@ public class QuestionService extends BaseService{
 		requestMap.put("start", pageBean.getRowFrom());
 		requestMap.put("end", pageBean.getPageSize());
 		List<Map<String, Object>> resultMap = questionSubjectEntityMapper.findQuestionDetailByPage(requestMap);
+		List<Long> ids = new ArrayList<Long>();
+		for (Map<String, Object> map : resultMap) {
+			Long id = (Long)map.get("id");
+			ids.add(id);
+		}
+		if (null == ids || ids.size()<=0) {
+			
+		}else {
+			//chaxun
+			List<Map<String, Object>> resultMapDetailList = questionSubjectDetailEntityMapper.getSubjectDetailBySubjectId(ids);
+			for (Map<String, Object> map : resultMap) {
+				List<Map<String, Object>> m2 = new ArrayList<Map<String, Object>>();
+				for (Map<String, Object> m1 : resultMapDetailList) {
+					if (((Long)m1.get("subjectId")).longValue() == ((Long)map.get("id")).longValue()) {
+						m2.add(m1);
+					}
+				}
+				map.put("detailList", m2);
+			}
+		}
 		pageBean.setRows(resultMap);
 	}
 	
