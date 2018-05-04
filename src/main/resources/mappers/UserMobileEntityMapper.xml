@@ -122,7 +122,7 @@
   	<include refid="Base_Column_List" />
   	FROM xl_user_mobile WHERE app_id = #{#appId} and app_token_id = #{appTokenId}
   </select>
-  <select id="getUserMessage" parameterType="com.xuanli.oepcms.entity.UserMobileEntity" resultMap="map">
+  <select id="getUserMessage" parameterType="com.xuanli.oepcms.entity.UserMobileEntity" resultType="map">
 	 SELECT
 		u.id id,
 		u. NAME NAME,
