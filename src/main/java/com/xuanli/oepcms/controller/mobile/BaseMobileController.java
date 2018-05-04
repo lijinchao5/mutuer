@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.entity.UserMobileEntity;
 import com.xuanli.oepcms.util.PageBean;
 import com.xuanli.oepcms.util.SessionUtil;
