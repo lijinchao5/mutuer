@@ -59,7 +59,7 @@ public class LoginController extends BaseController {
 				} else {
 					if (result.equals("2")) {
 						// 用户名//或者密码错误
-						return failed(ExceptionCode.USERINFO_ERROR_CODE, "用户名或者密码错误.");
+						return failed(ExceptionCode.USERINFO_ERROR_CODE, "手机号或者密码错误.");
 					} else if (result.equals("3")) {
 						// 用户名//或者密码错误
 						return failed(ExceptionCode.USERINFO_NOUSE_ERROR, "用户被禁用,请联系管理员.");
