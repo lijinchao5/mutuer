@@ -14,8 +14,18 @@ public class UserBookEntity {
     private String by2;
 
     private String by3;
+	// 查询用
+	private Integer allSize;
 
-    public Long getId() {
+	public Integer getAllSize() {
+		return allSize;
+	}
+
+	public void setAllSize(Integer allSize) {
+		this.allSize = allSize;
+	}
+
+	public Long getId() {
         return id;
     }
 

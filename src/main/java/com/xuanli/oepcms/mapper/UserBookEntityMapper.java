@@ -1,7 +1,10 @@
 package com.xuanli.oepcms.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.xuanli.oepcms.entity.UserBookEntity;
 
+@Mapper
 public interface UserBookEntityMapper {
 	/**
 	 * Title: deleteUserBookEntity 

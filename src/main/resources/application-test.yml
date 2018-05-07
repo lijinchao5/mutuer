@@ -7,7 +7,7 @@ server:
 jdbc:
   datasource:
     name: test
-    url: jdbc:mysql://39.104.76.67:3086/ai?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://39.104.76.67:3086/ai?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true
     username: test
     password: 09)(poPO
     # 使用druid数据源

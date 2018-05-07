@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuanli.oepcms.entity.BookEntity;
+import com.xuanli.oepcms.entity.UserBookEntity;
 import com.xuanli.oepcms.mapper.BookEntityMapper;
 
 /** 
@@ -73,4 +74,21 @@ public class BookService {
 		return bookDao.getBookVolume(bookEntity);
 	}
 
+	/**Title: replaceBookVersion 
+	 * Description:  
+	 * @date 2018年5月7日 下午2:47:14
+	 * @param id
+	 * @param bookId  
+	 */
+	public String replaceBookVersion(Long userId, Long bookId) {
+		UserBookEntity userBookEntity = new UserBookEntity();
+		userBookEntity.setUserId(userId);
+		userBookEntity.setBookId(bookId);
+		int result = bookDao.replaceBookVersion(userBookEntity);
+		if (result > 0) {
+			return "1";
+		} else {
+			return "0";
+		}
+	}
 }

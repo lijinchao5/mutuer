@@ -262,12 +262,30 @@
 	LEFT JOIN xl_dic_detail xdd ON xdd.name_val = b.book_volume
 	WHERE
 		xdd.dic_id = 5
-	AND grade = #{grade}
-	and xdd.enable_flag = 'T'
-	and b.book_version = #{bookVersion}
+	AND xdd.enable_flag = 'T'
+	<if test="grade != null">
+		AND grade = #{grade}
+	</if>
+	<if test="bookVersion != null">
+		AND b.book_version = #{bookVersion}
+	</if>
 	GROUP BY
 		b.book_volume,
 		xdd. NAME
   </select>
-  
+  <update id="replaceBookVersion" parameterType="com.xuanli.oepcms.mapper.UserBookEntityMapper">
+  	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
+  		SELECT COUNT(id) FROM xl_user_book WHERE user_id = #{userId} AND book_id = #{bookId}
+  	</selectKey>
+  	<if test="allSize>0">
+  		UPDATE xl_user_book SET book_use = 0 WHERE user_id = #{userId};
+		UPDATE xl_user_book SET book_use = 1 WHERE user_id = #{userId} AND book_id = #{bookId};
+  	</if>
+  	<if test="allSize==0">
+  		UPDATE xl_user_book SET book_use = 0 WHERE user_id = #{userId};
+  		INSERT INTO xl_user_book (user_id, book_id, book_use)
+		VALUES
+			(#{userId}, #{bookId}, 1);
+  	</if>
+  </update>
 </mapper>

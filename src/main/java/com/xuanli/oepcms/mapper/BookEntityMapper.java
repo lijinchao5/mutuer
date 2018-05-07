@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.xuanli.oepcms.entity.BookEntity;
+import com.xuanli.oepcms.entity.UserBookEntity;
 @Mapper
 public interface BookEntityMapper {
 	/**删除方法，根据id删除*/
@@ -63,4 +64,10 @@ public interface BookEntityMapper {
 	 * @return  
 	 */
 	List<Map<String, Object>> getBookVolume(BookEntity bookEntity);
+
+	/**Title: replaceBookVersion 
+	 * Description:  
+	 * @date 2018年5月7日 下午2:48:16  
+	 */
+	int replaceBookVersion(UserBookEntity userBookEntity);
 }
