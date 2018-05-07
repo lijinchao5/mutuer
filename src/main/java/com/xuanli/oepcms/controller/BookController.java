@@ -162,7 +162,8 @@ public class BookController extends BaseController {
 	}
 
 	@ApiOperation(value = "根据年级与教材版本获取册别", notes = "根据年级与教材版本获取册别")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "String") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = true, dataType = "Integer") })
 	@RequestMapping(value = "getBookVolume.do", method = RequestMethod.GET)
 	public RestResult<List<Map<String, Object>>> getBookVolume(String grade, Integer bookVersion) {
 		return ok(bookService.getBookVolume(grade, bookVersion));
