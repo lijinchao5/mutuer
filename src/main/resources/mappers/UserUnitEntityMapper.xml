@@ -1,30 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xuanli.oepcms.mapper.UnitBookEntityMapper">
-  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.UnitBookEntity">
+<mapper namespace="com.xuanli.oepcms.mapper.UserUnitEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.UserUnitEntity">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="unit_id" jdbcType="BIGINT" property="unitId" />
-    <result column="score" jdbcType="INTEGER" property="score" />
-    <result column="by1" jdbcType="INTEGER" property="by1" />
-    <result column="by2" jdbcType="VARCHAR" property="by2" />
-    <result column="by3" jdbcType="VARCHAR" property="by3" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, unit_id, score, by1, by2, by3
+    id, user_id, unit_id, score
   </sql>
   <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from xl_unit_book
+    from xl_user_unit
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteUnitBookEntity" parameterType="java.lang.Long">
-    delete from xl_unit_book
+  <delete id="deleteUserUnitEntity" parameterType="java.lang.Long">
+    delete from xl_user_unit
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insertUnitBookEntity" parameterType="com.xuanli.oepcms.entity.UnitBookEntity">
-    insert into xl_unit_book
+  <insert id="insertUserUnitEntity" parameterType="com.xuanli.oepcms.entity.UserUnitEntity">
+    insert into xl_user_unit
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -38,15 +35,6 @@
       <if test="score != null">
         score,
       </if>
-      <if test="by1 != null">
-        by1,
-      </if>
-      <if test="by2 != null">
-        by2,
-      </if>
-      <if test="by3 != null">
-        by3,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -59,21 +47,12 @@
         #{unitId,jdbcType=BIGINT},
       </if>
       <if test="score != null">
-        #{score,jdbcType=INTEGER},
-      </if>
-      <if test="by1 != null">
-        #{by1,jdbcType=INTEGER},
-      </if>
-      <if test="by2 != null">
-        #{by2,jdbcType=VARCHAR},
-      </if>
-      <if test="by3 != null">
-        #{by3,jdbcType=VARCHAR},
+        #{score,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
-  <update id="updateUnitBookEntity" parameterType="com.xuanli.oepcms.entity.UnitBookEntity">
-    update xl_unit_book
+  <update id="updateUserUnitEntity" parameterType="com.xuanli.oepcms.entity.UserUnitEntity">
+    update xl_user_unit
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
@@ -82,16 +61,7 @@
         unit_id = #{unitId,jdbcType=BIGINT},
       </if>
       <if test="score != null">
-        score = #{score,jdbcType=INTEGER},
-      </if>
-      <if test="by1 != null">
-        by1 = #{by1,jdbcType=INTEGER},
-      </if>
-      <if test="by2 != null">
-        by2 = #{by2,jdbcType=VARCHAR},
-      </if>
-      <if test="by3 != null">
-        by3 = #{by3,jdbcType=VARCHAR},
+        score = #{score,jdbcType=DOUBLE},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
