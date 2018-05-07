@@ -168,7 +168,6 @@ public class YunZhiSDK {
 			response = httpclient.execute(httpPost);
 			if (response != null && response.getStatusLine().getStatusCode() == 200) {
 				String text = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-				System.out.println(text);
 				return text;
 			} else {
 				return "";
@@ -289,5 +288,49 @@ public class YunZhiSDK {
 			result.add("空音频问题");
 		}
 		return result;
+	}
+
+	/**
+	 * @CreateName: QiaoYu[www.codelion.cn]
+	 * @CreateDate: 2018年5月7日 下午2:48:07
+	 */
+	public String generatorWordGameScore(String fileId, String word) {
+		DefaultHttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(systemConfig.YUN_ZHI_URL);
+		MultipartEntity customMultiPartEntity = new MultipartEntity();
+		try {
+			HttpResponse response = null;
+			customMultiPartEntity.addPart("mode", new StringBody("D", Charset.forName("UTF-8")));
+			httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10 * 1000);
+			httpclient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 1000);
+			Map<String, Object> map = new HashMap<>();
+			map.put("AudioCheck", true);
+			map.put("DisplayText", word + "");
+			customMultiPartEntity.addPart("text", new StringBody(JSONObject.toJSONString(map), Charset.forName("UTF-8")));
+			// ContentBody fileBody = new FileBody(new File(result.getAudioPath()));
+			String uuid = UUID.randomUUID().toString().replace("-", "") + ".mp3";
+			InputStream is = thirdAliOSSUtil.downloadFile(fileId);
+			ContentBody fileBody = new InputStreamBody(is, uuid);
+			customMultiPartEntity.addPart("voice", fileBody);
+			httpPost.setEntity(customMultiPartEntity);
+			httpPost.setHeader("appkey", systemConfig.YUN_ZHI_APPKEY);
+			httpPost.setHeader("score-coefficient", "1.6");
+			String uuid_str = UUID.randomUUID().toString();
+			httpPost.setHeader("session-id", uuid_str);
+			httpPost.setHeader("device-id", uuid_str);
+			response = httpclient.execute(httpPost);
+			if (response != null && response.getStatusLine().getStatusCode() == 200) {
+				String text = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+				return text;
+			} else {
+				return "";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		} finally {
+			httpclient.getConnectionManager().shutdown();
+			httpclient.close();
+		}
 	}
 }

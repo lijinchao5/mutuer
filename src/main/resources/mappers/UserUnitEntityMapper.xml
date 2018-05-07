@@ -66,4 +66,80 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  
+  <select id="getWordList" parameterType="map" resultMap="map">
+  	SELECT
+		u.id unitId,
+		(
+			SELECT
+				xb. NAME
+			FROM
+				xl_unit xb
+			WHERE
+				xb.id = u.id
+		) unitName,
+		(
+			SELECT
+				xun.score
+			FROM
+				xl_user_unit xun
+			WHERE
+				xun.unit_id = u.id
+			AND xun.user_id = #{userId}
+		) score
+	FROM
+		xl_section_detail se
+	LEFT JOIN xl_section e ON se.section_id = e.id
+	LEFT JOIN xl_unit u ON e.unit_id = u.id
+	LEFT JOIN xl_book b ON u.book_id = b.id
+	WHERE
+		se.enable_flag = 'T'
+	AND e.enable_flag = 'T'
+	AND u.enable_flag = 'T'
+	AND b.enable_flag = 'T'
+	AND se.type = 1
+	AND b.id = #{bookId}
+	GROUP BY
+		u.id
+	ORDER BY
+		u.id;
+  </select>
+  
+  	<select id="getWordDetailList" parameterType="map" resultMap="map">
+		SELECT
+			se.id,
+			se.text,
+			se.audio_path audioPath,
+			se.m_audio_path mAudioPath,
+			se.w_audio_path wAudioPath,
+			se.word_mean wordMean,
+			u.id unitId,
+			u.`name` unitName
+		FROM
+			xl_section_detail se
+		LEFT JOIN xl_section e ON se.section_id = e.id
+		LEFT JOIN xl_unit u ON e.unit_id = u.id
+		LEFT JOIN xl_book b ON u.book_id = b.id
+		WHERE
+			se.enable_flag = 'T'
+		AND e.enable_flag = 'T'
+		AND u.enable_flag = 'T'
+		AND b.enable_flag = 'T'
+		AND se.type = 1
+		AND u.id = #{sectionDetailId}
+	</select>  
+	
+	<update id="submitWordUnit" parameterType="map" >
+		<selectKey keyProperty="size" resultType="int" order="BEFORE">
+		  select count(id) id from xl_user_unit where unit_id=#{unitId} and user_id=#{userId}
+		</selectKey>
+		<if test="size==0">
+		  insert into xl_user_unit(unit_id,user_id,score) values(#{unitId},#{userId},#{score})
+		</if>
+		<if test="size>0">
+		  update xl_user_unit set score = #{score} whereunit_id=#{unitId} and user_id=#{userId}
+		</if>
+	</update>
+  
 </mapper>
