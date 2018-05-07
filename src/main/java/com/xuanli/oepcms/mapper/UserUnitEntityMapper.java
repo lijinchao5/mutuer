@@ -3,8 +3,10 @@ package com.xuanli.oepcms.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.xuanli.oepcms.entity.UserUnitEntity;
+import org.apache.ibatis.annotations.Mapper;
 
+import com.xuanli.oepcms.entity.UserUnitEntity;
+@Mapper
 public interface UserUnitEntityMapper {
 	/**
 	 * Title: deleteUserUnitEntity 
