@@ -154,11 +154,17 @@ public class BookController extends BaseController {
 		return ok(bookEntity);
 	}
 
-	@ApiOperation(value = "根据年级查询册别信息", notes = "根据年级查询册别信息")
+	@ApiOperation(value = "根据年级获取教材版本信息", notes = "根据年级获取教材版本信息")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级id", required = true, dataType = "Integer") })
-	@RequestMapping(value = "getBookVolume.do", method = RequestMethod.GET)
-	public RestResult<List<Map<String, Object>>> getBookVolume(Integer grade) {
-		return ok(bookService.getBookVolume(grade));
+	@RequestMapping(value = "getBookVersion.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getBookVersion(Integer grade) {
+		return ok(bookService.getBookVersion(grade));
 	}
 
+	@ApiOperation(value = "根据年级与教材版本获取册别", notes = "根据年级与教材版本获取册别")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "String") })
+	@RequestMapping(value = "getBookVolume.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getBookVolume(String grade, Integer bookVersion) {
+		return ok(bookService.getBookVolume(grade, bookVersion));
+	}
 }

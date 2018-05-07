@@ -35,7 +35,7 @@ public class SyncReadArticleController extends BaseController {
 			} else if (result.equals("2")) {
 				return okNoResult("同步练习文章失败,获取文章信息为空!");
 			} else if (result.equals("0")) {
-				return failed(ExceptionCode.SYNC_ARTICLE_ERROR, "同步练习文章失败。");
+				return failed(ExceptionCode.SYNC_ARTICLE_ERROR, "同步练习文章失败,未获取到资源");
 			} else if (result.equals("3")) {
 				return failed(ExceptionCode.SYNC_ARTICLE_ERROR, "同步练习文章,获取文章详情为空!");
 			} else {

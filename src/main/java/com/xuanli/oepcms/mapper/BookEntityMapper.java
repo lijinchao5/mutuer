@@ -54,5 +54,13 @@ public interface BookEntityMapper {
 	 * Description:  
 	 * @date 2018年4月27日 下午12:34:32  
 	 */
-	List<Map<String, Object>> getBookVolume(Integer grade);
+	List<Map<String, Object>> getBookVersion(Integer grade);
+
+	/**Title: getBookVolume 
+	 * Description:  
+	 * @date 2018年5月7日 上午11:32:31
+	 * @param bookEntity
+	 * @return  
+	 */
+	List<Map<String, Object>> getBookVolume(BookEntity bookEntity);
 }

@@ -55,7 +55,22 @@ public class BookService {
 	 * @date 2018年4月27日 下午12:32:57
 	 * @return  
 	 */
-	public List<Map<String, Object>> getBookVolume(Integer grade) {
-		return bookDao.getBookVolume(grade);
+	public List<Map<String, Object>> getBookVersion(Integer grade) {
+		return bookDao.getBookVersion(grade);
 	}
+
+	/**Title: getBookVolume 
+	 * Description:  
+	 * @date 2018年5月7日 上午11:29:31
+	 * @param grade
+	 * @param bookVersion
+	 * @return  
+	 */
+	public List<Map<String, Object>> getBookVolume(String grade, Integer bookVersion) {
+		BookEntity bookEntity = new BookEntity();
+		bookEntity.setGrade(grade);
+		bookEntity.setBookVersion(bookVersion);
+		return bookDao.getBookVolume(bookEntity);
+	}
+
 }

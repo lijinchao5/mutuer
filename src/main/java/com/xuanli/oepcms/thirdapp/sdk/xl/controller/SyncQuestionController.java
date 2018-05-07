@@ -33,7 +33,7 @@ public class SyncQuestionController extends BaseController{
 			if (result.equals("1")) {
 				return okNoResult("同步试题库成功");
 			} else if (result.equals("0")) {
-				return failed(ExceptionCode.SYNC_QUESTION_ERROR, "同步试题库失败!");
+				return failed(ExceptionCode.SYNC_QUESTION_ERROR, "同步试题库失败,未获取到资源!");
 			} else {
 				return failed(ExceptionCode.UNKNOW_CODE, "未知错误，请联系管理员!");
 			}
