@@ -41,9 +41,6 @@ public class AreaService extends BaseService{
 	 * @return  
 	 */
 	public RestResult<List<Map<String, Object>>> getProvince() {
-
 		return ok(areaEntityMapper.getProvince());
 	}
-	
-	
 }
