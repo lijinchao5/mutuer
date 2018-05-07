@@ -31,4 +31,11 @@ public interface AreaEntityMapper {
 	 * @CreateDate:  2018年4月20日 上午9:48:22
 	 */
 	List<Map<String, Object>> getRegion(Map<String, Object> map);
+
+	/**Title: getProvince 
+	 * Description:  
+	 * @date 2018年5月7日 下午6:15:57
+	 * @return  
+	 */
+	List<Map<String, Object>> getProvince();
 }

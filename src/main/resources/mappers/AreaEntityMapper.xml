@@ -129,5 +129,16 @@
       </if>
 	ORDER BY CODE
   </select>
-  
+  <select id="getProvince" resultType="map">
+	SELECT
+		texts text,
+		CODE code
+	FROM
+		xl_area_cms
+	WHERE
+		enable_flag = 'T'
+	AND level_type = 1
+	ORDER BY
+		`code`
+  </select>
 </mapper>

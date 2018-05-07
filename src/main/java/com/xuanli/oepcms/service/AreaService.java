@@ -35,6 +35,15 @@ public class AreaService extends BaseService{
 		return ok(areaEntityMapper.getRegion(map));
 	}
 
+	/**Title: getProvince 
+	 * Description:  
+	 * @date 2018年5月7日 下午6:15:22
+	 * @return  
+	 */
+	public RestResult<List<Map<String, Object>>> getProvince() {
+
+		return ok(areaEntityMapper.getProvince());
+	}
 	
 	
 }

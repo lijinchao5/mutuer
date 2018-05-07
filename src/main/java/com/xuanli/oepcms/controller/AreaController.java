@@ -41,4 +41,10 @@ public class AreaController extends BaseController{
 		return areaService.getRegion(level,regionId);
 	}
 
+	@ApiOperation(value = "获取省份信息", notes = "获取省份信息")
+	@ApiImplicitParams({})
+	@RequestMapping(value = "getProvince.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getProvince() {
+		return areaService.getProvince();
+	}
 }
