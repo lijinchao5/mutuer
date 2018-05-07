@@ -68,7 +68,7 @@
   </update>
   
   
-  <select id="getWordList" parameterType="map" resultMap="map">
+  <select id="getWordList" parameterType="map" resultType="map">
   	SELECT
 		u.id unitId,
 		(
@@ -106,7 +106,7 @@
 		u.id;
   </select>
   
-  	<select id="getWordDetailList" parameterType="map" resultMap="map">
+  	<select id="getWordDetailList" parameterType="map" resultType="map">
 		SELECT
 			se.id,
 			se.text,
