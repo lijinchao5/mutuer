@@ -177,7 +177,7 @@
       <if test="bookVolume != null">
         and book_volume = #{bookVolume,jdbcType=VARCHAR}
       </if>
-      <if test="bookVolume != null">
+      <if test="bookVersion != null">
         and book_version = #{bookVersion,jdbcType=VARCHAR}
       </if>
   </select>

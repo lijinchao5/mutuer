@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.xuanli.oepcms.contents.ExceptionCode;
+import com.xuanli.oepcms.entity.BookEntity;
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
+import com.xuanli.oepcms.service.BookService;
 import com.xuanli.oepcms.service.SchoolService;
 import com.xuanli.oepcms.service.UserService;
 import com.xuanli.oepcms.util.ExcelUtil;
@@ -42,6 +44,8 @@ public class UserController extends BaseController {
 	SessionUtil sessionUtil;
 	@Autowired
 	SchoolService schoolService;
+	@Autowired
+	BookService bookService;
 
 	@ApiIgnore
 	@RequestMapping(value = "insert.do", method = RequestMethod.POST)
@@ -355,6 +359,22 @@ public class UserController extends BaseController {
 			userEntity.setBookVersionId(bookVersion);
 			userEntity.setBookVolume(bookVolume);
 			userService.updateUserInfo(userEntity, StringUtil.isEmpty(picfile) ? null : ImageUtil.decodeToBytes(picfile));
+			// 更换教材数据同步至APP端
+			if (null == grade || null == bookVersion || null == bookVolume) {
+			} else {
+				BookEntity bookEntity = new BookEntity();
+				bookEntity.setGrade(grade + "");
+				bookEntity.setBookVersion(bookVersion);
+				bookEntity.setBookVolume(bookVolume + "");
+				List<BookEntity> bookEntities = bookService.getBookEntity(bookEntity);
+				BookEntity bookEntity2 = bookEntities.get(0);
+				String result = bookService.replaceBookVersion(getCurrentUser().getId(), bookEntity2.getId());
+				if (result.equals("1")) {
+					logger.info("更换教材已同步至APP端!");
+				} else if (result.equals("0")) {
+					logger.info("更换教材未同步至APP端!");
+				}
+			}
 			return okNoResult("操作成功");
 		} catch (Exception e) {
 			e.printStackTrace();
