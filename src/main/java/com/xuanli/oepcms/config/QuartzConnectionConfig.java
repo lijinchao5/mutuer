@@ -74,11 +74,10 @@ public class QuartzConnectionConfig implements ConnectionProvider {
 			dataSource.setPoolPreparedStatements(poolPreparedStatements);
 			dataSource.setMaxPoolPreparedStatementPerConnectionSize(maxOpenPreparedStatements);
 			dataSource.init();
-			logger.info("数据源初始化完成.............;");
+			logger.info("quartz初始化完成..............");
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
-		logger.info("quartz初始化中.........");
 	}
 
 	public String getUrl() {
