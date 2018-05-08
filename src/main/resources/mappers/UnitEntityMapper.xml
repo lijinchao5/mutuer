@@ -156,11 +156,21 @@
   <select id="getUnitEntity" parameterType="com.xuanli.oepcms.entity.UnitEntity" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from xl_unit
-    where enable_flag='T' 
-    <if test="bookId != null">
-      and book_id = #{bookId,jdbcType=VARCHAR}
-    </if>
+	FROM
+		xl_unit
+	WHERE
+		enable_flag = 'T'
+	AND  book_id = #{bookId}
+	OR book_id IN (
+		SELECT
+			id
+		FROM
+			xl_book
+		WHERE
+			grade =#{bgrade}
+		AND book_version =#{bversion}
+		AND book_volume =#{bvolume}
+	)
   </select>
 
 </mapper>

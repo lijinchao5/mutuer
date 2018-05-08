@@ -168,11 +168,17 @@
 		xl_book b
 	WHERE
 		enable_flag = 'T'
+	  <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
       <if test="grade != null">
         and grade = #{grade,jdbcType=VARCHAR}
       </if>
       <if test="bookVolume != null">
         and book_volume = #{bookVolume,jdbcType=VARCHAR}
+      </if>
+      <if test="bookVolume != null">
+        and book_version = #{bookVersion,jdbcType=VARCHAR}
       </if>
   </select>
 

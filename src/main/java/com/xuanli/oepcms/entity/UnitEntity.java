@@ -21,7 +21,37 @@ public class UnitEntity {
     
     private Long cmsId;
     
-    public Long getCmsId() {
+    //使用查询使用
+    private Integer bgrade;
+    private Integer bversion;
+    private Integer bvolume;
+    
+    
+    public Integer getBgrade() {
+		return bgrade;
+	}
+
+	public void setBgrade(Integer bgrade) {
+		this.bgrade = bgrade;
+	}
+
+	public Integer getBversion() {
+		return bversion;
+	}
+
+	public void setBversion(Integer bversion) {
+		this.bversion = bversion;
+	}
+
+	public Integer getBvolume() {
+		return bvolume;
+	}
+
+	public void setBvolume(Integer bvolume) {
+		this.bvolume = bvolume;
+	}
+
+	public Long getCmsId() {
 		return cmsId;
 	}
 
