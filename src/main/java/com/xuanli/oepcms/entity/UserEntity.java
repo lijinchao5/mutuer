@@ -55,6 +55,16 @@ public class UserEntity extends BasePageBean{
     
 	private Date enddate;
 
+	private Integer bookVolume;
+
+	public Integer getBookVolume() {
+		return bookVolume;
+	}
+
+	public void setBookVolume(Integer bookVolume) {
+		this.bookVolume = bookVolume;
+	}
+
 	public Date getEnddate() {
 		return enddate;
 	}

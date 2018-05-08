@@ -337,12 +337,13 @@ public class UserController extends BaseController {
 			@ApiImplicitParam(name = "birthDate", value = "出生日期 yyyy-MM-dd", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "schoolId", value = "学校id", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "Integer"),
-			@ApiImplicitParam(name = "studySection", value = "学段", required = true, dataType = "Integer"),
-			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = true, dataType = "Integer") })
+			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = true, dataType = "Integer"),
+			@ApiImplicitParam(name = "bookVolume", value = "上下册:上册1,下册2", required = true, dataType = "Integer") })
 	@RequestMapping(value = "updatePersionalInfo.do", method = RequestMethod.POST)
 	public RestResult<String> updatePersionalInfo(@RequestParam(required = false) String name, @RequestParam(required = false) String sex,
 			@RequestParam(required = false) Date birthDate, @RequestParam(required = false, value = "picfile") String picfile, @RequestParam(required = false) String schoolId,
-			@RequestParam(required = false) Integer grade, @RequestParam(required = false) Integer bookVersion,@RequestParam(required = false) Integer studySection) {
+			@RequestParam(required = false) Integer grade, @RequestParam(required = false) Integer bookVersion,
+			@RequestParam(required = false) Integer bookVolume) {
 		try {
 			UserEntity userEntity = new UserEntity();
 			userEntity.setId(getCurrentUser().getId());
@@ -352,7 +353,7 @@ public class UserController extends BaseController {
 			userEntity.setSchoolid(schoolId);
 			userEntity.setGradeLevelId(grade);
 			userEntity.setBookVersionId(bookVersion);
-			userEntity.setStudySectionId(studySection);
+			userEntity.setBookVolume(bookVolume);
 			userService.updateUserInfo(userEntity, StringUtil.isEmpty(picfile) ? null : ImageUtil.decodeToBytes(picfile));
 			return okNoResult("操作成功");
 		} catch (Exception e) {
