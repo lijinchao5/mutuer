@@ -281,7 +281,5 @@
 	WHERE
 		student_id = #{studentId}
 	AND article_id = #{articleId}
-	GROUP BY
-		student_id
   </select>
 </mapper>
