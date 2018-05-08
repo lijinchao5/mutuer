@@ -17,7 +17,9 @@ public class ExerciseDetailWordEntity {
 
     private String word;
 
-    private Long createId;
+	private String type;
+
+	private Long createId;
 
     private Date createDate;
 
@@ -26,6 +28,14 @@ public class ExerciseDetailWordEntity {
     private Date updateDate;
 
     private String enableFlag;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
     public Long getId() {
         return id;

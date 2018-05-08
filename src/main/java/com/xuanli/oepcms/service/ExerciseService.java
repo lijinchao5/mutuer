@@ -164,6 +164,7 @@ public class ExerciseService extends BaseService {
 					List<ExerciseDetailWordEntity> exerciseDetailWordEntities = new ArrayList<ExerciseDetailWordEntity>();
 					List<YunZhiWords> yunZhiSubWords = line.getWords();
 					for (YunZhiWords word : yunZhiSubWords) {
+						int type = word.getType();
 						double score = word.getScore();
 						String text1 = word.getText();
 						ExerciseDetailWordEntity detailWordEntity = new ExerciseDetailWordEntity();
@@ -172,6 +173,7 @@ public class ExerciseService extends BaseService {
 						detailWordEntity.setDetailId(exerciseDetailEntity.getId());
 						detailWordEntity.setStudentId(studentId);
 						detailWordEntity.setWord(text1);
+						detailWordEntity.setType(type + "");
 						double sc = score * 10;
 						sc = new BigDecimal(sc).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
 						detailWordEntity.setScore(sc);

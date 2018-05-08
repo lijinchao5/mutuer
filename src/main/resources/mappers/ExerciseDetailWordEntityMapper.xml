@@ -9,6 +9,7 @@
     <result column="detail_id" jdbcType="BIGINT" property="detailId" />
     <result column="score" jdbcType="DOUBLE" property="score" />
     <result column="word" jdbcType="VARCHAR" property="word" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="create_id" jdbcType="BIGINT" property="createId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_id" jdbcType="BIGINT" property="updateId" />
@@ -16,7 +17,7 @@
     <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, student_id, article_id, sentence_id, detail_id, score, word, create_id, 
+    id, student_id, article_id, sentence_id, detail_id, score, word, type, create_id, 
     create_date, update_id, update_date, enable_flag
   </sql>
   <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -53,6 +54,9 @@
       </if>
       <if test="word != null">
         word,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="createId != null">
         create_id,
@@ -92,6 +96,9 @@
       <if test="word != null">
         #{word,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
       <if test="createId != null">
         #{createId,jdbcType=BIGINT},
       </if>
@@ -129,6 +136,9 @@
       </if>
       <if test="word != null">
         word = #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="createId != null">
         create_id = #{createId,jdbcType=BIGINT},
@@ -175,10 +185,10 @@
   </select>
   <insert id="insertExerciseDetailWordEntityBatch" parameterType="java.util.List" >
   	INSERT INTO xl_exercise_detail_word
-  	(article_id, sentence_id, student_id, detail_id, word, score)
+  	(article_id, sentence_id, student_id, detail_id, word, type, score)
   	VALUES
   	<foreach collection="list" item="edw" index="index" separator=",">
-  		(#{edw.articleId}, #{edw.sentenceId}, #{edw.studentId}, #{edw.detailId}, #{edw.word}, #{edw.score})
+  		(#{edw.articleId}, #{edw.sentenceId}, #{edw.studentId}, #{edw.detailId}, #{edw.word},#{edw.type}, #{edw.score})
   	</foreach>
   </insert>
 </mapper>

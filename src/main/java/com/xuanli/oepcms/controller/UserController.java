@@ -372,7 +372,7 @@ public class UserController extends BaseController {
 				if (result.equals("1")) {
 					logger.info("更换教材已同步至APP端!");
 				} else if (result.equals("0")) {
-					logger.info("更换教材未同步至APP端!");
+					logger.info("更换教材同步至APP端失败!");
 				}
 			}
 			return okNoResult("操作成功");

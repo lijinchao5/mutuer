@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
+import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.service.BookService;
+import com.xuanli.oepcms.service.UserService;
 import com.xuanli.oepcms.vo.RestResult;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -28,6 +30,8 @@ import io.swagger.annotations.ApiOperation;
 public class MobileBookController extends BaseMobileController {
 	@Autowired
 	BookService bookService;
+	@Autowired
+	UserService userService;
 
 	/**
 	 * Title: replaceBookVersion 
@@ -39,8 +43,21 @@ public class MobileBookController extends BaseMobileController {
 	@ApiOperation(value = "切换教材", notes = "切换教材")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "bookId", value = "教材id", required = true, dataType = "Long") })
 	@RequestMapping(value = "replaceBookVersion.do", method = RequestMethod.POST)
-	public RestResult<String> replaceBookVersion(Long bookId) {
+	public RestResult<String> replaceBookVersion(Long bookId, Integer grade, Integer bookVersion, Integer bookVolume) {
 		String result = bookService.replaceBookVersion(getCurrentUser().getUserId(), bookId);
+		if (null == grade || null == bookVersion || null == bookVolume) {
+		} else {
+			UserEntity userEntity = new UserEntity();
+			userEntity.setGradeLevelId(grade);
+			userEntity.setBookVersionId(bookVersion);
+			userEntity.setBookVolume(bookVolume);
+			int userInfo = userService.updateUserInfo(userEntity, null);
+			if (userInfo > 0) {
+				logger.info("更换教材已同步至PC端!");
+			} else {
+				logger.info("更换教材同步至PC端失败!");
+			}
+		}
 		if (result.equals("1")) {
 			return ok("切换教材成功");
 		} else if (result.equals("0")) {
