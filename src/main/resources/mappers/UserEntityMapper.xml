@@ -516,18 +516,9 @@
 		u.mobile,
 		s.school_name schoolName,
 		s.id schoolId,
-		IFNULL(
-			(
-				SELECT
-					name_val
-				FROM
-					xl_dic_detail dd
-				WHERE
-					dd.dic_id = 3
-				AND dd.name_val = u.book_version_id and dd.enable_flag = 'T'
-			),
-			'0'
-		) bookVersion,
+		u.book_version_id bookVersion,
+		u.grade_level_id grade,
+		u.book_volume bookVolume,
 		(
 			SELECT
 				(
