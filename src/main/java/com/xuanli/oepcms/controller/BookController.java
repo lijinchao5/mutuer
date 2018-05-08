@@ -162,9 +162,12 @@ public class BookController extends BaseController {
 	public RestResult<BookEntity> getBookById(Long bookId,Integer bgrade,Integer bversion,Integer bvolume) {
 		BookEntity bookEntity = new BookEntity();
 		bookEntity.setId(bookId);
-		bookEntity.setBgrade(bgrade);
-		bookEntity.setBversion(bversion);
-		bookEntity.setBvolume(bvolume);
+		bookEntity.setGrade(bgrade + "");
+		bookEntity.setBookVersion(bversion);
+		bookEntity.setBookVolume(bvolume + "");
+		// bookEntity.setBgrade(bgrade);
+		// bookEntity.setBversion(bversion);
+		// bookEntity.setBvolume(bvolume);
 		List<BookEntity> bookEntities = bookService.getBookEntity(bookEntity);
 		if (null != bookEntities && bookEntities.size()>0) {
 			return ok(bookEntities.get(0));
