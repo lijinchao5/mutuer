@@ -167,7 +167,35 @@
 			xra.update_date updateDate,
 			xra.enable_flag enableFlag,
 			dd. NAME levelName,
-			dd1. NAME typeName
+			dd1. NAME typeName,
+			(
+				SELECT
+					count(xrs.id)
+				FROM
+					xl_read_sentence xrs
+				WHERE
+					xrs.article_id = xra.id
+			) allSize,
+			(
+				SELECT
+					count(*)
+				FROM
+					(
+						SELECT
+							sentence_id sid,
+							count(sentence_id) cid,
+							article_id
+						FROM
+							xl_exercise_detail_word
+						WHERE
+							student_id = #{userId}
+						GROUP BY
+							sentence_id,
+							article_id
+					) tmp
+				WHERE
+					tmp.article_id = xra.id
+			) readySize
 		FROM
 			xl_read_article xra
 		LEFT JOIN xl_dic_detail dd ON dd.dic_id = 15

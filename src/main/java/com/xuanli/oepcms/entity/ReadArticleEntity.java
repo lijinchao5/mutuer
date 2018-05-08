@@ -27,7 +27,18 @@ public class ReadArticleEntity extends BasePageBean{
 
     private String enableFlag;
 
-    public Long getId() {
+    private Long userId;
+    
+    
+    public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Long getId() {
         return id;
     }
 

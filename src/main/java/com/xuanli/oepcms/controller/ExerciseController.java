@@ -45,6 +45,7 @@ public class ExerciseController extends BaseController {
 		ReadArticleEntity readArticleEntity = new ReadArticleEntity();
 		readArticleEntity.setType(type);
 		readArticleEntity.setLevel(level);
+		readArticleEntity.setUserId(getCurrentUser().getId());
 		exerciseService.findReadArticlePage(readArticleEntity, pageBean);
 		return ok(pageBean);
 	}
