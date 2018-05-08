@@ -23,10 +23,11 @@
     <result column="cms_id" property="cmsId" jdbcType="VARCHAR" />
     <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
     <result column="areaid" property="areaid" jdbcType="VARCHAR" />
+    <result column="book_volume" property="bookVolume" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, mobile, password, sex, birth_date, study_section_id, grade_level_id, book_version_id, 
-    role_id, name_num, remark, photo,create_id, create_date, update_id, update_date, enable_flag,cms_id,schoolid,areaid
+    role_id, name_num, remark, photo,create_id, create_date, update_id, update_date, enable_flag,cms_id,schoolid,areaid,book_volume
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -128,6 +129,9 @@
       <if test="userBatch != null" >
         user_batch,
       </if>
+      <if test="bookVolume != null" >
+        book_volume,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -196,6 +200,9 @@
       <if test="userBatch != null" >
         #{userBatch},
       </if>
+      <if test="bookVolume != null" >
+        #{bookVolume},
+      </if>
     </trim>
   </insert>
   <update id="updateUserEntity" parameterType="com.xuanli.oepcms.entity.UserEntity" >
@@ -260,6 +267,9 @@
       </if>
       <if test="areaid != null" >
         areaid = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookVolume != null" >
+        book_volume = #{bookVolume,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -327,6 +337,9 @@
       <if test="bookVersionId != null" >
          book_version_id = #{bookVersionId,jdbcType=INTEGER},
       </if>
+      <if test="bookVolume != null" >
+         book_volume = #{bookVolume,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -387,6 +400,9 @@
       </if>
       <if test="areaid != null" >
         areaid = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="bookVolume != null" >
+         book_volume = #{bookVolume,jdbcType=INTEGER},
       </if>
     </set>
     where cms_id = #{cmsId,jdbcType=BIGINT}
