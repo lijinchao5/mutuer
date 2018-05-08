@@ -84,7 +84,7 @@ public class BookController extends BaseController {
 	})
 	@RequestMapping(value = "getUnits.do", method = RequestMethod.GET)
 	public RestResult<List<UnitEntity>> getUnits(String bookId,Integer bgrade,Integer bversion,Integer bvolume) {
-		if (StringUtil.isEmpty(bookId) && (StringUtil.isEmpty(bgrade) || StringUtil.isEmpty(bversion) || StringUtil.isEmpty(bvolume))) {
+		if (StringUtil.isEmpty(bookId) && (bgrade == null || bversion == null || bvolume == null)) {
 			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "请先选择教材");
 		}
 		UnitEntity unitEntity = new UnitEntity();
