@@ -24,37 +24,6 @@ public class BookEntity {
     private String enableFlag;
     
     private Long cmsId;
-    
-    
-    //使用查询使用
-    private Integer bgrade;
-    private Integer bversion;
-    private Integer bvolume;
-    
-
-	public Integer getBgrade() {
-		return bgrade;
-	}
-
-	public void setBgrade(Integer bgrade) {
-		this.bgrade = bgrade;
-	}
-
-	public Integer getBversion() {
-		return bversion;
-	}
-
-	public void setBversion(Integer bversion) {
-		this.bversion = bversion;
-	}
-
-	public Integer getBvolume() {
-		return bvolume;
-	}
-
-	public void setBvolume(Integer bvolume) {
-		this.bvolume = bvolume;
-	}
 
 	public Integer getBookVersion() {
 		return bookVersion;
