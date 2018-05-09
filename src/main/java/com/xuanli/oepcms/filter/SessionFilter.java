@@ -64,6 +64,7 @@ public class SessionFilter implements Filter {
 			List<String> notFilter = new ArrayList<String>();
 			notFilter.add("/mobile/login.do");
 			notFilter.add("/mobile/logout.do");
+			notFilter.add("/mobile/appRegist.do");
 			notFilter.add("/mobile/test/");
 			boolean doFilter = true;
 			if (uri.indexOf(".do") != -1) {

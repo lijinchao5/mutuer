@@ -3,6 +3,7 @@ package com.xuanli.oepcms.service;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,9 @@ import com.xuanli.oepcms.entity.ExamEntity;
 import com.xuanli.oepcms.entity.HomeworkEntity;
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
+import com.xuanli.oepcms.entity.UserMobileEntity;
 import com.xuanli.oepcms.mapper.UserEntityMapper;
+import com.xuanli.oepcms.mapper.UserMobileEntityMapper;
 import com.xuanli.oepcms.util.FileUtil;
 import com.xuanli.oepcms.util.PageBean;
 import com.xuanli.oepcms.util.PasswordUtil;
@@ -53,7 +56,8 @@ public class UserService extends BaseService {
 	StudentMqService studentMqService;
 	@Autowired
 	ClasService clasService;
-
+	@Autowired
+	private UserMobileEntityMapper userMobileDao;
 	/**
 	 * @Description: TODO
 	 * @CreateName: QiaoYu
@@ -547,5 +551,43 @@ public class UserService extends BaseService {
 
 	public List<Map<String, Object>> getClassmate(Long classId) {
 		return userDao.getClassmate(classId);
+	}
+
+	/**
+	 * @CreateName:  QiaoYu[www.codelion.cn]
+	 * @CreateDate:  2018年5月9日 上午10:42:32
+	 */
+	public Map<String, Object> appRegist(String mobile, String password,String appId) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		UserEntity registUser = new UserEntity();
+		registUser.setMobile(mobile);
+		List<UserEntity> userEntities = userDao.selectUserEntity(registUser);
+		if (null != userEntities && userEntities.size() <= 0) {
+			UserEntity userEntity = new UserEntity();
+			userEntity.setCreateDate(new Date());
+			userEntity.setEnableFlag("T");
+			userEntity.setPassword(PasswordUtil.generate(password));
+			userEntity.setMobile(mobile);
+			userEntity.setRoleId(new Integer(4));
+			userDao.insertUserEntity(userEntity);
+			UserEntity userEntity2 = new UserEntity();
+			userEntity2.setId(userEntity.getId());
+			userEntity2.setNameNum(userEntity.getId().longValue() + StringUtil.getRandomZM(2));
+			userDao.updateUserEntity(userEntity2);
+			Long userId = userEntity.getId();
+			String tokenId = RanNumUtil.getRandom();
+			UserMobileEntity ume = new UserMobileEntity();
+			ume.setUserId(userId);
+			ume.setAppId(appId);
+			ume.setAppTokenId(tokenId);
+			userMobileDao.updateUserMobileEntityByLogin(ume);
+			sessionUtil.setMobileRandomTokenId(tokenId,JSONObject.toJSONString(ume));
+			resultMap.put("success", "true");
+			resultMap.put("tokenId", tokenId);
+		} else {
+			resultMap.put("msg", "手机号码已经存在");
+			resultMap.put("success", "false");
+		}
+		return resultMap;
 	}
 }

@@ -3,6 +3,8 @@
  */
 package com.xuanli.oepcms.controller.mobile;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.service.MobileUserService;
+import com.xuanli.oepcms.service.UserService;
+import com.xuanli.oepcms.util.SessionUtil;
 import com.xuanli.oepcms.util.StringUtil;
 import com.xuanli.oepcms.vo.RestResult;
 
@@ -24,7 +28,10 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(value = "/mobile/")
 public class MobileLoginController extends BaseMobileController {
-
+	@Autowired
+	SessionUtil sessionUtil;
+	@Autowired
+	UserService userService;
 	@Autowired
 	private MobileUserService mobileUserService;
 
@@ -59,6 +66,31 @@ public class MobileLoginController extends BaseMobileController {
 			logger.error("登陆异常,请联系管理员.", e);
 			e.printStackTrace();
 			return failed(ExceptionCode.UNKNOW_CODE, e.getMessage());
+		}
+	}
+	@RequestMapping(value = "appRegist.do", method = RequestMethod.POST)
+	public RestResult<Map<String,Object>> regist(String mobile,String password,String randomValue,String appId){
+		if (!StringUtil.isMobile(mobile)) {
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
+		}
+		if (StringUtil.isEmpty(password)) {
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "密码不能为空.");
+		}
+		if (StringUtil.isEmpty(appId)) {
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "appId不能为空.");
+		}
+		if (StringUtil.isEmpty(randomValue)) {
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "密验证码不能为空.");
+		}
+		
+		String randomStr = sessionUtil.getAppMobileMessage(mobile);
+		logger.info("redis获取出来的value是:["+randomStr+"]对比:["+randomValue+"]");
+		if (null != randomStr && randomStr.equals(randomValue)) {
+			//对比通过
+			Map<String,Object> map = userService.appRegist(mobile,password,appId);
+			return ok(map);
+		}else {
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机验证码错误");
 		}
 	}
 }

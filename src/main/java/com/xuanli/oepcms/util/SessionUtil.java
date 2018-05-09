@@ -100,4 +100,17 @@ public class SessionUtil {
 	public void removeMobileRandomTokenId(String key) {
 		mobileRedisCache.remove(key + "_" + SystemContents.MOBILE_RANDOM_TOKEN_ID);
 	}
+
+	public void setAppMobileMessage(String key, String value) {
+		mobileRedisCache.put(SystemContents.APP_MOBILE_MESSAGE_NUM + "_" + key, value, 5);
+	}
+
+	public String getAppMobileMessage(String key) {
+		return mobileRedisCache.getAndClean(SystemContents.APP_MOBILE_MESSAGE_NUM + "_" + key);
+	}
+
+	public void removeAppMobileMessage(String key) {
+		mobileRedisCache.remove(SystemContents.APP_MOBILE_MESSAGE_NUM + "_" + key);
+	}
+
 }

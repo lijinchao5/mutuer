@@ -41,6 +41,37 @@ public class MobileMessageController extends BaseController {
 	 * @CreateDate: 2018年1月15日 下午3:56:32
 	 */
 	@ApiOperation(value = "发送手机短信", notes = "注册时用户发送手机短信验证码")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String")})
+	@RequestMapping(value = "appRegistMsg.do", method = RequestMethod.GET)
+	public RestResult<String> appRegistMsg(@RequestParam String mobile) {
+			if (!StringUtil.isMobile(mobile)) {
+				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
+			}
+			try {
+				String randomNum = RanNumUtil.createRandomNum(6);
+				String result = mobileMessageService.registMsg(mobile, randomNum);
+				if (StringUtil.isEmpty(result) || result.equals("1")) {
+					// 发送短信成功
+					sessionUtil.setAppMobileMessage(mobile, randomNum);
+					return okNoResult("发送短信成功!");
+				} else if (result.equals("2")) {
+					// 手机号码已经存在
+					return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经存在.");
+				} else {
+					return failed(ExceptionCode.UNKNOW_CODE, "发送短信未知错误.");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error("发送短信异常.", e);
+				return failed(ExceptionCode.SENDMSG_ERROR_CODE, "发送短信异常.");
+			}
+	}
+	/**
+	 * @Description: TODO 注册
+	 * @CreateName: QiaoYu
+	 * @CreateDate: 2018年1月15日 下午3:56:32
+	 */
+	@ApiOperation(value = "发送手机短信", notes = "注册时用户发送手机短信验证码")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "mobile", value = "手机号", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomStr", value = "手机图片验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomKey", value = "随机验证码关键key", required = true, dataType = "String") })
