@@ -87,7 +87,8 @@
 			WHERE
 				xun.unit_id = u.id
 			AND xun.user_id = #{userId}
-		) score
+		) score,
+		count(se.id) wordSize
 	FROM
 		xl_section_detail se
 	LEFT JOIN xl_section e ON se.section_id = e.id
