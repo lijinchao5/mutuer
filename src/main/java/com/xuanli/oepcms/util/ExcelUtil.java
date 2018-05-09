@@ -217,10 +217,8 @@ public class ExcelUtil {
 //
 //		String title = "测试";
 //		OutputStream outXlsx = new FileOutputStream("E://b.xlsx");
-//		System.out.println("正在导出xlsx....");
 //		Date d2 = new Date();
 //		ExcelUtil.exportExcelX(title, headMap, ja, null, 0, outXlsx);
-//		System.out.println("共" + count + "条数据,执行" + (new Date().getTime() - d2.getTime()) + "ms");
 //		outXlsx.close();
 //
 //	}

@@ -274,11 +274,10 @@ public class HttpUtil {
         return content;
     }
     
-    public static void main(String[] args) {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("wd", "nima");
-        byte[] b = doGet("http://www.baidu.com", map);
-        System.out.println("-------------------"+new String(b));
-    }
+//    public static void main(String[] args) {
+//        Map<String, String> map = new HashMap<String, String>();
+//        map.put("wd", "nima");
+//        byte[] b = doGet("http://www.baidu.com", map);
+//    }
 
 }

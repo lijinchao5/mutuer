@@ -24,6 +24,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,7 @@ import com.xuanli.oepcms.util.ThirdAliOSSUtil;
 @SuppressWarnings("deprecation")
 @Service
 public class YunZhiSDK {
+	public static Logger logger = Logger.getLogger(YunZhiSDK.class);
 	@Autowired
 	SystemConfig systemConfig;
 
@@ -230,7 +232,7 @@ public class YunZhiSDK {
 
 	public static String getJSGF(String pointResult, String currentResult) {
 		if (StringUtil.isEmpty(currentResult)) {
-			System.out.println("句式为空,不能评分!");
+			logger.info("句式为空,不能评分!");
 			return null;
 		}
 		String[] pointResults = pointResult.split("@@");
@@ -250,11 +252,8 @@ public class YunZhiSDK {
 		}
 		JSGFWeiBean jsgfWeiBean = new JSGFWeiBean();
 		jsgfWeiBean.setWeight_struct(objects);
-
 		currentResult = currentResult.replaceAll("\\|\\|", "|");
-
 		JSGFBean jsgfBean = new JSGFBean(JSON.toJSONString(jsgfWeiBean), currentResult);
-		System.out.println(JSON.toJSONString(jsgfBean));
 		return JSON.toJSONString(jsgfBean);
 	}
 

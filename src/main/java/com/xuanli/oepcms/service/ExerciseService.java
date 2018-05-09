@@ -143,7 +143,7 @@ public class ExerciseService extends BaseService {
 			logger.error(readSentenceEntity.getId() + "---出现问题,不能计算");
 		} else {
 			YunZhiBean yunZhiBean = JSONObject.parseObject(json, YunZhiBean.class);
-			logger.error(JSON.toJSONString(yunZhiBean));
+			logger.debug(JSON.toJSONString(yunZhiBean));
 			// 开始分析作业分数并且更新到数据库中
 			// 设置分数
 			exerciseDetailEntity.setScore(yunZhiBean.getScore());

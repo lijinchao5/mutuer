@@ -145,7 +145,6 @@ public class SyncQuestionService {
 			}
 			return "1";
 		} else {
-			System.out.println("syncQuestionSubjectBean是空的");
 			return "0";
 		}
 	}

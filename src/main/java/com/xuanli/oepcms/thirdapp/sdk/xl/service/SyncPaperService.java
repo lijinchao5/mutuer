@@ -179,11 +179,9 @@ public class SyncPaperService {
 							}
 						}
 					} else {
-						System.out.println("paperDetailBean是空的!");
 					}
 				}
 			} else {
-				System.out.println("paperBean是空的!");
 			}
 			return "1";
 		} else {

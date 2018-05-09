@@ -40,7 +40,7 @@ public class UserServiceTest extends BaseTest {
 //    	user.setRoleId(new Integer(2));
 //    	user.setPassword(PasswordUtil.generate("admin"));
 //    	int i = userService.saveUser(user);
-//    	System.out.println(i);
+//    	logger.info(i);
     }
     
     @Test

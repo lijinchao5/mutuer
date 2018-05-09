@@ -80,7 +80,6 @@ public class SyncOtherLinkService {
 					}
 				}
 			} else {
-				System.out.println("syncOtherLinkBean是空的!");
 			}
 			return "1";
 		} else {

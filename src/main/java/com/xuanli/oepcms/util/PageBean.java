@@ -51,8 +51,6 @@ public class PageBean {
 			rowTo = page * pageSize;
 		}
 		this.countPage = countPage;
-//		System.out.println(rowFrom + "----------->" + rowTo);
-//		System.out.println(rowFrom + "----------->" + pageSize);
 	}
 
 	public Integer getCountPage() {

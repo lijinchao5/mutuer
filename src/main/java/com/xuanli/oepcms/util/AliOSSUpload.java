@@ -37,7 +37,6 @@ public class AliOSSUpload {
 				File file = new File("C:\\workspace\\workspace10\\xl\\oep-be\\src\\main\\webapp\\map3\\"+string);
 				ossClient.putObject(new PutObjectRequest(bucketName, string, file));
 				boolean exists = ossClient.doesObjectExist(bucketName, string);
-				System.out.println(string);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

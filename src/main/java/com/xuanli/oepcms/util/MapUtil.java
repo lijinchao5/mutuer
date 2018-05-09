@@ -214,15 +214,4 @@ public class MapUtil {
 		return mapString.toString();
 	}
 
-//	public static void main(String[] args) {
-//		Map<String, String> map = new HashMap<String, String>();
-//		map.put("1", "p1q");
-//		map.put("2", "p2w");
-//		map.put("3", "p3e");
-//		map.put("4", "p4r");
-//		map.put("5", "p5t");
-//		map.put("6", "p6y");
-//		map.put("7", "p7y");
-//		System.out.println(getMap2String(map));
-//	}
 }

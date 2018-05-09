@@ -169,7 +169,6 @@ public class SyncBookService extends BaseService {
 					}
 				}
 			} else {
-				// System.out.println("bookBean是空的!");
 			}
 			return "1";
 		} else {

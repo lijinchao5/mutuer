@@ -1,20 +1,23 @@
 package com.xuanli.oepcms.other;
 
+import org.apache.log4j.Logger;
+
 import com.alibaba.fastjson.JSON;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFBean;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFMapBean;
 import com.xuanli.oepcms.thirdapp.sdk.yunzhi.bean.JSGFWeiBean;
 import com.xuanli.oepcms.util.StringUtil;
+import com.xuanli.oepcms.util.YMLUtil;
 
 public class StringTest {
-
+	public static Logger logger = Logger.getLogger(StringTest.class);
 	public static void main(String[] args) {
 		getJSGF("favorite||like best", "My science teacher.||The science teacher.||My favorite teacher is my science teacher.||My science teacher is my favorite teacher.||I like my science teacher best.");
 	}
 
 	public static String getJSGF(String pointResult, String currentResult) {
 		if (StringUtil.isEmpty(currentResult)) {
-			System.out.println("句式为空,不能评分!");
+			logger.info("句式为空,不能评分!");
 			return null;
 		}
 		String[] pointResults = pointResult.split("@@");
@@ -38,13 +41,12 @@ public class StringTest {
 		currentResult = currentResult.replaceAll("\\|\\|", "|");
 		
 		JSGFBean jsgfBean = new JSGFBean(JSON.toJSONString(jsgfWeiBean), currentResult);
-		System.out.println(JSON.toJSONString(jsgfBean));
+		logger.info(JSON.toJSONString(jsgfBean));
 		return JSON.toJSONString(jsgfBean);
 	}
 
 //	public static String getJSGF1(String pointResult, String currentResult) {
 //		if (StringUtil.isEmpty(currentResult)) {
-//			System.out.println("句式为空,不能评分!");
 //			return null;
 //		}
 //		String[] pointResults = pointResult.split("@@");
@@ -73,7 +75,6 @@ public class StringTest {
 //		jsgfWeiBean.setWeight_struct(objects);
 //
 //		JSGFBean jsgfBean = new JSGFBean(JSON.toJSONString(jsgfWeiBean), "i have a apple|i has two apple");
-//		System.out.println(JSON.toJSONString(jsgfBean));
 //
 //		return JSON.toJSONString(jsgfBean);
 //	}

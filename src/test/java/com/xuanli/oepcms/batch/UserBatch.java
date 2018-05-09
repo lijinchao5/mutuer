@@ -6,6 +6,7 @@
  */
 package com.xuanli.oepcms.batch;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONObject;
@@ -19,6 +20,7 @@ import com.xuanli.oepcms.service.UserService;
  * @author QiaoYu[www.codelion.cn]
  */
 public class UserBatch extends BaseTest {
+	public static Logger logger = Logger.getLogger(UserBatch.class);
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -32,10 +34,10 @@ public class UserBatch extends BaseTest {
 		int picStudentNum = 3;
 		for (int i = 0; i < teacherNum; i++) {
 			String mobile = "131333333" + (i < 10 ? "0" + i : "" + i);
-			System.out.println("教师账号为:"+mobile);
+			logger.info("教师账号为:"+mobile);
 			String teacherRegist = userService.teacherRegist(mobile, "888888");
 			if (teacherRegist.equals("2")) {
-				System.out.println("生成老师账号失败!");
+				logger.info("生成老师账号失败!");
 				break;
 			}
 			String a = userService.loginTest(mobile);

@@ -70,7 +70,7 @@ public class MobileMessageController extends BaseController {
 				return failed(ExceptionCode.SENDMSG_ERROR_CODE, "发送短信异常.");
 			}
 		} else {
-			logger.error("发送短信--->验证码错误.");
+			logger.info("发送短信--->验证码错误.");
 			return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
 		}
 	}

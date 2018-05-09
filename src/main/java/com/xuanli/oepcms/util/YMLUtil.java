@@ -10,13 +10,14 @@ import java.io.FileInputStream;
 import java.net.URL;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 /**
  * @author QiaoYu[www.codelion.cn]
  */
 public class YMLUtil {
-	
+	public static Logger logger = Logger.getLogger(YMLUtil.class);
 	@SuppressWarnings("rawtypes")
 	public static String getSpringEnv() {
 		try {
@@ -29,11 +30,11 @@ public class YMLUtil {
 				String env = (String) active.get("active");
 				return env;
 			}else {
-				System.out.println("读取环境配置文件url错误");
+				logger.error("读取环境配置文件url错误");
 				return "dev";
 			}
 		} catch (Exception e) {
-			System.out.println("读取环境配置文件错误返回dev环境信息");
+			logger.error("读取环境配置文件错误返回dev环境信息");
 			return "dev";
 		}
 	}

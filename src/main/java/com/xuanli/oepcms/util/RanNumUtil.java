@@ -12,7 +12,6 @@ public class RanNumUtil {
         for (int i = 0; i < num; i++) {  
             code.append(String.valueOf(random.nextInt(10)));  
         }  
-        System.out.println(code);
         return code.toString();
     }
     

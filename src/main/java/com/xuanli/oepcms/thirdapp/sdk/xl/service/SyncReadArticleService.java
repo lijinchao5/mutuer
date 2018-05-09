@@ -105,11 +105,9 @@ public class SyncReadArticleService {
 							}
 						}
 					} else {
-						System.out.println("syncReadSentenceBean是空的");
 					}
 				}
 			} else {
-				System.out.println("readArticleBean是空的");
 			}
 			return "1";
 		} else {

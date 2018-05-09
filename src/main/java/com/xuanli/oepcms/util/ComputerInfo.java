@@ -137,7 +137,6 @@ public class ComputerInfo {
             BufferedReader bufReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line = null;
             while ( (line = bufReader.readLine()) != null) {
-            	System.out.println(line);
             	ip+=line;
             }
             return ip;
@@ -170,12 +169,12 @@ public class ComputerInfo {
 
     }
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(ComputerInfo.getMacAddress());
-        System.out.println(ComputerInfo.getComputerName());
-        System.out.println(ComputerInfo.getIpAddr());
-        System.out.println(ComputerInfo.getIpAddrAndName());
-        System.out.println(ComputerInfo.getComputerID());
-    }
+//    public static void main(String[] args) throws IOException {
+//        logger.info(ComputerInfo.getMacAddress());
+//        logger.info(ComputerInfo.getComputerName());
+//        logger.info(ComputerInfo.getIpAddr());
+//        logger.info(ComputerInfo.getIpAddrAndName());
+//        logger.info(ComputerInfo.getComputerID());
+//    }
 
 }

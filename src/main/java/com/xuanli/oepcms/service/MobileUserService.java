@@ -62,8 +62,6 @@ public class MobileUserService {
 			// 手动登陆
 			UserEntity userEntity = new UserEntity();
 			userEntity.setMobile(userName);
-			System.out.println(JSONObject.toJSONString(userEntity));
-			System.out.println(userEntity);
 			List<UserEntity> userEntities = userDao.login(userEntity);
 			if (null != userEntities && userEntities.size() > 0) {
 				UserEntity result = userEntities.get(0);

@@ -14,10 +14,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author QiaoYu[www.codelion.cn]
  */
 public class TestHttp {
+	public static Logger logger = Logger.getLogger(TestHttp.class);
 	public static void main(String[] args) {
 		try {
 			URL url = new URL("http://www.aienglish.vip/oep-be/homework/getStudentHomeWorkList.do?rows=6&page=1");
@@ -35,7 +38,7 @@ public class TestHttp {
 			while ((temp = br.readLine()) != null) {
 				resultBuffer.append(temp);
 			}
-			System.out.println(resultBuffer.toString());
+			logger.info(resultBuffer.toString());
 			con.disconnect();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

@@ -7,11 +7,10 @@
 package com.xuanli.oepcms.school;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,7 +20,6 @@ import com.xuanli.oepcms.BaseTest;
 import com.xuanli.oepcms.entity.AreaEntity;
 import com.xuanli.oepcms.entity.SchoolDataEntity;
 import com.xuanli.oepcms.mapper.AreaEntityMapper;
-import com.xuanli.oepcms.mapper.AreaUseEntityMapper;
 import com.xuanli.oepcms.mapper.SchoolDataEntityMapper;
 import com.xuanli.oepcms.util.HttpUtil;
 
@@ -29,6 +27,7 @@ import com.xuanli.oepcms.util.HttpUtil;
  * @author QiaoYu[www.codelion.cn]
  */
 public class SyncSchoolData extends BaseTest {
+	public Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
 	SchoolDataEntityMapper schoolDataEntityMapper;
 	@Autowired
@@ -45,7 +44,6 @@ public class SyncSchoolData extends BaseTest {
 			List<SyncCityBean> city1s = JSONArray.parseArray(new String(HttpUtil.doGet("https://ucenter.17zuoye.com/map/nodes.api?id=" + cityIds[i] + "0000")), SyncCityBean.class);
 			for (SyncCityBean city1 : city1s) {
 				String cId1 = UUID.randomUUID().toString();
-				System.out.println(city1.getId() + "---" + city1.getText());
 				AreaEntity c1 = new AreaEntity();
 				c1.setId(cId1);
 				c1.setCode(city1.getId().longValue() + "");
@@ -57,7 +55,7 @@ public class SyncSchoolData extends BaseTest {
 				List<SyncCityBean> city2s = JSONArray.parseArray(new String(HttpUtil.doGet("https://ucenter.17zuoye.com/map/nodes.api?id=" + city1.getId())), SyncCityBean.class);
 				for (SyncCityBean city2 : city2s) {
 					String cId2 = UUID.randomUUID().toString();
-					System.out.println(city2.getId() + "==========" + city2.getText());
+					logger.info(city2.getId() + "==========" + city2.getText());
 					AreaEntity c2 = new AreaEntity();
 					c2.setId(cId2);
 					c2.setCode(city2.getId().longValue() + "");
@@ -71,7 +69,7 @@ public class SyncSchoolData extends BaseTest {
 					// city2.getId())), SyncCityBean.class);
 					// for (SyncCityBean city3 : city3s) {
 					// String cId3 = UUID.randomUUID().toString();
-					// System.out.println(city3.getId()+"=========="+city3.getText());
+					// logger.info(city3.getId()+"=========="+city3.getText());
 					// AreaEntity c3 = new AreaEntity();
 					// c3.setId(cId3);
 					// c3.setCode(city3.getId().longValue()+"");
@@ -343,7 +341,7 @@ public class SyncSchoolData extends BaseTest {
 			// 初中http://ucenter.17zuoye.com/school/areaschoolrs.api?regions=110101&level=JUNIOR_SCHOOL&_=1524118393593
 			// 高中http://ucenter.17zuoye.com/school/areaschoolrs.api?regions=340181&level=SENIOR_SCHOOL&_=1524118990912
 			String regionId = schoolIds[i];
-			System.out.println("开始同步信息学校为:" + regionId + "的信息");
+			logger.info("开始同步信息学校为:" + regionId + "的信息");
 			List<SyncSchoolBeans> syncSchoolBeans = new ArrayList<SyncSchoolBeans>();
 			sync1(regionId, errors, syncSchoolBeans);
 			sync2(regionId, errors, syncSchoolBeans);
@@ -356,9 +354,9 @@ public class SyncSchoolData extends BaseTest {
 				schoolDataEntityMapper.insertSelective(record);
 			}
 		}
-		System.out.println("同步错误:");
+		logger.info("同步错误:");
 		for (String e : errors) {
-			System.out.println(e);
+			logger.info(e);
 		}
 	}
 
@@ -366,8 +364,8 @@ public class SyncSchoolData extends BaseTest {
 		// 小学
 		byte[] b = HttpUtil.doGet("http://ucenter.17zuoye.com/school/areaschoolrs.api?regions=" + schoolId + "&level=PRIMARY_SCHOOL&_=1524111720530");
 		SyncSchoolBean schoolBeans = JSONObject.parseObject(new String(b), SyncSchoolBean.class);
-		System.out.println(schoolBeans.isSuccess());
-		System.out.println("开始同步信息学校为:" + schoolId + "的信息[小学]:" + schoolBeans.isSuccess());
+		logger.info(schoolBeans.isSuccess());
+		logger.info("开始同步信息学校为:" + schoolId + "的信息[小学]:" + schoolBeans.isSuccess());
 		if (schoolBeans.isSuccess()) {
 			List<SyncSchoolBeans> schoolBeans2 = schoolBeans.getRows();
 			for (SyncSchoolBeans sb2 : schoolBeans2) {
@@ -383,8 +381,8 @@ public class SyncSchoolData extends BaseTest {
 		// 小学
 		byte[] b = HttpUtil.doGet("http://ucenter.17zuoye.com/school/areaschoolrs.api?regions=" + schoolId + "&level=JUNIOR_SCHOOL&_=1524111720530");
 		SyncSchoolBean schoolBeans = JSONObject.parseObject(new String(b), SyncSchoolBean.class);
-		System.out.println(schoolBeans.isSuccess());
-		System.out.println("开始同步信息学校为:" + schoolId + "的信息[初中]:" + schoolBeans.isSuccess());
+		logger.info(schoolBeans.isSuccess());
+		logger.info("开始同步信息学校为:" + schoolId + "的信息[初中]:" + schoolBeans.isSuccess());
 		if (schoolBeans.isSuccess()) {
 			List<SyncSchoolBeans> schoolBeans2 = schoolBeans.getRows();
 			for (SyncSchoolBeans sb2 : schoolBeans2) {
@@ -400,8 +398,8 @@ public class SyncSchoolData extends BaseTest {
 		// 小学
 		byte[] b = HttpUtil.doGet("http://ucenter.17zuoye.com/school/areaschoolrs.api?regions=" + schoolId + "&level=SENIOR_SCHOOL&_=1524111720530");
 		SyncSchoolBean schoolBeans = JSONObject.parseObject(new String(b), SyncSchoolBean.class);
-		System.out.println(schoolBeans.isSuccess());
-		System.out.println("开始同步信息学校为:" + schoolId + "的信息[高中]:" + schoolBeans.isSuccess());
+		logger.info(schoolBeans.isSuccess());
+		logger.info("开始同步信息学校为:" + schoolId + "的信息[高中]:" + schoolBeans.isSuccess());
 		if (schoolBeans.isSuccess()) {
 			List<SyncSchoolBeans> schoolBeans2 = schoolBeans.getRows();
 			for (SyncSchoolBeans sb2 : schoolBeans2) {

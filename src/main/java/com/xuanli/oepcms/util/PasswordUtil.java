@@ -49,7 +49,6 @@ public class PasswordUtil {
             cs2[i / 3] = md5.charAt(i + 1);
         }
         String salt = new String(cs2);
-        //System.out.println("对比信息["+md5Hex(password + salt)+"]===="+"["+new String(cs1)+"]");
         return md5Hex(password + salt).equals(new String(cs1));
     }
 
