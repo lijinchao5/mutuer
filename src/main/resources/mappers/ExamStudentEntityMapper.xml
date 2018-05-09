@@ -247,7 +247,7 @@
 				FROM
 					xl_exam_student s
 				WHERE
-					s.score > es.score
+					s.score > es.score and s.exam_id = es.exam_id
 			) rank,
 			es.student_rank studentRank
 		FROM
