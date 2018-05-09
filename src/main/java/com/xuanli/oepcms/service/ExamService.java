@@ -310,6 +310,7 @@ public class ExamService extends BaseService {
 			ese.setComplate("E");
 			ese.setExamId(examId);
 			ese.setEnableFlag("T");
+			ese.setTimeOut(null);
 			examStudentEntityMapper.updateExamStudentEntityByExamId(ese);
 		}
 		// TODO 更新名次信息
@@ -542,6 +543,7 @@ public class ExamService extends BaseService {
 			ese.setComplate("S");
 			ese.setExamId(examId);
 			ese.setEnableFlag("T");
+			ese.setTimeOut(null);
 			examStudentEntityMapper.updateExamStudentEntityByExamId(ese);
 		}
 		return okNoResult("作业提交");
