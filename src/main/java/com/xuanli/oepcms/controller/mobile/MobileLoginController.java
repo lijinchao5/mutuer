@@ -41,7 +41,7 @@ public class MobileLoginController extends BaseMobileController {
 			@ApiImplicitParam(name = "appId", value = "设备唯一标识", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "appTokenId", value = "随机验证码关键Key", required = true, dataType = "String") })
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public RestResult<String> mobileLogin(String userName, String password, String appId, String appTokenId) {
+	public RestResult<String> mobileLogin(String userName, String password, String appId, String appTokenId,String roleId) {
 		try {
 			if (StringUtil.isEmpty(userName) && StringUtil.isEmpty(password) && StringUtil.isEmpty(appTokenId)) {
 				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "登陆信息不完整");
@@ -49,7 +49,10 @@ public class MobileLoginController extends BaseMobileController {
 			if (StringUtil.isEmpty(appId)) {
 				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "appId不能为空");
 			}
-			String result = mobileUserService.mobileLogin(userName, password, appId, appTokenId);
+			if (StringUtil.isEmpty(roleId)) {
+				roleId = "4";//学生登录
+			}
+			String result = mobileUserService.mobileLogin(userName, password, appId, appTokenId,roleId);
 			if (StringUtil.isEmpty(result)) {
 				return failed(ExceptionCode.UNKNOW_CODE, "未知错误,请联系管理员.");
 			} else {
@@ -58,7 +61,9 @@ public class MobileLoginController extends BaseMobileController {
 					return failed(ExceptionCode.USERINFO_ERROR_CODE, "用户名或者密码错误.");
 				} else if (result.equals("2")) {
 					return failed(ExceptionCode.UNKNOW_CODE, "登陆超时!");
-				} else {
+				} else if (result.equals("1")) {
+					return failed(ExceptionCode.UNKNOW_CODE, "您的账户角色不正确!");
+				}else {
 					return ok(result);
 				}
 			}

@@ -35,7 +35,7 @@ public class MobileUserService {
 	@Autowired
 	SessionUtil sessionUtil;
 
-	public String mobileLogin(String userName, String password, String appId, String appTokenId) {
+	public String mobileLogin(String userName, String password, String appId, String appTokenId,String roleId) {
 		// 如果用户名密码为空,appTokenId不为空,自动登陆
 		if (StringUtil.isNotEmpty(appTokenId)) {
 			UserMobileEntity userMobileEntity = new UserMobileEntity();
@@ -66,16 +66,21 @@ public class MobileUserService {
 			if (null != userEntities && userEntities.size() > 0) {
 				UserEntity result = userEntities.get(0);
 				if (PasswordUtil.verify(password, result.getPassword())) {
-					String tokenId = RanNumUtil.getRandom();
-					UserMobileEntity ume = new UserMobileEntity();
-					ume.setUserId(result.getId());
-					ume.setAppId(appId);
-					ume.setAppTokenId(tokenId);
-					userMobileDao.updateUserMobileEntityByLogin(ume);
-					sessionUtil.setMobileRandomTokenId(tokenId,JSONObject.toJSONString(ume));
-					// 返回用户信息
-					Map<String, Object> resultMap = userMobileDao.getUserMessage(ume);
-					return JSONObject.toJSONString(resultMap, SerializerFeature.WriteMapNullValue);
+					if (null != result.getRoleId() && result.getRoleId().intValue() == Integer.parseInt(roleId)) {
+						String tokenId = RanNumUtil.getRandom();
+						UserMobileEntity ume = new UserMobileEntity();
+						ume.setUserId(result.getId());
+						ume.setAppId(appId);
+						ume.setAppTokenId(tokenId);
+						userMobileDao.updateUserMobileEntityByLogin(ume);
+						sessionUtil.setMobileRandomTokenId(tokenId,JSONObject.toJSONString(ume));
+						// 返回用户信息
+						Map<String, Object> resultMap = userMobileDao.getUserMessage(ume);
+						return JSONObject.toJSONString(resultMap, SerializerFeature.WriteMapNullValue);
+					}else {
+						//教师
+						return "1";
+					}
 				} else {
 					// 用户名或密码错误
 					return "0";
