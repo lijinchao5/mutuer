@@ -205,7 +205,15 @@
 			WHERE
 				u.name_num IS NOT NULL
 			AND uc.clas_id = c.id
-		) canBatch
+		) canBatch,
+		(
+			SELECT
+				count(xe.id)
+			FROM
+				xl_exam xe
+			WHERE
+				xe.class_id = c.id
+		) totalExam
     from xl_clas c
     where 
     	c.enable_flag='T'
