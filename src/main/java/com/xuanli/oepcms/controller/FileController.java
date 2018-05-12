@@ -58,7 +58,7 @@ public class FileController extends BaseController {
 					outputStream.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
-					logger.error("下载文件出现错误!");
+					logger.error("下载文件出现错误");
 				} finally {
 					try {
 						if (null != outputStream) {
@@ -72,7 +72,7 @@ public class FileController extends BaseController {
 					}
 				}
 			} else {
-				logger.info("文件id不能为空!");
+				logger.info("文件id不能为空");
 			}
 		}
 

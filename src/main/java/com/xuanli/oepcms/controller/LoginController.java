@@ -46,17 +46,17 @@ public class LoginController extends BaseController {
             // 验证通过
             String result = userService.login(userName, password);
             if (StringUtil.isEmpty(result)) {
-                return failed(ExceptionCode.UNKNOW_CODE, "未知错误,请联系管理员.");
+				return failed(ExceptionCode.UNKNOW_CODE, "未知错误,请联系管理员");
             } else {
                 if (result.equals("2")) {
                     // 用户名//或者密码错误
-                    return failed(ExceptionCode.USERINFO_ERROR_CODE, "手机号或者密码错误.");
+					return failed(ExceptionCode.USERINFO_ERROR_CODE, "手机号或者密码错误");
                 } else if (result.equals("3")) {
                     // 用户名//或者密码错误
-                    return failed(ExceptionCode.USERINFO_NOUSE_ERROR, "用户被禁用,请联系管理员.");
+					return failed(ExceptionCode.USERINFO_NOUSE_ERROR, "用户被禁用，请联系管理员");
                 } else if (result.equals("4")) {
                     // 用户使用到期
-                    return failed(ExceptionCode.USERINFO_NOUSE_ERROR, "已超出使用期限,请联系管理员.");
+					return failed(ExceptionCode.USERINFO_NOUSE_ERROR, "已超出使用期限，请联系管理员");
                 } else {
                     return ok(result);
                 }
@@ -101,7 +101,7 @@ public class LoginController extends BaseController {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            logger.error("获取随机数图片出现错误.", e);
+			logger.error("获取随机数图片出现错误", e);
         }
     }
 

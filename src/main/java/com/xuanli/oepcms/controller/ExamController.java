@@ -191,7 +191,7 @@ public class ExamController extends BaseController {
 		if (result.equals("1")) {
 			return okNoResult("写评语成功");
 		} else if (result.equals("0")) {
-			return failed(ExceptionCode.UPDATE_BATCH_REMARK_ERROR, "写评语失败!");
+			return failed(ExceptionCode.UPDATE_BATCH_REMARK_ERROR, "写评语失败");
 		} else {
 			return failed(ExceptionCode.UNKNOW_CODE, "未知错误");
 		}

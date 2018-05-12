@@ -59,19 +59,19 @@ public class UserController extends BaseController {
             try {
                 user.setCreateId(getCurrentUser().getId().intValue() + "");
             } catch (Exception e) {
-                logger.error("保存用户-->设置创建人失败!");
+				logger.error("保存用户-->设置创建人失败");
             }
             user.setPassword(PasswordUtil.generate(user.getPassword()));
             int result = userService.saveUser(user);
             if (result > 0) {
-                return okNoResult("增加用户成功");
+				return okNoResult("增加用户成功！");
             } else {
-                return failed(ExceptionCode.ADDUSER_ERROR_CODE, "增加用户失败.");
+				return failed(ExceptionCode.ADDUSER_ERROR_CODE, "增加用户失败");
             }
         } catch (Exception e) {
-            logger.error("增加用户失败!", e);
+			logger.error("增加用户失败", e);
             e.printStackTrace();
-            return failed(ExceptionCode.ADDUSER_ERROR_CODE, "增加用户失败.");
+			return failed(ExceptionCode.ADDUSER_ERROR_CODE, "增加用户失败");
         }
     }
 
@@ -87,7 +87,7 @@ public class UserController extends BaseController {
             @ApiImplicitParam(name = "mobileRandomStr", value = "手机短信验证码", required = true, dataType = "String"),
             @ApiImplicitParam(name = "randomKey", value = "随机验证码关键Key不能为空", required = true, dataType = "String") })
     @RequestMapping(value = "teacher_regist.do", method = RequestMethod.POST)
-    public RestResult<String> teacher_regist(@RequestParam String mobile, @RequestParam String randomStr,
+	public RestResult<Map<String, Object>> teacher_regist(@RequestParam String mobile, @RequestParam String randomStr,
             @RequestParam String password, @RequestParam String mobileRandomStr, @RequestParam String randomKey) {
         if (StringUtil.isEmpty(randomKey)) {
             return failed(ExceptionCode.USERINFO_ERROR_CODE, "随机验证码关键Key不能为空");
@@ -98,29 +98,23 @@ public class UserController extends BaseController {
                 && (randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey)) || randomStr.equals("1234"))) {
 
             if (StringUtil.isEmpty(mobile)) {
-                return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不能为空.");
+				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不能为空");
             }
             if (StringUtil.isEmpty(mobileRandomStr)) {
-                return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码不能为空.");
+				return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码不能为空");
             }
             if (StringUtil.isEmpty(password)) {
-                return failed(ExceptionCode.USERINFO_ERROR_CODE, "密码不能为空.");
+				return failed(ExceptionCode.USERINFO_ERROR_CODE, "密码不能为空");
             }
             logger.debug("对比手机短信验证码:" + mobileRandomStr + "===" + sessionUtil.getMobileMessageRandomNum(randomKey));
             if (!mobileRandomStr.equalsIgnoreCase(sessionUtil.getMobileMessageRandomNum(randomKey))) {
-                return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码错误.");
+				return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码错误");
             }
             sessionUtil.removeMobileMessageRandomNum(randomKey);
-            String result = userService.teacherRegist(mobile, password);
-            if (result.equals("1")) {
-                return failed(ExceptionCode.USERINFO_ERROR_CODE, "校区ID错误.");
-            } else if (result.equals("2")) {
-                return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
-            } else {
-                return ok(userService.login(mobile, password));
-            }
+			return userService.teacherRegist(mobile, password);
+
         } else {
-            return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
+			return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误");
         }
     }
 
@@ -136,7 +130,7 @@ public class UserController extends BaseController {
             @ApiImplicitParam(name = "mobileRandomStr", value = "手机短信验证码", required = true, dataType = "String"),
             @ApiImplicitParam(name = "randomKey", value = "随机验证码关键Key不能为空", required = true, dataType = "String") })
     @RequestMapping(value = "student_regist.do", method = RequestMethod.POST)
-    public RestResult<String> student_regist(@RequestParam String mobile,
+	public RestResult<Map<String, Object>> student_regist(@RequestParam String mobile,
             @RequestParam(required = false) String randomStr, @RequestParam String password,
             @RequestParam String mobileRandomStr, @RequestParam(required = false) String randomKey) {
         boolean isMobile = WebUtil.isMobile();
@@ -147,18 +141,18 @@ public class UserController extends BaseController {
             }
             if (StringUtil.isEmpty(randomStr) || (!randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey))
                     && !randomStr.equals("1234"))) {
-                return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
+				return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误");
             }
         }
 
         if (StringUtil.isEmpty(mobile)) {
-            return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不能为空.");
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不能为空");
         }
         if (StringUtil.isEmpty(mobileRandomStr)) {
-            return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码不能为空.");
+			return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码不能为空");
         }
         if (StringUtil.isEmpty(password)) {
-            return failed(ExceptionCode.USERINFO_ERROR_CODE, "密码不能为空.");
+			return failed(ExceptionCode.USERINFO_ERROR_CODE, "密码不能为空");
         }
 
         if (isMobile) {
@@ -172,15 +166,10 @@ public class UserController extends BaseController {
                 return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码错误");
             }
         }
-        String result = userService.studentRegist(mobile, password);
-        if (result.equals("2")) {
-            return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
-        } else {
-            if (!isMobile) {
-                sessionUtil.removeMobileMessageRandomNum(randomKey);
-            }
-            return ok(userService.login(mobile, password));
-        }
+		if (!isMobile) {
+			sessionUtil.removeMobileMessageRandomNum(randomKey);
+		}
+		return userService.studentRegist(mobile, password);
     }
 
     @ApiOperation(value = "获取班级学生使用情况", notes = "分页查询方法")
@@ -243,11 +232,11 @@ public class UserController extends BaseController {
             userClasEntity.setUserId(userId);
             userClasEntity.setClasId(classId);
             userService.deleteStudent(userClasEntity);
-            return okNoResult("操作成功.");
+			return okNoResult("操作成功");
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("删除班级学生出现错误.");
-            return failed(ExceptionCode.DELETE_STUDENT_ERROR, "删除班级学生出现错误.");
+			return failed(ExceptionCode.DELETE_STUDENT_ERROR, "删除班级学生出现错误");
         }
     }
 
@@ -268,11 +257,11 @@ public class UserController extends BaseController {
             userEntity.setId(studentId);
             userEntity.setPassword("888888");
             userService.resetStudentPassword(userEntity);
-            return okNoResult("操作成功.");
+			return okNoResult("操作成功");
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("重置学生密码出现错误.");
-            return failed(ExceptionCode.REST_STUDENT_PASSWORD_ERROR, "重置学生密码出现错误.");
+			logger.error("重置学生密码出现错误");
+			return failed(ExceptionCode.REST_STUDENT_PASSWORD_ERROR, "重置学生密码出现错误");
         }
     }
 
@@ -291,18 +280,18 @@ public class UserController extends BaseController {
                 return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "请填入批量生成学生数量");
             }
             if (size > 100) {
-                return failed(ExceptionCode.ADD_BATCH_SIZE_ERROR, "批量添加数量不能超过100!");
+				return failed(ExceptionCode.ADD_BATCH_SIZE_ERROR, "批量添加数量不能超过100");
             }
             Long userId = getCurrentUser().getId();
             int successSize = userService.addClasStudentBatch(size, classId, userId);
             if (successSize == -1) {
-                return failed(ExceptionCode.NOT_AGING_ADD_ERROR, "已经批量添加过了,不能再次批量添加");
+				return failed(ExceptionCode.NOT_AGING_ADD_ERROR, "已经批量添加过了，不能再次批量添加");
             }
             return ok(successSize + "");
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("批量添加出现错误.");
-            return failed(ExceptionCode.ADD_BATCH_ERROR, "批量添加出现错误.");
+			return failed(ExceptionCode.ADD_BATCH_ERROR, "批量添加出现错误");
         }
     }
 
@@ -338,8 +327,8 @@ public class UserController extends BaseController {
             return ok(userEntities);
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("查询出现错误.");
-            return failed(ExceptionCode.UNKNOW_CODE, "未知错误.");
+			logger.error("查询出现错误");
+			return failed(ExceptionCode.UNKNOW_CODE, "未知错误");
         }
     }
 
@@ -381,7 +370,7 @@ public class UserController extends BaseController {
                     StringUtil.isEmpty(picfile) ? null : ImageUtil.decodeToBytes(picfile));
             // 更换教材数据同步至APP端
             if (null == grade || null == bookVersion || null == bookVolume) {
-            	logger.info("更换教材同步至APP端失败!");
+				logger.info("更换教材同步至APP端失败");
             } else {
                 BookEntity bookEntity = new BookEntity();
                 bookEntity.setGrade(grade + "");
@@ -390,7 +379,7 @@ public class UserController extends BaseController {
                 List<BookEntity> bookEntities = bookService.getBookEntity(bookEntity);
                 BookEntity bookEntity2 = bookEntities.get(0);
                 bookService.replaceBookVersion(getCurrentUser().getId(), bookEntity2.getId());
-                logger.info("更换教材已同步至APP端!");
+				logger.info("更换教材已同步至APP端");
             }
             return okNoResult("操作成功");
         } catch (Exception e) {

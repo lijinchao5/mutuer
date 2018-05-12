@@ -92,7 +92,7 @@ public class BookController extends BaseController {
 			return ok(unitEntities);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("查询单元信息出现异常.", e);
+			logger.error("查询单元信息出现异常", e);
 			return failed(ExceptionCode.UNKNOW_CODE, e.getMessage());
 		}
 	}
@@ -116,7 +116,7 @@ public class BookController extends BaseController {
 			return ok(sectionEntities);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("查询单元详细信息出现异常.", e);
+			logger.error("查询单元详细信息出现异常", e);
 			return failed(ExceptionCode.UNKNOW_CODE, e.getMessage());
 		}
 	}
@@ -140,7 +140,7 @@ public class BookController extends BaseController {
 			return ok(sectionDetails);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("查询题目详细信息出现异常.", e);
+			logger.error("查询题目详细信息出现异常", e);
 			return failed(ExceptionCode.UNKNOW_CODE, e.getMessage());
 		}
 	}

@@ -45,7 +45,7 @@ public class MobileMessageController extends BaseController {
 	@RequestMapping(value = "appRegistMsg.do", method = RequestMethod.GET)
 	public RestResult<String> appRegistMsg(@RequestParam String mobile) {
 			if (!StringUtil.isMobile(mobile)) {
-				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误");
 			}
 			try {
 				String randomNum = RanNumUtil.createRandomNum(6);
@@ -56,9 +56,9 @@ public class MobileMessageController extends BaseController {
 					return okNoResult("发送短信成功!");
 				} else if (result.equals("2")) {
 					// 手机号码已经存在
-					return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经存在.");
+				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经存在");
 				} else {
-					return failed(ExceptionCode.UNKNOW_CODE, "发送短信未知错误.");
+				return failed(ExceptionCode.UNKNOW_CODE, "发送短信未知错误");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -80,7 +80,7 @@ public class MobileMessageController extends BaseController {
 		if (StringUtil.isNotEmpty(randomStr) && randomStr.equalsIgnoreCase(sessionUtil.getMobileRandomNum(randomKey))) {
 			sessionUtil.removeMobileRandomNum(randomKey);
 			if (!StringUtil.isMobile(mobile)) {
-				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
+				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误");
 			}
 			try {
 				String randomNum = RanNumUtil.createRandomNum(6);
@@ -88,21 +88,21 @@ public class MobileMessageController extends BaseController {
 				if (StringUtil.isEmpty(result) || result.equals("1")) {
 					// 发送短信成功
 					sessionUtil.setMobileMessageRandomNum(randomKey, randomNum);
-					return okNoResult("发送短信成功!");
+					return okNoResult("发送短信成功");
 				} else if (result.equals("2")) {
 					// 手机号码已经存在
-					return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经存在.");
+					return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经存在");
 				} else {
-					return failed(ExceptionCode.UNKNOW_CODE, "发送短信未知错误.");
+					return failed(ExceptionCode.UNKNOW_CODE, "发送短信未知错误");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				logger.error("发送短信异常.", e);
-				return failed(ExceptionCode.SENDMSG_ERROR_CODE, "发送短信异常.");
+				logger.error("发送短信异常", e);
+				return failed(ExceptionCode.SENDMSG_ERROR_CODE, "发送短信异常");
 			}
 		} else {
-			logger.info("发送短信--->验证码错误.");
-			return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
+			logger.info("发送短信--->验证码错误");
+			return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误");
 		}
 	}
 
@@ -120,7 +120,7 @@ public class MobileMessageController extends BaseController {
 		if (StringUtil.isNotEmpty(randomStr) && randomStr.equalsIgnoreCase(sessionUtil.getMobileRandomNum(randomKey))) {
 			sessionUtil.removeMobileRandomNum(randomKey);
 			if (!StringUtil.isMobile(mobile)) {
-				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
+				return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误");
 			}
 			try {
 				String randomNum = RanNumUtil.createRandomNum(6);
@@ -128,21 +128,21 @@ public class MobileMessageController extends BaseController {
 				if (StringUtil.isEmpty(result) || result.equals("1")) {
 					// 发送短信成功
 					sessionUtil.setMobileMessageRandomNum(randomKey, randomNum);
-					return okNoResult("发送短信成功!");
+					return okNoResult("发送短信成功");
 				} else if (result.equals("2")) {
 					// 手机号码已经存在
-					return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不存在.");
+					return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码不存在");
 				} else {
-					return failed(ExceptionCode.UNKNOW_CODE, "发送短信未知错误.");
+					return failed(ExceptionCode.UNKNOW_CODE, "发送短信未知错误");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				logger.error("发送短信异常.", e);
-				return failed(ExceptionCode.SENDMSG_ERROR_CODE, "发送短信异常.");
+				logger.error("发送短信异常", e);
+				return failed(ExceptionCode.SENDMSG_ERROR_CODE, "发送短信异常");
 			}
 		} else {
 			logger.error("发送短信--->验证码错误.");
-			return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
+			return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误");
 		}
 	}
 

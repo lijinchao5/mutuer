@@ -62,16 +62,16 @@ public class MobileLoginController extends BaseController {
 	@RequestMapping(value = "appRegist.do", method = RequestMethod.POST)
 	public RestResult<Map<String,Object>> regist(String mobile,String password,String randomValue,String appId){
 		if (!StringUtil.isMobile(mobile)) {
-			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误.");
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码错误");
 		}
 		if (StringUtil.isEmpty(password)) {
-			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "密码不能为空.");
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "密码不能为空");
 		}
 		if (StringUtil.isEmpty(appId)) {
-			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "appId不能为空.");
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "appId不能为空");
 		}
 		if (StringUtil.isEmpty(randomValue)) {
-			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "密验证码不能为空.");
+			return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "密验证码不能为空");
 		}
 		
 		String randomStr = sessionUtil.getAppMobileMessage(mobile);

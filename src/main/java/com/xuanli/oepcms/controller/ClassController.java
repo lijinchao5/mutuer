@@ -46,10 +46,10 @@ public class ClassController extends BaseController {
 		try {
 			Long userId = getCurrentUser().getId();
 			clasService.saveClas(clasEntity, userId);
-			return okNoResult("添加班级成功!");
+			return okNoResult("添加班级成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("添加班级异常,请联系管理员.", e);
+			logger.error("添加班级异常,请联系管理员", e);
 			return failed(ExceptionCode.UNKNOW_CODE, e.getMessage());
 		}
 	}
@@ -69,10 +69,10 @@ public class ClassController extends BaseController {
 			}
 			// classId = getCurrentUser().getId();
 			clasService.updateClas(classId);
-			return okNoResult("删除班级成功!");
+			return okNoResult("删除班级成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("删除班级异常,请联系管理员", e);
+			logger.error("删除班级异常，请联系管理员", e);
 			return failed(ExceptionCode.UNKNOW_CODE, e.getMessage());
 		}
 	}
@@ -121,13 +121,13 @@ public class ClassController extends BaseController {
 			if (result.equals("1")) {
 				return ok("更换班级成功");
 			} else if (result.equals("0")) {
-				return failed(ExceptionCode.UNKNOW_CODE, "更换班级失败!");
+				return failed(ExceptionCode.UNKNOW_CODE, "更换班级失败");
 			} else {
 				return failed(ExceptionCode.UNKNOW_CODE, "未知错误，请联系管理员");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("更换班级失败.", e);
+			logger.error("更换班级失败", e);
 			return failed(ExceptionCode.UNKNOW_CODE, e.getMessage());
 		}
 	}

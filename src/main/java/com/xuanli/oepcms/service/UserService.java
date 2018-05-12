@@ -168,7 +168,8 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月15日 下午4:50:08
 	 */
-	public String teacherRegist(String mobile, String password) {
+	public RestResult<Map<String, Object>> teacherRegist(String mobile, String password) {
+		Map<String, Object> map = new HashMap<>();
 		// 判断手机号码是否已经注册
 		UserEntity registUser = new UserEntity();
 		registUser.setMobile(mobile);
@@ -176,7 +177,7 @@ public class UserService extends BaseService {
 		if (null != userEntities && userEntities.size() <= 0) {
 		} else {
 			// 手机号码已经存在
-			return "2";
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册");
 		}
 
 		UserEntity userEntity = new UserEntity();
@@ -191,7 +192,8 @@ public class UserService extends BaseService {
 		String tokenId = RanNumUtil.getRandom();
 		userEntity.setTokenId(tokenId);
 		sessionUtil.setSessionUser(tokenId, userEntity);
-		return JSONObject.toJSONString(userEntity, SerializerFeature.WriteMapNullValue);
+		map.put("tokenId", tokenId);
+		return ok(map);
 	}
 
 	/**
@@ -199,14 +201,15 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月16日 上午9:35:07
 	 */
-	public String studentRegist(String mobile, String password) {
+	public RestResult<Map<String, Object>> studentRegist(String mobile, String password) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		// 判断手机号码是否已经注册
 		UserEntity registUser = new UserEntity();
 		registUser.setMobile(mobile);
 		List<UserEntity> userEntities = userDao.selectUserEntity(registUser);
 		if (CollectionUtils.isNotEmpty(userEntities)) {
 			// 手机号码已经存在
-			return "2";
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册");
 		}
 		// 班级存在
 		UserEntity userEntity = new UserEntity();
@@ -226,7 +229,8 @@ public class UserService extends BaseService {
 		String tokenId = RanNumUtil.getRandom();
 		userEntity2.setTokenId(tokenId);
 		sessionUtil.setSessionUser(tokenId, userEntity2);
-		return JSONObject.toJSONString(userEntity2, SerializerFeature.WriteMapNullValue);
+		map.put("tokenId", tokenId);
+		return ok(map);
 	}
 
 	/**
