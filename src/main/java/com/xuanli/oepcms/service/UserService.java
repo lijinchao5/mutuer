@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +62,7 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月15日 下午2:13:52
 	 */
-    public String login(String userName, String password, HttpServletRequest request) {
+    public String login(String userName, String password) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setMobile(userName);
 		List<UserEntity> userEntities = userDao.login(userEntity);
@@ -111,7 +109,6 @@ public class UserService extends BaseService {
 			// 用户名或者密码错误
 			return "2";
 		}
-
 	}
 
 	/**

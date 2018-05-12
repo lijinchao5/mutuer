@@ -117,7 +117,7 @@ public class UserController extends BaseController {
             } else if (result.equals("2")) {
                 return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
             } else {
-                return ok(result);
+                return ok(userService.login(mobile, password));
             }
         } else {
             return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
@@ -181,7 +181,7 @@ public class UserController extends BaseController {
                 sessionUtil.removeMobileMessageRandomNum(randomKey);
             }
 
-            return ok(result);
+            return ok(userService.login(mobile, password));
         }
     }
 
