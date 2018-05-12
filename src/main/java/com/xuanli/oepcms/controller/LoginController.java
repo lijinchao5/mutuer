@@ -37,9 +37,9 @@ public class LoginController extends BaseController {
 			@ApiImplicitParam(name = "randomStr", value = "图片验证码", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "randomKey", value = "随机验证码关键Key", required = true, dataType = "String") })
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
-	public RestResult<String> login(String username, String password, String randomStr, String randomKey) {
+	public RestResult<String> login(String userName, String password, String randomStr, String randomKey) {
 		try {
-			if (StringUtil.isEmpty(username)) {
+			if (StringUtil.isEmpty(userName)) {
 				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "用户名不能为空");
 			}
 			if (StringUtil.isEmpty(password)) {
@@ -48,12 +48,12 @@ public class LoginController extends BaseController {
 			if (StringUtil.isEmpty(randomStr)) {
 				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "验证码不能为空");
 			}
-			if (StringUtil.isEmpty(randomKey)) {
+            if (StringUtil.isEmpty(randomKey)) {
 				return failed(ExceptionCode.PARAMETER_VALIDATE_ERROR_CODE, "随机验证码关键Key不能为空");
 			}
 			if (StringUtil.isNotEmpty(randomStr) && randomStr.equalsIgnoreCase(sessionUtil.getRandomNum(randomKey)) || randomStr.equals("1234")) {
 				// 验证通过
-				String result = userService.login(username, password, request);
+				String result = userService.login(userName, password, request);
 				if (StringUtil.isEmpty(result)) {
 					return failed(ExceptionCode.UNKNOW_CODE, "未知错误,请联系管理员.");
 				} else {

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,9 +64,9 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月15日 下午2:13:52
 	 */
-	public String login(String username, String password, HttpServletRequest request) {
+    public String login(String userName, String password, HttpServletRequest request) {
 		UserEntity userEntity = new UserEntity();
-		userEntity.setMobile(username);
+		userEntity.setMobile(userName);
 		List<UserEntity> userEntities = userDao.login(userEntity);
 		if (null != userEntities && userEntities.size() > 0) {
 			UserEntity result = userEntities.get(0);
@@ -201,8 +202,7 @@ public class UserService extends BaseService {
 		UserEntity registUser = new UserEntity();
 		registUser.setMobile(mobile);
 		List<UserEntity> userEntities = userDao.selectUserEntity(registUser);
-		if (null != userEntities && userEntities.size() <= 0) {
-		} else {
+		if (CollectionUtils.isNotEmpty(userEntities)) {
 			// 手机号码已经存在
 			return "2";
 		}

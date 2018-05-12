@@ -16,6 +16,8 @@ import java.net.URL;
 
 import org.apache.log4j.Logger;
 
+import com.xuanli.oepcms.contents.Constants;
+
 /**
  * @author QiaoYu[www.codelion.cn]
  */
@@ -28,7 +30,7 @@ public class TestHttp {
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			// 设置请求头
 			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			con.setRequestProperty("X-AUTH-TOKEN", "a29b3bf7867445b0b3a91832bd4771df");
+			con.setRequestProperty(Constants.HEADER_X_AUTH_TOKEN, "a29b3bf7867445b0b3a91832bd4771df");
 			// 开启连接
 			con.connect();
 			// 将返回的数据转成StringBuffer对象

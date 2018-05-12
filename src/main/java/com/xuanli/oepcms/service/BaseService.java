@@ -10,6 +10,7 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.xuanli.oepcms.contents.Constants;
 import com.xuanli.oepcms.vo.RestResult;
 
 /**
@@ -33,7 +34,7 @@ public class BaseService {
 	}
 
 	public String getTokenId(HttpServletRequest request) {
-		Enumeration<String> enumeration = request.getHeaders("X-AUTH-TOKEN");
+		Enumeration<String> enumeration = request.getHeaders(Constants.HEADER_X_AUTH_TOKEN);
 		if (enumeration.hasMoreElements()) {
 			String tokenId = (String) enumeration.nextElement();
 			return tokenId;

@@ -28,6 +28,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.xuanli.oepcms.contents.Constants;
 import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.entity.UserMobileEntity;
 import com.xuanli.oepcms.util.SessionUtil;
@@ -152,7 +153,7 @@ public class SessionFilter implements Filter {
 					ServletContext context = request.getServletContext();
 					ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(context);
 					SessionUtil sessionUtil = ctx.getBean(SessionUtil.class);
-					Enumeration<String> enumeration = request.getHeaders("X-AUTH-TOKEN");
+					Enumeration<String> enumeration = request.getHeaders(Constants.HEADER_X_AUTH_TOKEN);
 					if (enumeration.hasMoreElements()) {
 						String tokenId = (String) enumeration.nextElement();
 						UserEntity user = sessionUtil.getSessionUser(tokenId);
