@@ -111,7 +111,14 @@ public class UserController extends BaseController {
                 return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码错误.");
             }
             sessionUtil.removeMobileMessageRandomNum(randomKey);
-			return userService.teacherRegist(mobile, password);
+            String result = userService.teacherRegist(mobile, password);
+            if (result.equals("1")) {
+                return failed(ExceptionCode.USERINFO_ERROR_CODE, "校区ID错误.");
+            } else if (result.equals("2")) {
+                return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
+            } else {
+                return ok(userService.login(mobile, password));
+            }
         } else {
             return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
         }
@@ -165,10 +172,15 @@ public class UserController extends BaseController {
                 return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码错误");
             }
         }
-		if (!isMobile) {
-			sessionUtil.removeMobileMessageRandomNum(randomKey);
+        String result = userService.studentRegist(mobile, password);
+        if (result.equals("2")) {
+            return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
+        } else {
+            if (!isMobile) {
+                sessionUtil.removeMobileMessageRandomNum(randomKey);
+            }
+            return ok(userService.login(mobile, password));
         }
-		return userService.studentRegist(mobile, password);
     }
 
     @ApiOperation(value = "获取班级学生使用情况", notes = "分页查询方法")
