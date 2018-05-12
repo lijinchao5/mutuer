@@ -111,14 +111,7 @@ public class UserController extends BaseController {
                 return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码错误.");
             }
             sessionUtil.removeMobileMessageRandomNum(randomKey);
-            String result = userService.teacherRegist(mobile, password);
-            if (result.equals("1")) {
-                return failed(ExceptionCode.USERINFO_ERROR_CODE, "校区ID错误.");
-            } else if (result.equals("2")) {
-                return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
-            } else {
-                return ok(result);
-            }
+			return userService.teacherRegist(mobile, password);
         } else {
             return failed(ExceptionCode.CAPTCHA_ERROR_CODE, "验证码错误.");
         }
@@ -172,17 +165,10 @@ public class UserController extends BaseController {
                 return failed(ExceptionCode.MOBILE_MESSAGE_ERROR_CODE, "手机验证码错误");
             }
         }
-
-        String result = userService.studentRegist(mobile, password);
-        if (result.equals("2")) {
-            return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
-        } else {
-            if (!isMobile) {
-                sessionUtil.removeMobileMessageRandomNum(randomKey);
-            }
-
-            return ok(result);
+		if (!isMobile) {
+			sessionUtil.removeMobileMessageRandomNum(randomKey);
         }
+		return userService.studentRegist(mobile, password);
     }
 
     @ApiOperation(value = "获取班级学生使用情况", notes = "分页查询方法")
@@ -383,6 +369,7 @@ public class UserController extends BaseController {
                     StringUtil.isEmpty(picfile) ? null : ImageUtil.decodeToBytes(picfile));
             // 更换教材数据同步至APP端
             if (null == grade || null == bookVersion || null == bookVolume) {
+            	logger.info("更换教材同步至APP端失败!");
             } else {
                 BookEntity bookEntity = new BookEntity();
                 bookEntity.setGrade(grade + "");
@@ -390,12 +377,8 @@ public class UserController extends BaseController {
                 bookEntity.setBookVolume(bookVolume + "");
                 List<BookEntity> bookEntities = bookService.getBookEntity(bookEntity);
                 BookEntity bookEntity2 = bookEntities.get(0);
-                String result = bookService.replaceBookVersion(getCurrentUser().getId(), bookEntity2.getId());
-                if (result.equals("1")) {
-                    logger.info("更换教材已同步至APP端!");
-                } else if (result.equals("0")) {
-                    logger.info("更换教材同步至APP端失败!");
-                }
+                bookService.replaceBookVersion(getCurrentUser().getId(), bookEntity2.getId());
+                logger.info("更换教材已同步至APP端!");
             }
             return okNoResult("操作成功");
         } catch (Exception e) {
