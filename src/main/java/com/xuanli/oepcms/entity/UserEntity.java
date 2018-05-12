@@ -57,6 +57,16 @@ public class UserEntity extends BasePageBean{
 
 	private Integer bookVolume;
 
+	private Date lastLoginDate;
+
+	public Date getLastLoginDate() {
+		return lastLoginDate;
+	}
+
+	public void setLastLoginDate(Date lastLoginDate) {
+		this.lastLoginDate = lastLoginDate;
+	}
+
 	public Integer getBookVolume() {
 		return bookVolume;
 	}

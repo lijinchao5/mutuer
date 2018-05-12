@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xuanli.oepcms.controller.BaseController;
 import com.xuanli.oepcms.service.GameService;
 import com.xuanli.oepcms.vo.RestResult;
 
@@ -22,7 +23,7 @@ import com.xuanli.oepcms.vo.RestResult;
  */
 @RestController
 @RequestMapping(value = "/mobile/game/")
-public class MobileGameController extends BaseMobileController {
+public class MobileGameController extends BaseController {
 	@Autowired
 	GameService gameService;
 	
@@ -35,7 +36,7 @@ public class MobileGameController extends BaseMobileController {
 	 */
 	@RequestMapping(value = "getWordList.do", method = RequestMethod.GET)
 	public RestResult<List<Map<String, Object>>> getWordList(Long bookId){
-		return ok(gameService.getWordList(getCurrentUser().getUserId(),bookId));
+		return ok(gameService.getWordList(getCurrentUser().getId(), bookId));
 	}
 	/**
 	 * 获取该关卡下的单词信息
@@ -53,7 +54,7 @@ public class MobileGameController extends BaseMobileController {
 	 */
 	@RequestMapping(value = "doWordDetail.do", method = RequestMethod.POST)
 	public RestResult<Map<String, Object>> doWordDetail(Long sectionDetailId,String fileId){
-		return ok(gameService.doWordDetail(sectionDetailId,fileId,getCurrentUser().getUserId()));
+		return ok(gameService.doWordDetail(sectionDetailId, fileId, getCurrentUser().getId()));
 	}
 	/**
 	 * 提交该关卡的分数信息
@@ -62,7 +63,7 @@ public class MobileGameController extends BaseMobileController {
 	 */
 	@RequestMapping(value = "submitWordUnit.do", method = RequestMethod.POST)
 	public RestResult<String> submitWordUnit(Long unitId,Double score){
-		return ok(gameService.submitWordUnit(unitId,getCurrentUser().getUserId(),score));
+		return ok(gameService.submitWordUnit(unitId, getCurrentUser().getId(), score));
 	}
 	
 	

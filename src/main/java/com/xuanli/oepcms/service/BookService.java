@@ -12,15 +12,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.entity.BookEntity;
 import com.xuanli.oepcms.entity.UserBookEntity;
 import com.xuanli.oepcms.mapper.BookEntityMapper;
+import com.xuanli.oepcms.vo.RestResult;
 
 /** 
  * @author  QiaoYu 
  */
 @Service
-public class BookService {
+public class BookService extends BaseService {
 	@Autowired
 	BookEntityMapper bookDao;
 	
@@ -80,15 +82,15 @@ public class BookService {
 	 * @param id
 	 * @param bookId  
 	 */
-	public String replaceBookVersion(Long userId, Long bookId) {
+	public RestResult<String> replaceBookVersion(Long userId, Long bookId) {
 		UserBookEntity userBookEntity = new UserBookEntity();
 		userBookEntity.setUserId(userId);
 		userBookEntity.setBookId(bookId);
 		int result = bookDao.replaceBookVersion(userBookEntity);
 		if (result > 0) {
-			return "1";
+			return ok("切换教材成功");
 		} else {
-			return "0";
+			return failed(ExceptionCode.PERFECT_USERINFO_ERROR, "切换教材失败!");
 		}
 	}
 }

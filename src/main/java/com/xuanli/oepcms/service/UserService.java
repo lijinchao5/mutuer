@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,9 +64,9 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月15日 下午2:13:52
 	 */
-	public String login(String username, String password, HttpServletRequest request) {
+    public String login(String userName, String password, HttpServletRequest request) {
 		UserEntity userEntity = new UserEntity();
-		userEntity.setMobile(username);
+		userEntity.setMobile(userName);
 		List<UserEntity> userEntities = userDao.login(userEntity);
 		if (null != userEntities && userEntities.size() > 0) {
 			UserEntity result = userEntities.get(0);
@@ -90,7 +91,8 @@ public class UserService extends BaseService {
 					// }
 					// }
 					UserEntity up = new UserEntity();
-					up.setUpdateDate(new Date());
+					// 设置最后登录时间
+					up.setLastLoginDate(new Date());
 					up.setId(result.getId());
 					userDao.updateUserEntity(up);
 					// 登陆成功
@@ -169,7 +171,7 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月15日 下午4:50:08
 	 */
-	public String teacherRegist(String mobile, String password) {
+	public RestResult<String> teacherRegist(String mobile, String password) {
 		// 判断手机号码是否已经注册
 		UserEntity registUser = new UserEntity();
 		registUser.setMobile(mobile);
@@ -177,7 +179,7 @@ public class UserService extends BaseService {
 		if (null != userEntities && userEntities.size() <= 0) {
 		} else {
 			// 手机号码已经存在
-			return "2";
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
 		}
 
 		UserEntity userEntity = new UserEntity();
@@ -188,7 +190,11 @@ public class UserService extends BaseService {
 		// 教师角色id为3
 		userEntity.setRoleId(new Integer(3));
 		userDao.insertUserEntity(userEntity);
-		return userEntity.getId().longValue() + "";
+		// 注册成功
+		String tokenId = RanNumUtil.getRandom();
+		userEntity.setTokenId(tokenId);
+		sessionUtil.setSessionUser(tokenId, userEntity);
+		return ok(JSONObject.toJSONString(userEntity, SerializerFeature.WriteMapNullValue));
 	}
 
 	/**
@@ -196,15 +202,14 @@ public class UserService extends BaseService {
 	 * @CreateName: QiaoYu
 	 * @CreateDate: 2018年1月16日 上午9:35:07
 	 */
-	public String studentRegist(String mobile, String password) {
+	public RestResult<String> studentRegist(String mobile, String password) {
 		// 判断手机号码是否已经注册
 		UserEntity registUser = new UserEntity();
 		registUser.setMobile(mobile);
 		List<UserEntity> userEntities = userDao.selectUserEntity(registUser);
-		if (null != userEntities && userEntities.size() <= 0) {
-		} else {
+		if (CollectionUtils.isNotEmpty(userEntities)) {
 			// 手机号码已经存在
-			return "2";
+			return failed(ExceptionCode.MOBILE_ERROR_CODE, "手机号码已经注册.");
 		}
 		// 班级存在
 		UserEntity userEntity = new UserEntity();
@@ -220,7 +225,11 @@ public class UserService extends BaseService {
 		userEntity2.setId(userEntity.getId());
 		userEntity2.setNameNum(userEntity.getId().longValue() + StringUtil.getRandomZM(2));
 		userDao.updateUserEntity(userEntity2);
-		return userEntity.getId().longValue() + "";
+		// 学生注册成功,返回tokenID
+		String tokenId = RanNumUtil.getRandom();
+		userEntity2.setTokenId(tokenId);
+		sessionUtil.setSessionUser(tokenId, userEntity2);
+		return ok(JSONObject.toJSONString(userEntity2, SerializerFeature.WriteMapNullValue));
 	}
 
 	/**

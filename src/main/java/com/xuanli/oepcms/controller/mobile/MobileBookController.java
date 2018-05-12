@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xuanli.oepcms.contents.ExceptionCode;
+import com.xuanli.oepcms.controller.BaseController;
 import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.service.BookService;
 import com.xuanli.oepcms.service.UserService;
@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping(value = "/mobile/book/")
-public class MobileBookController extends BaseMobileController {
+public class MobileBookController extends BaseController {
 	@Autowired
 	BookService bookService;
 	@Autowired
@@ -44,7 +44,6 @@ public class MobileBookController extends BaseMobileController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "bookId", value = "教材id", required = true, dataType = "Long") })
 	@RequestMapping(value = "replaceBookVersion.do", method = RequestMethod.POST)
 	public RestResult<String> replaceBookVersion(Long bookId, Integer grade, Integer bookVersion, Integer bookVolume) {
-		String result = bookService.replaceBookVersion(getCurrentUser().getUserId(), bookId);
 		if (null == grade || null == bookVersion || null == bookVolume) {
 		} else {
 			UserEntity userEntity = new UserEntity();
@@ -58,13 +57,7 @@ public class MobileBookController extends BaseMobileController {
 				logger.info("更换教材同步至PC端失败!");
 			}
 		}
-		if (result.equals("1")) {
-			return ok("切换教材成功");
-		} else if (result.equals("0")) {
-			return failed(ExceptionCode.PERFECT_USERINFO_ERROR, "切换教材失败!");
-		} else {
-			return failed(ExceptionCode.UNKNOW_CODE, "未知错误,请联系管理员");
-		}
+		return bookService.replaceBookVersion(getCurrentUser().getId(), bookId);
 	}
 
 	/**

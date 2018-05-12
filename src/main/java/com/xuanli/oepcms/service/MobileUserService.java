@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.entity.UserMobileEntity;
 import com.xuanli.oepcms.mapper.UserEntityMapper;
@@ -19,7 +20,7 @@ import com.xuanli.oepcms.mapper.UserMobileEntityMapper;
 import com.xuanli.oepcms.util.PasswordUtil;
 import com.xuanli.oepcms.util.RanNumUtil;
 import com.xuanli.oepcms.util.SessionUtil;
-import com.xuanli.oepcms.util.StringUtil;
+import com.xuanli.oepcms.vo.RestResult;
 
 /**
  * @author lijinchao
@@ -27,7 +28,7 @@ import com.xuanli.oepcms.util.StringUtil;
  */
 @Service
 @Transactional
-public class MobileUserService {
+public class MobileUserService extends BaseService{
 	@Autowired
 	private UserEntityMapper userDao;
 	@Autowired
@@ -35,30 +36,32 @@ public class MobileUserService {
 	@Autowired
 	SessionUtil sessionUtil;
 
-	public String mobileLogin(String userName, String password, String appId, String appTokenId,String roleId) {
+	public RestResult<String> mobileLogin(String userName, String password, String appId, String appTokenId,String roleId) {
 		// 如果用户名密码为空,appTokenId不为空,自动登陆
-		if (StringUtil.isNotEmpty(appTokenId)) {
-			UserMobileEntity userMobileEntity = new UserMobileEntity();
-			userMobileEntity.setAppId(appId);
-			userMobileEntity.setAppTokenId(appTokenId);
-			List<UserMobileEntity> UserMobileEntities = userMobileDao.mobileLogin(userMobileEntity);
-			if (null != UserMobileEntities && UserMobileEntities.size() > 0) {
-				UserMobileEntity umEntity =  sessionUtil.getMobileRandomTokenId(appTokenId);
-				if (null == umEntity) {
-					//超时
-					return "2";
-				}else {
-					// umEntity.getUserId();
-					// umEntity.getAppId();
-					//返回用户信息
-					Map<String, Object> resultMap = userMobileDao.getUserMessage(umEntity);
-					return JSONObject.toJSONString(resultMap, SerializerFeature.WriteMapNullValue);
-				}
-			} else {
-				// 登陆超时
-				return "2";
-			}
-		} else {
+		// if (StringUtil.isNotEmpty(appTokenId)) {
+		// UserMobileEntity userMobileEntity = new UserMobileEntity();
+		// userMobileEntity.setAppId(appId);
+		// userMobileEntity.setAppTokenId(appTokenId);
+		// List<UserMobileEntity> UserMobileEntities =
+		// userMobileDao.mobileLogin(userMobileEntity);
+		// if (null != UserMobileEntities && UserMobileEntities.size() > 0) {
+		// UserMobileEntity umEntity = sessionUtil.getMobileRandomTokenId(appTokenId);
+		// if (null == umEntity) {
+		// //超时
+		// return "2";
+		// }else {
+		// // umEntity.getUserId();
+		// // umEntity.getAppId();
+		// //返回用户信息
+		// Map<String, Object> resultMap = userMobileDao.getUserMessage(umEntity);
+		// return JSONObject.toJSONString(resultMap,
+		// SerializerFeature.WriteMapNullValue);
+		// }
+		// } else {
+		// // 登陆超时
+		// return "2";
+		// }
+		// } else {
 			// 手动登陆
 			UserEntity userEntity = new UserEntity();
 			userEntity.setMobile(userName);
@@ -76,19 +79,19 @@ public class MobileUserService {
 						sessionUtil.setMobileRandomTokenId(tokenId,JSONObject.toJSONString(ume));
 						// 返回用户信息
 						Map<String, Object> resultMap = userMobileDao.getUserMessage(ume);
-						return JSONObject.toJSONString(resultMap, SerializerFeature.WriteMapNullValue);
+						return ok(JSONObject.toJSONString(resultMap, SerializerFeature.WriteMapNullValue));
 					}else {
 						//教师
-						return "1";
+						return failed(ExceptionCode.UNKNOW_CODE, "您的账户角色不正确!");
 					}
 				} else {
 					// 用户名或密码错误
-					return "0";
+					return failed(ExceptionCode.USERINFO_ERROR_CODE, "用户名或者密码错误.");
 				}
 			} else {
 				// 用户名或密码错误
-				return "0";
+				return failed(ExceptionCode.USERINFO_ERROR_CODE, "用户名或者密码错误.");
 			}
-		}
+		// }
 	}
 }

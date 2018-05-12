@@ -32,23 +32,22 @@ public class UserBatch extends BaseTest {
 	public void addUserBatch() {
 		int teacherNum = 10;
 		int picStudentNum = 3;
-		for (int i = 0; i < teacherNum; i++) {
-			String mobile = "131333333" + (i < 10 ? "0" + i : "" + i);
-			logger.info("教师账号为:"+mobile);
-			String teacherRegist = userService.teacherRegist(mobile, "888888");
-			if (teacherRegist.equals("2")) {
-				logger.info("生成老师账号失败!");
-				break;
+		try {
+			for (int i = 0; i < teacherNum; i++) {
+				String mobile = "131333333" + (i < 10 ? "0" + i : "" + i);
+				logger.info("教师账号为:" + mobile);
+				userService.teacherRegist(mobile, "888888");
+				String a = userService.loginTest(mobile);
+				UserEntity userEntity = JSONObject.parseObject(a, UserEntity.class);
+				ClasEntity clasEntity = new ClasEntity();
+				clasEntity.setGrade("1");
+				clasEntity.setName("测试班级");
+				clasService.saveClas(clasEntity, userEntity.getId());
+				Long clasId = clasEntity.getId();
+				userService.addClasStudentBatchTest(picStudentNum, clasId, userEntity.getId());
 			}
-			String a = userService.loginTest(mobile);
-			UserEntity userEntity = JSONObject.parseObject(a,UserEntity.class);
-			ClasEntity clasEntity = new ClasEntity();
-			clasEntity.setGrade("1");
-			clasEntity.setName("测试班级");
-			clasService.saveClas(clasEntity, userEntity.getId());
-			Long clasId = clasEntity.getId();
-			userService.addClasStudentBatchTest(picStudentNum, clasId, userEntity.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 }

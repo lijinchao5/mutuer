@@ -24,10 +24,11 @@
     <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
     <result column="areaid" property="areaid" jdbcType="VARCHAR" />
     <result column="book_volume" property="bookVolume" jdbcType="INTEGER" />
+    <result column="last_login_date" property="lastLoginDate" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, mobile, password, sex, birth_date, study_section_id, grade_level_id, book_version_id, 
-    role_id, name_num, remark, photo,create_id, create_date, update_id, update_date, enable_flag,cms_id,schoolid,areaid,book_volume
+    role_id, name_num, remark, photo,create_id, create_date, update_id, update_date, enable_flag,cms_id,schoolid,areaid,book_volume,last_login_date
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -132,6 +133,9 @@
       <if test="bookVolume != null" >
         book_volume,
       </if>
+      <if test="lastLoginDate != null" >
+        last_login_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -203,6 +207,9 @@
       <if test="bookVolume != null" >
         #{bookVolume},
       </if>
+      <if test="lastLoginDate != null" >
+        #{lastLoginDate},
+      </if>
     </trim>
   </insert>
   <update id="updateUserEntity" parameterType="com.xuanli.oepcms.entity.UserEntity" >
@@ -270,6 +277,9 @@
       </if>
       <if test="bookVolume != null" >
         book_volume = #{bookVolume,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginDate != null" >
+        last_login_date = #{lastLoginDate,jdbcType=DATE},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -340,6 +350,9 @@
       <if test="bookVolume != null" >
          book_volume = #{bookVolume,jdbcType=INTEGER},
       </if>
+      <if test="lastLoginDate != null" >
+         last_login_date = #{lastLoginDate,jdbcType=DATE},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -403,6 +416,9 @@
       </if>
       <if test="bookVolume != null" >
          book_volume = #{bookVolume,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginDate != null" >
+         last_login_date = #{lastLoginDate,jdbcType=DATE},
       </if>
     </set>
     where cms_id = #{cmsId,jdbcType=BIGINT}
