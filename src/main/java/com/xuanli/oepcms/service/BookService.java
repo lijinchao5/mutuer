@@ -90,7 +90,7 @@ public class BookService extends BaseService {
 		if (result > 0) {
 			return ok("切换教材成功");
 		} else {
-			return failed(ExceptionCode.PERFECT_USERINFO_ERROR, "切换教材失败!");
+			return failed(ExceptionCode.PERFECT_USERINFO_ERROR, "切换教材失败");
 		}
 	}
 
