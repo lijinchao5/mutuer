@@ -76,6 +76,14 @@ public class MobileBookController extends BaseController {
 		return ok(bookService.getBookVolume(grade, bookVersion));
 	}
 
+	/**
+	 * Title: selectBook 
+	 * Description:  
+	 * @date 2018年5月15日 下午5:29:47
+	 * @param grade
+	 * @param bookVersion
+	 * @return
+	 */
 	@ApiOperation(value = "根据年级或版本筛选教材", notes = "根据年级或版本筛选教材")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = false, dataType = "String"),
 			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = false, dataType = "Integer") })

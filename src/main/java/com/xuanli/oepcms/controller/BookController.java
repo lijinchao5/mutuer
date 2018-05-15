@@ -52,7 +52,7 @@ public class BookController extends BaseController {
 	 * @CreateDate: 2018年1月18日 上午9:50:50
 	 */
 
-	@ApiOperation(value = "更换教材", notes = "查询教材信息")
+	@ApiOperation(value = "查询教材信息", notes = "查询教材信息")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "String"),
 			@ApiImplicitParam(name = "bookVolume", value = "教材册别", required = true, dataType = "String"), })
 	@RequestMapping(value = "getBooks.do", method = RequestMethod.GET)
