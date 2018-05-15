@@ -294,4 +294,40 @@
 			(#{userId}, #{bookId}, 1);
   	</if>
   </update>
+  <select id="selectBook" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.util.Map">
+	SELECT
+		id bookId,
+		grade,
+		book_version bookVersion,
+		book_volume bookVolume,
+		(
+			SELECT
+				COUNT(id)
+			FROM
+				xl_user_book xub
+			WHERE
+				xub.book_id = u.id
+		) useNumber,
+		(
+		SELECT
+			ub.book_use
+		FROM
+			xl_user_book ub
+		WHERE
+			ub.book_id = u.id
+		AND ub.user_id = #{userId}
+		AND ub.book_use = 1
+	) bookUse
+	FROM
+		xl_book u
+	WHERE
+		1 = 1
+	<if test="grade != null">
+		AND grade = #{grade}
+	</if>
+	<if test="bookVersion != null">
+		AND book_version = #{bookVersion}
+	</if>
+	ORDER BY grade,book_version,book_volume
+  </select>
 </mapper>

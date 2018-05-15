@@ -70,4 +70,12 @@ public interface BookEntityMapper {
 	 * @date 2018年5月7日 下午2:48:16  
 	 */
 	int replaceBookVersion(UserBookEntity userBookEntity);
+
+	/**Title: selectBook 
+	 * Description:  
+	 * @param bookVersion 
+	 * @param grade 
+	 * @date 2018年5月15日 上午10:10:57  
+	 */
+	List<Map<String, Object>> selectBook(BookEntity bookEntity);
 }

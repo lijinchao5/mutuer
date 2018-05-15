@@ -93,4 +93,18 @@ public class BookService extends BaseService {
 			return failed(ExceptionCode.PERFECT_USERINFO_ERROR, "切换教材失败!");
 		}
 	}
+
+	/**Title: selectBook 
+	 * Description:  
+	 * @param bookVersion 
+	 * @param grade 
+	 * @date 2018年5月15日 上午10:10:04  
+	 */
+	public RestResult<List<Map<String, Object>>> selectBook(Long userId, String grade, Integer bookVersion) {
+		BookEntity bookEntity = new BookEntity();
+		bookEntity.setUserId(userId);
+		bookEntity.setGrade(grade);
+		bookEntity.setBookVersion(bookVersion);
+		return ok(bookDao.selectBook(bookEntity));
+	}
 }

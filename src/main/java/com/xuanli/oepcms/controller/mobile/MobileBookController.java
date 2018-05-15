@@ -89,4 +89,12 @@ public class MobileBookController extends BaseController {
 	public RestResult<List<Map<String, Object>>> getMobileBookVolume(String grade, Integer bookVersion) {
 		return ok(bookService.getBookVolume(grade, bookVersion));
 	}
+
+	@ApiOperation(value = "根据年级或版本筛选教材", notes = "根据年级或版本筛选教材")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "String"),
+			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = true, dataType = "Integer") })
+	@RequestMapping(value = "selectBook.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> selectBook(String grade, Integer bookVersion) {
+		return bookService.selectBook(getCurrentUser().getId(), grade, bookVersion);
+	}
 }
