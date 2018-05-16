@@ -281,17 +281,22 @@
   </select>
   <update id="replaceBookVersion" parameterType="com.xuanli.oepcms.entity.UserBookEntity">
   	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
-  		SELECT COUNT(id) FROM xl_user_book WHERE user_id = #{userId} AND book_id = #{bookId}
+		SELECT
+			COUNT(id)
+		FROM
+			xl_user_book
+		WHERE
+			user_id = #{userId} AND grade = #{grade} AND book_version = #{bookVersion} AND book_volume = #{bookVolume}
   	</selectKey>
   	<if test="allSize>0">
   		UPDATE xl_user_book SET book_use = 0 WHERE user_id = #{userId};
-		UPDATE xl_user_book SET book_use = 1 WHERE user_id = #{userId} AND book_id = #{bookId};
+		UPDATE xl_user_book SET book_use = 1 WHERE user_id = #{userId} AND grade = #{grade} 
+		AND book_version = #{bookVersion} AND book_volume = #{bookVolume};
   	</if>
   	<if test="allSize==0">
-  		UPDATE xl_user_book SET book_use = 0 WHERE user_id = #{userId};
-  		INSERT INTO xl_user_book (user_id, book_id, book_use)
+  		INSERT INTO xl_user_book (user_id, book_use, grade, book_version, book_volume )
 		VALUES
-			(#{userId}, #{bookId}, 1);
+			(#{userId}, 1, #{grade}, #{bookVersion}, #{bookVolume});
   	</if>
   </update>
   <select id="selectBook" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.util.Map">
