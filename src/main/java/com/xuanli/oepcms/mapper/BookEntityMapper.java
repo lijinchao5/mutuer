@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.xuanli.oepcms.entity.BookEntity;
+import com.xuanli.oepcms.entity.BookVersionEntity;
 import com.xuanli.oepcms.entity.UserBookEntity;
 @Mapper
 public interface BookEntityMapper {
@@ -63,7 +64,7 @@ public interface BookEntityMapper {
 	 * @param bookEntity
 	 * @return  
 	 */
-	List<Map<String, Object>> getBookVolume(BookEntity bookEntity);
+	List<Map<String, Object>> getBookVolume(BookVersionEntity bookVersionEntity);
 
 	/**Title: replaceBookVersion 
 	 * Description:  
@@ -78,4 +79,13 @@ public interface BookEntityMapper {
 	 * @date 2018年5月15日 上午10:10:57  
 	 */
 	List<Map<String, Object>> selectBook(BookEntity bookEntity);
+
+	/**Title: getBookUse 
+	 * Description:  
+	 * @date 2018年5月16日 上午9:49:57
+	 * @param userId
+	 * @param bookUse
+	 * @return  
+	 */
+	List<Map<String, Object>> getBookUse(UserBookEntity userBookEntity);
 }

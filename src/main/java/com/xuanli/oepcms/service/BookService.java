@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.entity.BookEntity;
+import com.xuanli.oepcms.entity.BookVersionEntity;
 import com.xuanli.oepcms.entity.UserBookEntity;
 import com.xuanli.oepcms.mapper.BookEntityMapper;
 import com.xuanli.oepcms.vo.RestResult;
@@ -70,10 +71,10 @@ public class BookService extends BaseService {
 	 * @return  
 	 */
 	public List<Map<String, Object>> getBookVolume(String grade, Integer bookVersion) {
-		BookEntity bookEntity = new BookEntity();
-		bookEntity.setGrade(grade);
-		bookEntity.setBookVersion(bookVersion);
-		return bookDao.getBookVolume(bookEntity);
+		BookVersionEntity bookVersionEntity = new BookVersionEntity();
+		bookVersionEntity.setGradeVal(grade);
+		bookVersionEntity.setVersionVal(bookVersion.intValue() + "");
+		return bookDao.getBookVolume(bookVersionEntity);
 	}
 
 	/**Title: replaceBookVersion 
@@ -82,10 +83,12 @@ public class BookService extends BaseService {
 	 * @param id
 	 * @param bookId  
 	 */
-	public RestResult<String> replaceBookVersion(Long userId, Long bookId) {
+	public RestResult<String> replaceBookVersion(Long userId, Integer grade, Integer bookVersion, Integer bookVolume) {
 		UserBookEntity userBookEntity = new UserBookEntity();
 		userBookEntity.setUserId(userId);
-		userBookEntity.setBookId(bookId);
+		userBookEntity.setGrade(grade.intValue() + "");
+		userBookEntity.setBookVersion(bookVersion);
+		userBookEntity.setBookVolume(bookVolume.intValue() + "");
 		int result = bookDao.replaceBookVersion(userBookEntity);
 		if (result > 0) {
 			return ok("切换教材成功");
@@ -106,5 +109,19 @@ public class BookService extends BaseService {
 		bookEntity.setGrade(grade);
 		bookEntity.setBookVersion(bookVersion);
 		return ok(bookDao.selectBook(bookEntity));
+	}
+
+	/**Title: getBookUse 
+	 * Description:  
+	 * @date 2018年5月16日 上午9:37:50
+	 * @param id
+	 * @param bookUse
+	 * @return  
+	 */
+	public RestResult<List<Map<String, Object>>> getBookUse(Long userId, Integer bookUse) {
+		UserBookEntity userBookEntity = new UserBookEntity();
+		userBookEntity.setUserId(userId);
+		userBookEntity.setBookUse(bookUse);
+		return ok(bookDao.getBookUse(userBookEntity));
 	}
 }

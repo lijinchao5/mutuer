@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.xuanli.oepcms.contents.ExceptionCode;
-import com.xuanli.oepcms.entity.BookEntity;
 import com.xuanli.oepcms.entity.UserClasEntity;
 import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.service.BookService;
@@ -372,13 +371,7 @@ public class UserController extends BaseController {
             if (null == grade || null == bookVersion || null == bookVolume) {
 				logger.info("更换教材同步至APP端失败");
             } else {
-                BookEntity bookEntity = new BookEntity();
-                bookEntity.setGrade(grade + "");
-                bookEntity.setBookVersion(bookVersion);
-                bookEntity.setBookVolume(bookVolume + "");
-                List<BookEntity> bookEntities = bookService.getBookEntity(bookEntity);
-                BookEntity bookEntity2 = bookEntities.get(0);
-                bookService.replaceBookVersion(getCurrentUser().getId(), bookEntity2.getId());
+				bookService.replaceBookVersion(getCurrentUser().getId(), grade, bookVersion, bookVolume);
 				logger.info("更换教材已同步至APP端");
             }
             return okNoResult("操作成功");

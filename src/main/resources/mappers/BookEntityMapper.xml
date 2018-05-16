@@ -246,17 +246,17 @@
   </select>
   <select id="getBookVersion" parameterType="java.lang.Integer" resultType="java.util.Map">
 	SELECT
-		b.book_version bookVersion,
+		xdd.name_val bookVersion,
 		xdd.`name` versionName
 	FROM
-		xl_book b
-	LEFT JOIN xl_dic_detail xdd ON xdd.name_val = b.book_version
+		xl_book_version bv
+	LEFT JOIN xl_dic_detail xdd ON xdd.name_val = bv.version_val
 	WHERE
 		xdd.dic_id = 3
-	AND grade = #{grade}
-	and xdd.enable_flag = 'T'
+	AND bv.grade_val = #{gradeVal}
+	AND xdd.enable_flag = 'T'
 	GROUP BY
-		b.book_version,
+		xdd.name_val,
 		xdd. NAME
   </select>
   <select id="getBookVolume" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.util.Map">
@@ -279,7 +279,7 @@
 		b.book_volume,
 		xdd. NAME
   </select>
-  <update id="replaceBookVersion" parameterType="com.xuanli.oepcms.mapper.UserBookEntityMapper">
+  <update id="replaceBookVersion" parameterType="com.xuanli.oepcms.entity.UserBookEntity">
   	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
   		SELECT COUNT(id) FROM xl_user_book WHERE user_id = #{userId} AND book_id = #{bookId}
   	</selectKey>
@@ -329,5 +329,22 @@
 		AND book_version = #{bookVersion}
 	</if>
 	ORDER BY grade,book_version,book_volume
+  </select>
+  <select id="getBookUse" parameterType="com.xuanli.oepcms.entity.UserBookEntity" resultType="map">
+	SELECT
+		id,
+		grade,
+		book_version bookVersion,
+		book_volume bookVolume,
+		user_id userId,
+		book_id bookId,
+		book_use bookUse
+	FROM
+		xl_user_book
+	WHERE
+		user_id = #{userId}
+	<if test="bookUse != null">
+		AND book_use = #{bookUse}
+	</if>
   </select>
 </mapper>

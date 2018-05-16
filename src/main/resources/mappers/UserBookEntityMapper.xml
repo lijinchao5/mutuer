@@ -9,9 +9,12 @@
     <result column="by1" jdbcType="INTEGER" property="by1" />
     <result column="by2" jdbcType="VARCHAR" property="by2" />
     <result column="by3" jdbcType="VARCHAR" property="by3" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="book_version" jdbcType="INTEGER" property="bookVersion" />
+    <result column="book_volume" jdbcType="INTEGER" property="bookVolume" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, book_id, book_use, by1, by2, by3
+    id, user_id, book_id, book_use, by1, by2, by3,grade, bookVersion, bookVolume
   </sql>
   <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -47,6 +50,15 @@
       <if test="by3 != null">
         by3,
       </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="bookVersion != null">
+        book_version,
+      </if>
+      <if test="bookVolume != null">
+        book_volume,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,6 +82,15 @@
       <if test="by3 != null">
         #{by3,jdbcType=VARCHAR},
       </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="bookVersion != null">
+        #{bookVersion,jdbcType=INTEGER},
+      </if>
+      <if test="bookVolume != null">
+        #{bookVolume,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateUserBookEntity" parameterType="com.xuanli.oepcms.entity.UserBookEntity">
@@ -92,6 +113,15 @@
       </if>
       <if test="by3 != null">
         by3 = #{by3,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="bookVersion != null">
+        book_version = #{bookVersion,jdbcType=INTEGER},
+      </if>
+      <if test="bookVolume != null">
+        book_volume = #{bookVolume,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

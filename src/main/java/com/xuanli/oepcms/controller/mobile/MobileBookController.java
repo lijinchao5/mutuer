@@ -42,8 +42,8 @@ public class MobileBookController extends BaseController {
 	@ApiOperation(value = "切换教材", notes = "切换教材")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "bookId", value = "教材id", required = true, dataType = "Long") })
 	@RequestMapping(value = "replaceBookVersion.do", method = RequestMethod.POST)
-	public RestResult<String> replaceBookVersion(Long bookId) {
-		return bookService.replaceBookVersion(getCurrentUser().getId(), bookId);
+	public RestResult<String> replaceBookVersion(Integer grade, Integer bookVersion, Integer bookVolume) {
+		return bookService.replaceBookVersion(getCurrentUser().getId(), grade, bookVersion, bookVolume);
 	}
 
 	/**
@@ -90,5 +90,28 @@ public class MobileBookController extends BaseController {
 	@RequestMapping(value = "selectBook.do", method = RequestMethod.GET)
 	public RestResult<List<Map<String, Object>>> selectBook(String grade, Integer bookVersion) {
 		return bookService.selectBook(getCurrentUser().getId(), grade, bookVersion);
+	}
+
+	/**
+	 * Title: getBookDetailList 
+	 * Description:  
+	 * @date 2018年5月16日 上午9:59:46
+	 * @param grade
+	 * @param bookVersion
+	 * @return
+	 */
+	@ApiOperation(value = "获取所有教材版本和教材册别", notes = "获取所有教材版本和教材册别")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = false, dataType = "String"),
+			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = false, dataType = "Integer") })
+	@RequestMapping(value = "getBookDetailList.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getBookDetailList(String grade, Integer bookVersion) {
+		return bookService.selectBook(getCurrentUser().getId(), grade, bookVersion);
+	}
+
+	@ApiOperation(value = "获取使用教材记录", notes = "获取当前使用教材记录")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "bookUse", value = "使用情况:默认不传全部使用记录,使用过:0,正在使用:1", required = false, dataType = "String") })
+	@RequestMapping(value = "getBookUse.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getBookUse(Integer bookUse) {
+		return bookService.getBookUse(getCurrentUser().getId(), bookUse);
 	}
 }

@@ -14,6 +14,37 @@ public class UserBookEntity {
     private String by2;
 
     private String by3;
+
+	private String grade;
+
+	private Integer bookVersion;
+
+	private String bookVolume;
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public Integer getBookVersion() {
+		return bookVersion;
+	}
+
+	public void setBookVersion(Integer bookVersion) {
+		this.bookVersion = bookVersion;
+	}
+
+	public String getBookVolume() {
+		return bookVolume;
+	}
+
+	public void setBookVolume(String bookVolume) {
+		this.bookVolume = bookVolume;
+	}
+
 	// 查询用
 	private Integer allSize;
 

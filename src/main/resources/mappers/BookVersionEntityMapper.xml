@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.BookVersionEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.BookVersionEntity">
+    <result column="version_val" jdbcType="VARCHAR" property="versionVal" />
+    <result column="grade_val" jdbcType="VARCHAR" property="gradeVal" />
+  </resultMap>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.BookVersionEntity">
+    insert into xl_book_version (version_val, grade_val)
+    values (#{versionVal,jdbcType=VARCHAR}, #{gradeVal,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.BookVersionEntity">
+    insert into xl_book_version
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="versionVal != null">
+        version_val,
+      </if>
+      <if test="gradeVal != null">
+        grade_val,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="versionVal != null">
+        #{versionVal,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeVal != null">
+        #{gradeVal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

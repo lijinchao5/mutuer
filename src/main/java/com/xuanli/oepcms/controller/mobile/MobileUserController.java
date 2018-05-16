@@ -4,7 +4,6 @@
 package com.xuanli.oepcms.controller.mobile;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
-import com.xuanli.oepcms.entity.BookEntity;
 import com.xuanli.oepcms.entity.UserEntity;
 import com.xuanli.oepcms.service.BookService;
 import com.xuanli.oepcms.service.UserService;
@@ -78,13 +76,7 @@ public class MobileUserController extends BaseMobileController {
 			if (null == grade || null == bookVersion || null == bookVolume) {
 				logger.info("更换教材同步至APP端失败!");
 			} else {
-				BookEntity bookEntity = new BookEntity();
-				bookEntity.setGrade(grade + "");
-				bookEntity.setBookVersion(bookVersion);
-				bookEntity.setBookVolume(bookVolume + "");
-				List<BookEntity> bookEntities = bookService.getBookEntity(bookEntity);
-				BookEntity bookEntity2 = bookEntities.get(0);
-				bookService.replaceBookVersion(getCurrentUser().getUserId(), bookEntity2.getId());
+				bookService.replaceBookVersion(getCurrentUser().getUserId(), grade, bookVersion, bookVolume);
 				logger.info("更换教材已同步至APP端!");
 			}
 			return okNoResult("操作成功");
