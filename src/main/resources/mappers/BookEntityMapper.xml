@@ -259,6 +259,9 @@
 		xdd.name_val,
 		xdd. NAME
   </select>
+  <select id="getVolumeCount" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="int">
+  	SELECT COUNT(id) FROM xl_book WHERE grade = #{grade} AND book_version = #{bookVersion}
+  </select>
   <select id="getBookVolume" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.util.Map">
 	SELECT
 		b.book_volume bookVolume,
@@ -294,6 +297,7 @@
 		AND book_version = #{bookVersion} AND book_volume = #{bookVolume};
   	</if>
   	<if test="allSize==0">
+  		UPDATE xl_user_book SET book_use = 0 WHERE user_id = #{userId};
   		INSERT INTO xl_user_book (user_id, book_use, grade, book_version, book_volume )
 		VALUES
 			(#{userId}, 1, #{grade}, #{bookVersion}, #{bookVolume});

@@ -6,15 +6,18 @@
  */ 
 package com.xuanli.oepcms.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.entity.BookEntity;
-import com.xuanli.oepcms.entity.BookVersionEntity;
+import com.xuanli.oepcms.entity.DicDetailEntity;
 import com.xuanli.oepcms.entity.UserBookEntity;
 import com.xuanli.oepcms.mapper.BookEntityMapper;
 import com.xuanli.oepcms.vo.RestResult;
@@ -26,6 +29,8 @@ import com.xuanli.oepcms.vo.RestResult;
 public class BookService extends BaseService {
 	@Autowired
 	BookEntityMapper bookDao;
+	@Autowired
+	DicService dicService;
 	
 	/**
 	 * @Description:  TODO 获取书本的信息
@@ -71,10 +76,27 @@ public class BookService extends BaseService {
 	 * @return  
 	 */
 	public List<Map<String, Object>> getBookVolume(String grade, Integer bookVersion) {
-		BookVersionEntity bookVersionEntity = new BookVersionEntity();
-		bookVersionEntity.setGradeVal(grade);
-		bookVersionEntity.setVersionVal(bookVersion.intValue() + "");
-		return bookDao.getBookVolume(bookVersionEntity);
+		BookEntity bookEntity = new BookEntity();
+		bookEntity.setGrade(grade);
+		bookEntity.setBookVersion(bookVersion);
+		int count = bookDao.getVolumeCount(bookEntity);
+		if (count > 0) {
+			return bookDao.getBookVolume(bookEntity);
+		} else {
+			// map = BeanUtils.describe(person1);
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			String type = "5";
+			List<DicDetailEntity> dicDetailEntities = dicService.findDicByType(type);
+			if (CollectionUtils.isNotEmpty(dicDetailEntities)) {
+				for (DicDetailEntity dicDetailEntity : dicDetailEntities) {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("bookVolume", dicDetailEntity.getNameVal());
+					map.put("volumeName", dicDetailEntity.getName());
+					list.add(map);
+				}
+			}
+			return list;
+		}
 	}
 
 	/**Title: replaceBookVersion 
