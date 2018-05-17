@@ -6,18 +6,14 @@
  */ 
 package com.xuanli.oepcms.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xuanli.oepcms.contents.ExceptionCode;
 import com.xuanli.oepcms.entity.BookEntity;
-import com.xuanli.oepcms.entity.DicDetailEntity;
 import com.xuanli.oepcms.entity.UserBookEntity;
 import com.xuanli.oepcms.mapper.BookEntityMapper;
 import com.xuanli.oepcms.vo.RestResult;
@@ -83,19 +79,7 @@ public class BookService extends BaseService {
 		if (count > 0) {
 			return bookDao.getBookVolume(bookEntity);
 		} else {
-			// map = BeanUtils.describe(person1);
-			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-			String type = "5";
-			List<DicDetailEntity> dicDetailEntities = dicService.findDicByType(type);
-			if (CollectionUtils.isNotEmpty(dicDetailEntities)) {
-				for (DicDetailEntity dicDetailEntity : dicDetailEntities) {
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("bookVolume", dicDetailEntity.getNameVal());
-					map.put("volumeName", dicDetailEntity.getName());
-					list.add(map);
-				}
-			}
-			return list;
+			return dicService.getVolume();
 		}
 	}
 
@@ -145,5 +129,29 @@ public class BookService extends BaseService {
 		userBookEntity.setUserId(userId);
 		userBookEntity.setBookUse(bookUse);
 		return ok(bookDao.getBookUse(userBookEntity));
+	}
+
+	/**Title: getBookVersionList 
+	 * Description:  
+	 * @date 2018年5月17日 上午11:21:25
+	 * @param grade
+	 * @return  
+	 */
+	public RestResult<List<Map<String, Object>>> getBookVersionList(String grade) {
+		BookEntity bookEntity = new BookEntity();
+		bookEntity.setGrade(grade);
+		return ok(bookDao.getBookVersionList(bookEntity));
+	}
+
+	/**Title: getBookVolumeList 
+	 * Description:  
+	 * @date 2018年5月17日 上午11:30:00
+	 * @param bookVersion
+	 * @return  
+	 */
+	public RestResult<List<Map<String, Object>>> getBookVolumeList(Integer bookVersion) {
+		BookEntity bookEntity = new BookEntity();
+		bookEntity.setBookVersion(bookVersion);
+		return ok(bookDao.getBookVolumeList(bookEntity));
 	}
 }

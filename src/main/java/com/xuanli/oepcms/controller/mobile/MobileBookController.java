@@ -93,21 +93,40 @@ public class MobileBookController extends BaseController {
 	}
 
 	/**
-	 * Title: getBookDetailList 
+	 * Title: getBookVersionList 
 	 * Description:  
-	 * @date 2018年5月16日 上午9:59:46
+	 * @date 2018年5月17日 上午11:25:07
 	 * @param grade
-	 * @param bookVersion
 	 * @return
 	 */
-	@ApiOperation(value = "获取所有教材版本和教材册别", notes = "获取所有教材版本和教材册别")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = false, dataType = "String"),
-			@ApiImplicitParam(name = "bookVersion", value = "教材版本", required = false, dataType = "Integer") })
-	@RequestMapping(value = "getBookDetailList.do", method = RequestMethod.GET)
-	public RestResult<List<Map<String, Object>>> getBookDetailList(String grade, Integer bookVersion) {
-		return bookService.selectBook(getCurrentUser().getId(), grade, bookVersion);
+	@ApiOperation(value = "获取教材版本", notes = "获取教材版本")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "grade", value = "年级", required = false, dataType = "String") })
+	@RequestMapping(value = "getBookVersionList.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getBookVersionList(String grade) {
+		return bookService.getBookVersionList(grade);
+	}
+	
+	/**
+	 * Title: getBookVersionList 
+	 * Description:  
+	 * @date 2018年5月17日 上午11:25:10
+	 * @param grade
+	 * @return
+	 */
+	@ApiOperation(value = "获取教材册别", notes = "获取教材册别")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "bookVersion", value = "教材版本", required = false, dataType = "Integer") })
+	@RequestMapping(value = "getBookVolumeList.do", method = RequestMethod.GET)
+	public RestResult<List<Map<String, Object>>> getBookVolumeList(Integer bookVersion) {
+		return bookService.getBookVolumeList(bookVersion);
 	}
 
+	/**
+	 * Title: getBookUse 
+	 * Description:  
+	 * @date 2018年5月16日 上午14:36:21
+	 * @param bookUse
+	 * @return
+	 */
 	@ApiOperation(value = "获取使用教材记录", notes = "获取当前使用教材记录")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "bookUse", value = "使用情况:默认不传全部使用记录,使用过:0,正在使用:1", required = false, dataType = "String") })
 	@RequestMapping(value = "getBookUse.do", method = RequestMethod.GET)

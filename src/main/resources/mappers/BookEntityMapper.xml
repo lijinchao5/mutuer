@@ -305,39 +305,70 @@
   </update>
   <select id="selectBook" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.util.Map">
 	SELECT
-		id bookId,
-		grade,
-		book_version bookVersion,
-		book_volume bookVolume,
+		u.id bookId,
+		u.grade,
+		u.book_version bookVersion,
+		u.book_volume bookVolume,
+		ub.book_use bookUse,
 		(
 			SELECT
 				COUNT(id)
 			FROM
 				xl_user_book xub
 			WHERE
-				xub.book_id = u.id
-		) useNumber,
-		(
-		SELECT
-			ub.book_use
-		FROM
-			xl_user_book ub
-		WHERE
-			ub.book_id = u.id
-		AND ub.user_id = #{userId}
-		AND ub.book_use = 1
-	) bookUse
+				xub.grade = u.grade
+			AND xub.book_version = u.book_version
+			AND xub.book_volume = u.book_volume
+		) useNumber
 	FROM
 		xl_book u
+	LEFT JOIN xl_user_book ub ON ub.grade = u.grade
+	AND ub.book_version = u.book_version
+	AND ub.book_volume = u.book_volume
+	AND ub.user_id = #{userId}
 	WHERE
 		1 = 1
 	<if test="grade != null">
-		AND grade = #{grade}
+		AND u.grade = #{grade}
 	</if>
 	<if test="bookVersion != null">
-		AND book_version = #{bookVersion}
+		AND u.book_version = #{bookVersion}
 	</if>
-	ORDER BY grade,book_version,book_volume
+	ORDER BY u.grade, u.book_version, u.book_volume
+  </select>
+  <select id="getBookVersionList" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.util.Map">
+	SELECT
+		b.book_version bookVersion,
+		dd.`name`
+	FROM
+		xl_book b
+	LEFT JOIN xl_dic_detail dd ON b.book_version = dd.name_val
+	WHERE
+		dd.dic_id = 3
+	AND dd.enable_flag = 'T'
+	<if test="grade != null">
+		AND b.grade = #{grade}
+	</if>
+	GROUP BY
+		book_version,
+		dd.`name`
+  </select>
+  <select id="getBookVolumeList" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.util.Map">
+	SELECT
+		b.book_volume bookVolume,
+		dd.`name`
+	FROM
+		xl_book b
+	LEFT JOIN xl_dic_detail dd ON b.book_volume = dd.name_val
+	WHERE
+		dd.dic_id = 5
+	AND dd.enable_flag = 'T'
+	<if test="bookVersion != null">
+		AND b.book_version = #{bookVersion}
+	</if>
+	GROUP BY
+		book_volume,
+		dd.`name`
   </select>
   <select id="getBookUse" parameterType="com.xuanli.oepcms.entity.UserBookEntity" resultType="map">
 	SELECT

@@ -124,5 +124,21 @@
 	and xdd.enable_flag = 'T'
 	and xbv.grade_val = #{nameVal}
   </select>
+  <select id="getVolume" resultType="map">
+	SELECT
+		name_val bookVolume,
+		NAME volumeName
+	FROM
+		xl_dic_detail xdd
+	LEFT JOIN xl_book_version xbv ON xdd.name_val = xbv.version_val
+	WHERE
+		xdd.dic_id = 5
+	AND xdd.enable_flag = 'T'
+	GROUP BY
+		name_val,
+		NAME
+	ORDER BY
+		NAME
+  </select>
   
 </mapper>

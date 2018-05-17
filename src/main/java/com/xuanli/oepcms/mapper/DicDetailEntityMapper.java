@@ -1,6 +1,7 @@
 package com.xuanli.oepcms.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,5 +26,14 @@ public interface DicDetailEntityMapper {
 	 * @return  
 	 */
 	public List<DicDetailEntity> getBookVersion(String grade);
+
+	/**
+	 * Title: getVolume 
+	 * Description:  
+	 * @date 2018年5月16日 下午5:58:11
+	 * @param type
+	 * @return
+	 */
+	public List<Map<String, Object>> getVolume();
 	
 }

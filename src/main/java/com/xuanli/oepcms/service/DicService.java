@@ -7,6 +7,7 @@
 package com.xuanli.oepcms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,9 @@ public class DicService {
 	
 	public List<DicDetailEntity> getBookVersion(String grade) {
 		return dicDetailEntityMapper.getBookVersion(grade);
+	}
+
+	public List<Map<String, Object>> getVolume() {
+		return dicDetailEntityMapper.getVolume();
 	}
 }
